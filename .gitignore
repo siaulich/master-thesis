@@ -269,3 +269,6 @@ TSWLatexianTemp*
 *.sta
 *.lpz
 *.xwm
+
+# Plot folders
+plots/

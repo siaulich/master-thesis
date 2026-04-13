@@ -106,8 +106,8 @@
 \def\ThesisAuthor#1#2{\author{#1 #2}}
 \def\ThesisTitle#1#2{\title{#1}\gdef\@titleOther{#2}}
 % added by A.Quadt, 31.08.2010
-\def\CourseName#1{\gdef\@CourseName{#1}}
-\def\@CourseName{\@latex@error{No \noexpand\CourseName given}\@ehc}
+\def\ReferenceNumber#1{\gdef\@ReferenceNumber{#1}}
+\def\@ReferenceNumber{\@latex@error{No \noexpand\ReferenceNumber given}\@ehc}
 %
 \def\@titleOther{\@latex@error{No \noexpand\titleOther given}\@ehc}
 \newcounter{@countbegin}
@@ -241,10 +241,10 @@
     \noindent
     \begin{tabular}[t]{p{0.24\linewidth}p{0.76\textwidth-4\tabcolsep}}
 % added by A.Quadt, 31.08.2010
-      \bfseries Course:&        
+      \bfseries ReferenceNumber:&        
       \begin{minipage}[t]{0.76\textwidth-4\tabcolsep}%
-        \@CourseName\end{minipage}\\&\\
-      \bfseries Course period:&
+        \@ReferenceNumber\end{minipage}\\&\\
+      \bfseries Thesis period:&
       \begin{minipage}[t]{0.76\textwidth-4\tabcolsep}%
         \dateselectlanguage{english}\setdatebynumber{\the@countbegin}\datedate\ 
         until \setdatebynumber{\the@countend}\datedate\end{minipage}\\&\\
