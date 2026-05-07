@@ -190,7 +190,13 @@
     {\includegraphics[height=1.5cm]{template_figures/Logo_Physik_links}}}%
   {\l@g@error}%
 }{\l@g@error}
-\titlehead{\LLogo\hfill\RLogo}
+\IfFileExists{template_figures/DESY_logo.eps}%
+{\IfFileExists{template_figures/DESY_logo.pdf}%
+  {\newcommand{\MLogo}%
+    {\includegraphics[height=1.5cm]{template_figures/DESY_logo}}}%
+  {\l@g@error}%
+}{\l@g@error}
+\titlehead{\MLogo\hfill\LLogo\hfill\RLogo}
 \def\s@bject{%
   % \if@diplom\if@englishpreamble{Diploma Thesis}\else{Diplomarbeit}\fi%
   % \else%
@@ -235,7 +241,7 @@
       \textbf{\large \@author}\\[3mm]
       from \@WhereFrom\\[3mm]
       at the \@Institute\\ [5mm]
-      \includegraphics[width = 0.2\textwidth]{template_figures/DESY_logo.pdf}%
+      %
     \end{center}
     \vfill\null
     \noindent

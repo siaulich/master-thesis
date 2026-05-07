@@ -6,19 +6,19 @@
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/standard_model.pdf}
-    \caption{The particles of the Standard Model. Particle properties taken from Ref.~\cite{PDG2024}.}
+    \caption{The particles of the Standard Model. Particle properties taken from Reference~\cite{PDG2024}.}
     \label{fig:standard_model_particles}
 \end{figure}
 The Standard Model (SM) of particle physics is a quantum field theory describing
 three of the four fundamental interactions of nature—electromagnetic, weak and strong—and the elementary particles on which they act.
 It is formulated as a renormalizable, Lorentz-invariant gauge theory with gauge group
 \[
-SU(3)_C \times SU(2)_L \times U(1)_Y,
+    SU(3)_C \times SU(2)_L \times U(1)_Y,
 \]
-and its structure has been established in a series of seminal works~\cite{standardmodel0,standardmodel1,standardmodel2,standardmodel7,standardmodel5,standardmodel9}. 
+and its structure has been established in a series of seminal works~\cite{standardmodel0,standardmodel1,standardmodel2,standardmodel7,standardmodel5,standardmodel9}.
 A summary of the particle content is shown in \Cref{fig:standard_model_particles}.
 
-The elementary particles fall into two categories, fermions and bosons. Fermions are spin-$\tfrac{1}{2}$ fields that constitute matter, organised into three generations of quarks and leptons. 
+The elementary particles fall into two categories, fermions and bosons. Fermions are spin-$\tfrac{1}{2}$ fields that constitute matter, organised into three generations of quarks and leptons.
 Quarks carry colour charge and participate in the strong interaction; leptons do not.
 Bosons are integer-spin gauge fields mediating the fundamental forces: the photon for electromagnetism,
 the $W^\pm$ and $Z$ bosons for the weak interaction,
@@ -26,10 +26,10 @@ and eight gluons for the strong interaction.
 The Higgs boson completes the SM and is responsible for electroweak symmetry breaking (EWSB), giving mass to the weak gauge bosons and, through Yukawa couplings, to the fermions.
 The SM Lagrangian can be written schematically as
 \[
-\mathcal{L}_\mathrm{SM} = \mathcal{L}_\mathrm{gauge}
-+ \mathcal{L}_\mathrm{fermion}
-+ \mathcal{L}_\mathrm{Yukawa}
-+ \mathcal{L}_\mathrm{Higgs},
+    \mathcal{L}_\mathrm{SM} = \mathcal{L}_\mathrm{gauge}
+    + \mathcal{L}_\mathrm{fermion}
+    + \mathcal{L}_\mathrm{Yukawa}
+    + \mathcal{L}_\mathrm{Higgs},
 \]
 where the first term contains the gauge kinetic terms and self-interactions, the second describes the fermions and gauge covariant derivatives,
 the third encodes the Yukawa couplings to the Higgs field, and the last term contains the Higgs potential and EWSB mechanism.
@@ -45,13 +45,13 @@ Because QED is an Abelian theory, its coupling runs only mildly with energy and 
 \subsection{Weak Interaction}
 
 The weak interaction forms, together with electromagnetism, the electroweak theory based on the gauge group $SU(2)_L \times U(1)_Y$.
-The vacuum expectation value of the Higgs field spontaneously breaks the symmetry to $U(1)_{\mathrm{EM}}$, giving masses to the weak gauge bosons through the Higgs mechanism~\cite{higgs1,higgs2,higgs3}. 
+The vacuum expectation value of the Higgs field spontaneously breaks the symmetry to $U(1)_{\mathrm{EM}}$, giving masses to the weak gauge bosons through the Higgs mechanism~\cite{higgs1,higgs2,higgs3}.
 The resulting massive $W^\pm$ and $Z$ bosons mediate a short-range force.
 
-A defining property of the weak interaction is its \emph{chiral} structure: 
-charged-current interactions couple only to left-handed fermions and right-handed antifermions. 
-This feature, predicted in~\cite{Parity_Violation_Theory} and confirmed in the Wu experiment~\cite{WU_Exp}, 
-leads to maximal parity violation and characteristic angular distributions of weak decay products. The vertex factor of the charged-current interaction is given by 
+A defining property of the weak interaction is its \emph{chiral} structure:
+charged-current interactions couple only to left-handed fermions and right-handed antifermions.
+This feature, predicted in~\cite{Parity_Violation_Theory} and confirmed in the Wu experiment~\cite{WU_Exp},
+leads to maximal parity violation and characteristic angular distributions of weak decay products. The vertex factor of the charged-current interaction is given by
 \begin{equation}
     \frac{-ig}{2\sqrt{2}} \gamma^\mu (1 - \gamma^5),
 \end{equation}
@@ -81,11 +81,11 @@ A crucial consequence for collider physics is that quarks and gluons produced in
 This process is typically described in terms of:
 
 \begin{itemize}
-\item \textbf{Parton distribution functions (PDFs)}, characterising the proton structure and entering via the QCD factorisation theorem~\cite{collins_soper_sterman}.
-\item \textbf{Initial- and final-state radiation (ISR/FSR)}, arising from soft and collinear gluon emission.
-\item \textbf{Parton showers}, which resum logarithmically enhanced emissions and are implemented in Monte Carlo generators such as \pythia,
-first developed in~\cite{SJOSTRAND1985321,parton_shower} and extended in modern formulations~\cite{pythia}.
-\item \textbf{Hadronisation models}, such as the Lund string model~\cite{lund_model,SJOSTRAND1984469}, which describe the confinement-driven formation of hadrons.
+    \item \textbf{Parton distribution functions (PDFs)}, characterising the proton structure and entering via the QCD factorisation theorem~\cite{collins_soper_sterman}.
+    \item \textbf{Initial- and final-state radiation (ISR/FSR)}, arising from soft and collinear gluon emission.
+    \item \textbf{Parton showers}, which resum logarithmically enhanced emissions and are implemented in Monte Carlo generators such as \pythia,
+          first developed in~\cite{SJOSTRAND1985321,parton_shower} and extended in modern formulations~\cite{pythia}.
+    \item \textbf{Hadronisation models}, such as the Lund string model~\cite{lund_model,SJOSTRAND1984469}, which describe the confinement-driven formation of hadrons.
 \end{itemize}
 
 These aspects of QCD are essential for the reconstruction of hadronic final states and for Monte Carlo simulations of \lhc physics.
@@ -100,7 +100,7 @@ These aspects of QCD are essential for the reconstruction of hadronic final stat
         \caption{}
         \label{fig:top_production_qq_s_channel}
     \end{subfigure}
-    
+
     \begin{subfigure}[c]{0.3\textwidth}
         \centering
         \includegraphics[width=\textwidth]{figures/feynman-diagrams/ttbar_production_gg_t_channel.pdf}
@@ -136,7 +136,7 @@ Due to its large mass, the top quark also has the shortest lifetime of all quark
 Notably, the top quark also decays before its spin can decorrelate, preserving spin information in the angular distributions of its decay products~\cite{spin_decorrelation_time}. This unique feature enables precise measurements of spin correlations and polarisation of top quarks.
 
 At hadron colliders like the \lhc, top quarks are predominantly produced in pairs via the strong interaction.
-The leading order (LO) Feynman diagrams for top-quark pair production are shown in \Cref{fig:top_production}. 
+The leading order (LO) Feynman diagrams for top-quark pair production are shown in \Cref{fig:top_production}.
 At the \lhc, the dominant production mechanism is gluon fusion (ggF).
 This is due to the high gluon density in the proton at the relevant Bjorken-$x$ values for top-quark production.
 
@@ -152,7 +152,7 @@ As elaborated upon before, the top quark decays before it can hadronise or its s
 
 Recent studies at the \lhc began to explore potential effects of quantum entanglement in top-quark pairs~\cite{ATLAS2024Entanglement}. Entanglement generally describes a quantum mechanical phenomenon where the quantum states of two or more particles become correlated in such a way that the state of one particle cannot be described independently of the state of the other(s), even when the particles are separated by large distances~\cite{schrödinger_entanglement}. This property is expressed as the system having a non-separable density matrix. While a general description of this phenomenon is beyond the scope of this thesis, entanglement can be tested using specific criterions. One such criterion is the \emph{Peres-Horodecki criterion}~\cite{peres_criterion,entanglement_two_qbits}, which states that if the partial transpose of the density matrix of a bipartite system has at least one negative eigenvalue, then the system is entangled. Considering the top-quark pair's spin as a bipartite system of two spin-$\tfrac{1}{2}$ particles (qubits), this criterion can be applied to test for entanglement in their spin states.
 
-In Ref.~\cite{entanglement_top_quarks} it was proposed to measure entanglement in top-quark pairs produced at the \lhc by analysing the angular distributions of their decay products, specifically the charged leptons in the dileptonic decay channel. The study showed that by measuring the opening angle between the two leptons, one can construct an observable sensitive to the entanglement of the spin system of the top quarks. Due to the kinematics of the top-quark pair production, the entanglement is expected to be more pronounced in certain regions of phase space, one such region is at low invariant masses of the top-quark pair system. One particular region of interest is the so-called \emph{threshold region}, where the top-quark pair is produced with low relative velocity. In this region, the top quark is produced as a spin singlet state in about $\sim 80\%$ of the cases, leading to a strong entanglement signature \cite{toponium_2}. The \atlas collaboration has recently reported the first experimental evidence of quantum correlations consistent with entangled spin quantum states in top-quark pairs \cite{ATLAS2024Entanglement}. 
+In Reference~\cite{entanglement_top_quarks} it was proposed to measure entanglement in top-quark pairs produced at the \lhc by analysing the angular distributions of their decay products, specifically the charged leptons in the dileptonic decay channel. The study showed that by measuring the opening angle between the two leptons, one can construct an observable sensitive to the entanglement of the spin system of the top quarks. Due to the kinematics of the top-quark pair production, the entanglement is expected to be more pronounced in certain regions of phase space, one such region is at low invariant masses of the top-quark pair system. One particular region of interest is the so-called \emph{threshold region}, where the top-quark pair is produced with low relative velocity. In this region, the top quark is produced as a spin singlet state in about $\sim 80\%$ of the cases, leading to a strong entanglement signature \cite{toponium_2}. The \atlas collaboration has recently reported the first experimental evidence of quantum correlations consistent with entangled spin quantum states in top-quark pairs \cite{ATLAS2024Entanglement}.
 Measurements of this variable, are particularly sensitive in the dilepton channel, because, the lepton has the highest spin-analysing power \cite{spin_analyzing_power,spin_analyzing_power_jets}.
 The spin-analysing power measure, to which extent the spin-information of the parent is imprinted in the angular distributions of the decay products. Due to QCD effects, this is lower for light jets compared to leptons.
 
@@ -177,14 +177,14 @@ The dileptonic decay channel, where both $W$ bosons decay leptonically, has a br
 \label{sec:kinematic_constraints}
 Assuming both $W$ bosons and top quarks are on-shell, the following kinematic constraints can be applied to the dileptonic decay channel,
 \begin{align}
-    (p_{\ell_1} + p_{\nu_1})^2 &= m_W^2, \label{eq:w_boson1_mass}\\
-    (p_{\ell_2} + p_{\nu_2})^2 &= m_W^2, \label{eq:w_boson2_mass}\\
-    (p_{b_1} + p_{\ell_1} + p_{\nu_1})^2 &= m_t^2, \label{eq:top_quark1_mass}\\
-    (p_{b_2} + p_{\ell_2} + p_{\nu_2})^2 &= m_t^2, \label{eq:top_quark2_mass}\\
-    (\vec{p}_{\nu_1} + \vec{p}_{\nu_2})_{x} &= \met_x, \label{eq:met_x}\\
-    (\vec{p}_{\nu_1} + \vec{p}_{\nu_2})_{y} &= \met_y. \label{eq:met_y}
+    (p_{\ell_1} + p_{\nu_1})^2              & = m_W^2, \label{eq:w_boson1_mass}   \\
+    (p_{\ell_2} + p_{\nu_2})^2              & = m_W^2, \label{eq:w_boson2_mass}   \\
+    (p_{b_1} + p_{\ell_1} + p_{\nu_1})^2    & = m_t^2, \label{eq:top_quark1_mass} \\
+    (p_{b_2} + p_{\ell_2} + p_{\nu_2})^2    & = m_t^2, \label{eq:top_quark2_mass} \\
+    (\vec{p}_{\nu_1} + \vec{p}_{\nu_2})_{x} & = \met_x, \label{eq:met_x}          \\
+    (\vec{p}_{\nu_1} + \vec{p}_{\nu_2})_{y} & = \met_y. \label{eq:met_y}
 \end{align}
-If one assumes the neutrinos to be massless, these six equations provide constraints on the six unknown components of the two neutrino momenta. Therefore, additional assumptions or techniques are required to fully reconstruct the event kinematics in the dileptonic channel. Due to the algebraic nature of the constraints, multiple solutions can exist for a given event, leading to ambiguities in the reconstruction. Due to the effects of detector resolution and off-shell particles, this system of equation can also have no real-valued solution \cite{sonnenschein_method, ellipse_method}. Various methods have been developed to address these challenges, including likelihood-based approaches \cite{neutrino_weighting_method}, matrix element methods, and machine learning techniques \cite{nu_square_flows}, which aim to optimally utilise the available information and improve the accuracy of the top quark kinematic reconstruction in dileptonic events.
+If one assumes the neutrinos to be massless, these six equations provide constraints on the six unknown components of the two neutrino momenta. Due to the algebraic nature of the constraints, multiple solutions can exist for a given event, leading to ambiguities in the reconstruction. Due to the effects of detector resolution and off-shell particles, this system of equation can also have no real-valued solution \cite{sonnenschein_method, ellipse_method}. Various methods have been developed to address these challenges, including likelihood-based approaches \cite{neutrino_weighting_method}, matrix element methods, and machine learning techniques \cite{nu_square_flows}, which aim to optimally utilise the available information and improve the accuracy of the top quark's kinematic reconstruction in dileptonic events.
 
 
 \subsection{Spin Sensitive Angular Variables}
@@ -213,6 +213,6 @@ Analogously, one can define the variable $c_{\text{han}}$, where either of the l
         \caption{$c_{\text{han}}$}
         \label{fig:c_han_theory}
     \end{subfigure}
-    \caption{Simulation of the distributions of  $c_{\text{hel}}$ and $c_{\text{han}}$ for dileptonic decaying top-quark pairs produced near threshold for different spin states. The distributions are normalised to unity and at parton level. The Figures are taken from Ref.~\cite{atlas_toponium_preprint}.} 
+    \caption{Simulation of the distributions of  $c_{\text{hel}}$ and $c_{\text{han}}$ for dileptonic decaying top-quark pairs produced near threshold for different spin states and combinations thereof. The distributions are normalised to unity and at parton level. The Figures are taken from Reference~\cite{atlas_toponium_preprint}.}
 \end{figure}
 \todo{potentially update citation from preprint}

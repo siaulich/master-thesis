@@ -1,0 +1,15 @@
+\chapter{Supplementary Computations and Proofs}
+\label{chap:supplementary_computations_and_proofs}
+\section{Mathematical Foundation of Machine Learning}
+\subsection{Mean Squared Error Loss and Conditional Expectation}
+When performing a minimisation of the mean squared error (MSE) loss function in a supervised learning setting, one can show that the optimal predictor corresponds to the conditional expectation of the target variable given the input features.
+The MSE loss function can be written as:
+\begin{equation}
+    L_{\text{MSE}}(\mathbf{y}, f_\theta(\mathbf{x})) = \frac{1}{N} \sum_{i=1}^{N} (y_i - f_\theta(\mathbf{x}_i))^2
+\end{equation}
+Using a simple calculus argument, one can show that the function $f_\theta$ that minimises this loss function is given by:
+\begin{align}
+    \frac{d}{d\theta} L_{\text{MSE}}(\mathbf{y}, f_\theta(\mathbf{x})|\mathbf{x}) & = \frac{d}{df} \int (y - f_\theta(x))^2 p(y|x) dy \cdot \frac{\partial f}{\partial \theta}   \\
+                                                                                  & = \int 2(f_\theta(x) - y) p(y|x) dy \cdot \frac{\partial f}{\partial \theta}\overset{!}{=} 0 \\
+    \Rightarrow f_\theta(x)                                                       & = \int y p(y|x) dy = \mathbb{E}[y|x]
+\end{align}

@@ -1,6 +1,6 @@
 \documentclass[master,
                oneside,
-               BCOR=0mm,
+               BCOR=10mm,
                ngerman,
                english,
                final,          %% Endversion; draft fuer schnelles Kompilieren
@@ -18,7 +18,7 @@
 \usepackage{caption}  % important
 \usepackage[labelfont=bf]{caption}  % important
 \usepackage{subcaption} % important
-\usepackage{amsmath,amssymb, amsfonts}
+\usepackage{amsmath, amssymb, amsfonts}
 \usepackage{mathrsfs}
 \usepackage{longtable}
 \usepackage{booktabs}
@@ -27,6 +27,7 @@
 \usepackage{dcolumn}
 \usepackage{bm}
 \usepackage{siunitx}
+\usepackage{svg}
 \usepackage{xspace}
 \usepackage{lmodern}
 \usepackage{todonotes}
@@ -56,7 +57,7 @@
 
 \ThesisAuthor{Siemen Henning}{Aulich}
 \PlaceOfBirth{Emden}
-\ThesisTitle{Improving Event Reconstruction for Dileptonic Decays of Top-Quark Pairs Using Machine Learning}{}%{Verbesserung der Event Rekonstruktion für dilpetonische Zerfälle von Top Quark Paaren mit Machine Learning}
+\ThesisTitle{Improving the Reconstruction of Top-Quark Pairs in Dileptonic Final States in ATLAS Using Machine Learning}{}%{Verbesserung der Event Rekonstruktion für dilpetonische Zerfälle von Top Quark Paaren mit Machine Learning}
 \FirstReferee{Prof.~Dr.~Stan Lai}
 \Institute{DESY Hamburg}
 \SecondReferee{Dr.~Katharina Behr}
@@ -88,22 +89,24 @@
 \include{chapters/01-introduction}
 \include{chapters/02-background}
 \include{chapters/03-methods}
-%\include{chapters/04-atlas-detector}
+\include{chapters/04-atlas-detector}
 \include{chapters/05-reconstruction-methods}
-\include{chapters/06-ml-jet-selection}
+\include{chapters/06-ml-reconstruction}
 \include{chapters/07-performance-evaluation}
-\include{chapters/08-conclusion}
+\include{chapters/08-physics-analysis}
+\include{chapters/09-conclusion}
 
 
 
 \appendix
 \include{chapters/a1-additional-plots}
+\include{chapters/a2-proofs-computations}
 
 
 \cleardoublepage
 
 
-\bibliography{bthesis_datenbank} 
+\bibliography{bthesis_datenbank}
 
 %\chapter*{Danksagung}
 %Dank\dots

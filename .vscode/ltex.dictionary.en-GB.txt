@@ -14,3 +14,5 @@ dilepton
 hadronise
 hadronisation
 softmax
+backpropagation
+equivariant

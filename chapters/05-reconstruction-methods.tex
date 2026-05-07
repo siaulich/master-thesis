@@ -37,18 +37,17 @@ Reconstructing the kinematics of dileptonic \ttbar events requires an assignment
 
 While the leptons are directly identified from the reconstructed objects, the assignment of jets to the $b$-quarks from the top quark decays is ambiguous due to the presence of multiple jets in the event. Additionally, the two neutrinos from the $W$ boson decays are not directly detected, leading to missing information in the event reconstruction.
 Based on this, the reconstruction breaks down into two main tasks:
-\paragraph{Neutrino Regression} Estimating the momenta of the two neutrinos using the measured \met and other event kinematics.
 \paragraph{Jet Assignment} Assigning the reconstructed jets to the $b$-quarks from the top quark decays.
-\subsection{Neutrino Regression Methods}
-\label{sec:neutrino_regression}
-Due to the current stage of the thesis, only one baseline method for neutrino regression has been used. The method of choice for the final thesis will be determined after evaluating multiple approaches.
+\paragraph{Neutrino Regression} Estimating the momenta of the two neutrinos using the measured \met and other event kinematics.
 
-The baseline method used here is called $\nu^2$-Flows \cite{nu_square_flows} and uses normalizing flows to model the conditional probability distribution of the neutrino momenta given the observed event kinematics. The model is trained on simulated dileptonic \ttbar events, where the true neutrino momenta are known from the parton-level information. The trained model can then be used to sample possible neutrino momenta for new events, allowing for a probabilistic reconstruction of the event kinematics. For each event, multiple samples of neutrino momenta are drawn from the model, and the one with the highest probability density is selected as the reconstructed neutrino momenta.
-A detailed outline of the $\nu^2$-Flows method and its implementation can be found in Ref.~\cite{nu_square_flows}. For this thesis, this method serves to establish a baseline for neutrino regression to evaluate the impact of improved jet assignment methods. Note, however, that this method has not been used in \atlas analyses yet. However, due to matters of software compatibility, it was the only viable option at this stage of the thesis.
-Since $\nu^2$-Flows processes the full event information to make a prediction for the neutrino momenta, it is agnostic to the jet assignment. This is drastically different from the conventional methods, which were used in previous \atlas analyses \cite{entanglement_top_quarks}. These methods are interdependent with the jet assignment and mostly based on exploiting the kinematic constraints of the event, such as the invariant masses of the $W$ bosons and top quarks outlined in \Cref{sec:kinematic_constraints}.
+\subsection{B-Tagging}
+\label{sec:b_tagging}
+The identification of $b$-jets is crucial for the reconstruction of \ttbar events. Due to the long lifetime of $b$-hadrons, they travel a measurable distance from the primary vertex before decaying, leading to displaced vertices and tracks with large impact parameters. The GN2 algorithm \cite{gn2_btagger} is used for $b$-tagging in this analysis, which combines various discriminating variables using a deep (graph) neural network to achieve high efficiency and purity in identifying $b$-jets. The performance of the $b$-tagging algorithm is characterised by its efficiency (the probability of correctly identifying a $b$-jet) and its misidentification rate (the probability of incorrectly tagging a non-$b$-jet as a $b$-jet).
+
+
 \subsection{Jet Assignment Methods}
 \label{sec:jet_assignment}
-This thesis explores several methods for jet assignment, ranging from traditional algorithms to machine learning approaches. From recent publications e.g. \cite{entanglement_top_quarks}, two conventional methods have been implemented as baselines:
+This thesis explores several methods for jet assignment, ranging from traditional algorithms to machine learning approaches. From recent publications e.g. \cite{ATLAS2024Entanglement}, two conventional methods have been implemented as baselines:
 
 \paragraph{Jet-Selection}
 Both methods start by selecting the two $b$-jet candidates in the event based on the $b$-tagging at the $77\%$ WP. If more than two $b$-tagged jets are present, the two with the highest \pt are chosen. If only one $b$-tagged jet is found, the non-tagged jet with the highest $b$-tagging score is selected as the second candidate.
@@ -66,7 +65,7 @@ Both methods start by selecting the two $b$-jet candidates in the event based on
     \hfill
     \begin{minipage}[t]{0.48\textwidth}
         \textbf{$\Delta R$-Method}\\[0.5em]
-        This method assigns the $b$-jet candidates based on their angular distance to the leptons. 
+        This method assigns the $b$-jet candidates based on their angular distance to the leptons.
         \begin{equation}
             \Delta R = \sqrt{(\Delta\phi)^2 + (\Delta\eta)^2}
         \end{equation}
@@ -76,4 +75,13 @@ Both methods start by selecting the two $b$-jet candidates in the event based on
 Note, that the $\chi^2$-Method relies on the reconstructed neutrino momenta to compute the invariant masses of the top quarks. Therefore, it is inherently linked to the neutrino regression method used. In contrast, the $\Delta R$-Method is independent of the neutrino momenta.
 Further, it should be noted, that due to its reliance on the neutrino reconstruction and the use of $\nu^2$-Flows here, the $\chi^2$-method should also be considered a machine learning based approach.
 
-The $\Delta R$-Method was used in previous \atlas analyses \cite{entanglement_top_quarks} for events, that failed the kinematic reconstruction required for the $\chi^2$-Method. However, in this thesis, both methods are evaluated on the full dataset for comparison.
+The $\Delta R$-Method was used in previous \atlas analyses \cite{ATLAS2024Entanglement} for events, that failed the kinematic reconstruction required for the $\chi^2$-Method. However, in this thesis, both methods are evaluated on the full dataset for comparison.
+
+
+\subsection{Neutrino Regression Methods}
+\label{sec:neutrino_regression}
+Due to the limited availability of kinematic reconstruction methods in the \atlas software framework, only one method for neutrino regression has been implemented and evaluated in this thesis.
+
+The baseline method used here is called $\nu^2$-Flows \cite{nu_square_flows} and uses normalizing flows to model the conditional probability distribution of the neutrino momenta given the observed event kinematics. The model is trained on simulated dileptonic \ttbar events, where the true neutrino momenta are known from the parton-level information. The trained model can then be used to sample possible neutrino momenta for new events, allowing for a probabilistic reconstruction of the event kinematics. For each event, multiple samples of neutrino momenta are drawn from the model, and the one with the highest probability density is selected as the reconstructed neutrino momenta.
+A detailed outline of the $\nu^2$-Flows method and its implementation can be found in Reference~\cite{nu_square_flows}. For this thesis, this method serves to establish a baseline for neutrino regression to evaluate the impact of improved jet assignment methods. Note, however, that this method has not been used in \atlas analyses yet. However, due to matters of software compatibility, it was the only viable option at this stage of the thesis.
+Since $\nu^2$-Flows processes the full event information to make a prediction for the neutrino momenta, it does not require a jet-assignment. This is drastically different from the conventional methods, which were used in previous \atlas analyses \cite{ATLAS2024Entanglement}. These methods are interdependent with the jet assignment and mostly based on exploiting the kinematic constraints of the event, such as the invariant masses of the $W$ bosons and top quarks outlined in \Cref{sec:kinematic_constraints}.

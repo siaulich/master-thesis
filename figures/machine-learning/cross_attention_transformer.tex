@@ -99,48 +99,57 @@
 
 
 % Jet Encoder
-\node[self_attention, fill=green!20!red!20, 
-      right=2cm of jet_dnn_dots, 
-      minimum height=3cm, 
-      minimum width=1cm] 
-      (transformer_1) {\rotatebox{90}{Self-Attetnion}};
+\coordinate (jet_midpoint) at ($(jet_dnn_1.east)!0.5!(jet_dnn_n.east)$);
 
-\node[self_attention, fill=green!20!red!20, 
-      right=0.8cm of transformer_1, 
-      minimum height=3cm, 
-      minimum width=1cm] 
-      (transformer_n) {\rotatebox{90}{Self-Attention}};
+\path let \p1 = (jet_dnn_1.north), \p2 = (jet_dnn_n.south) in
+    node[self_attention,
+             right=0.8cm of jet_midpoint.east,
+             minimum height={\y1-\y2},
+             minimum width=1cm]
+             (transformer_1) {\rotatebox{90}{Self-Attention}};
+
+\path let \p1 = (jet_dnn_1.north), \p2 = (jet_dnn_n.south) in
+    node[self_attention,
+             right=0.8cm of transformer_1,
+             minimum height={\y1-\y2},
+             minimum width=1cm]
+             (transformer_n) {\rotatebox{90}{Self-Attention}};
 \node[yshift=0.05cm] at ($(transformer_1)!0.5!(transformer_n)$) (transformer_dots) {$\cdots$};
 
 % Lepton Encoder
-\coordinate (lepton_midpoint) at ($(lep_dnn_1)!0.5!(lep_dnn_2)+(0.2,0)$);
+\coordinate (lepton_midpoint) at ($(lep_dnn_1.east)!0.5!(lep_dnn_2.east)$);
 
-\node[self_attention, fill=cyan!30, 
-      right=2cm of lepton_midpoint, 
-      minimum height=3cm, 
-      minimum width=1cm] 
-      (lep_transformer_1) {\rotatebox{90}{Self-Attetnion}};
+\path let \p1 = (lep_dnn_1.north), \p2 = (lep_dnn_2.south) in
+    node[self_attention,
+             right=0.8cm of lepton_midpoint,
+             minimum height={\y1-\y2},
+             minimum width=1cm]
+             (lep_transformer_1) {\rotatebox{90}{Self-Attention}};
 
-\node[self_attention, fill=cyan!30, 
-      right=0.8cm of lep_transformer_1, 
-      minimum height=3cm, 
-      minimum width=1cm] 
-      (lep_transformer_n) {\rotatebox{90}{Self-Attention}};
+\path let \p1 = (lep_dnn_1.north), \p2 = (lep_dnn_2.south) in
+    node[self_attention,
+             right=0.8cm of lep_transformer_1,
+             minimum height={\y1-\y2},
+             minimum width=1cm]
+             (lep_transformer_n) {\rotatebox{90}{Self-Attention}};
+
 \node[yshift=0.05cm] at ($(lep_transformer_1)!0.5!(lep_transformer_n)$) (transformer_dots) {$\cdots$};
 
 
 % Cross-Attention Layer
-\node[cross_attention, fill=orange!30, 
-      right=1cm of transformer_n, 
-      minimum height=3cm, 
-      minimum width=1cm] 
-      (cross_attention_1) {\rotatebox{90}{Cross-Attention}};
+\path let \p1 = (jet_dnn_1.north), \p2 = (jet_dnn_n.south) in
+      node[cross_attention, fill=orange!30,
+             right=1cm of transformer_n,
+             minimum height={\y1-\y2},
+             minimum width=1cm]
+             (cross_attention_1) {\rotatebox{90}{Cross-Attention}};
+\path let \p1 = (jet_dnn_1.north), \p2 = (jet_dnn_n.south) in
+      node[cross_attention, fill=orange!30,
+             right=0.8cm of cross_attention_1,
+             minimum height={\y1-\y2},
+             minimum width=1cm]
+             (cross_attention_2) {\rotatebox{90}{Cross-Attention}};
 
-\node[cross_attention, fill=orange!30, 
-      right=0.8cm of cross_attention_1, 
-      minimum height=3cm, 
-      minimum width=1cm] 
-      (cross_attention_2) {\rotatebox{90}{Cross-Attention}};
 \node[yshift=0.05cm] at ($(cross_attention_1)!0.5!(cross_attention_2)$) (cross_attention_dots) {$\cdots$};
 
 % Cross Attention Probabilities
@@ -153,12 +162,13 @@
 
 % Output Probabilities
 
-\node[output, right=10.7cm of jet_dnn_1] (output_b_1) {P($b$)};
-\node[output, right=10.7cm of jet_dnn_n] (output_b_n) {P($b$)};
-\node[yshift=0.05cm] at ($(output_b_1)!0.5!(output_b_n)$) (output_b_dots) {$\vdots$};
+      
+\node[output] at ($(cross_attention_probs.east |- jet_1)+(1.5,0)$) (jet_1_prob_b) {$P(b)$};
+\node[output] at ($(cross_attention_probs.east |- jet_n)+(1.5,0)$) (jet_n_prob_b) {$P(b)$};
+\node[yshift=0.05cm] at ($(jet_1_prob_b)!0.5!(jet_n_prob_b)$) (output_b_dots) {$\vdots$};
 
-\node[output, right=0.5cm of output_b_1] (output_bbar_1) {P($\bar{b}$)};
-\node[output, right=0.5cm  of output_b_n] (output_bbar_n) {P($\bar{b}$)};
+\node[output, right=0.5cm of jet_1_prob_b] (output_bbar_1) {$P(\bar{b})$};
+\node[output, right=0.5cm  of jet_n_prob_b] (output_bbar_n) {$P(\bar{b})$};
 \node[yshift=0.05cm] at ($(output_bbar_1)!0.5!(output_bbar_n)$) (output_bbar_dots) {$\vdots$};
 
 
@@ -220,8 +230,8 @@
 \draw[arrow] (lep_dnn_1.east -| lep_transformer_n.east) -|  ( cross_attention_probs.south) node[near end, fill=white, draw, rectangle] {K};
 
 % From Cross-Attention Probs to Outputs
-\draw[arrow] (jet_dnn_1.east -| cross_attention_probs.east) -- (output_b_1.west);
-\draw[arrow] (jet_dnn_n.east -| cross_attention_probs.east) -- (output_b_n.west);
+\draw[arrow] (jet_dnn_1.east -| cross_attention_probs.east) -- (jet_1_prob_b.west);
+\draw[arrow] (jet_dnn_n.east -| cross_attention_probs.east) -- (jet_n_prob_b.west);
 
 
 
@@ -270,7 +280,7 @@
 
 
 
-\node[fit=(output_b_1)(output_b_n)(output_bbar_1)(output_bbar_n), 
+\node[fit=(jet_1_prob_b)(jet_n_prob_b)(output_bbar_1)(output_bbar_n), 
       draw, 
       inner sep=0.2cm, 
       label=above:{\textbf{Output Probabilities}}] 
