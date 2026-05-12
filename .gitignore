@@ -273,3 +273,4 @@ TSWLatexianTemp*
 # Plot folders
 plots/
 **.DS_Store
+.vscode/

@@ -12,7 +12,7 @@ Machine learning can be broadly categorised into supervised and unsupervised lea
 \subsection{Monte Carlo Training Data}
 \begin{figure}
     \centering
-    \includesvg[width=0.6\textwidth]{figures/event.svg}
+    \includegraphics[width=0.6\textwidth]{figures/event_svg-tex.pdf}
     \caption{Schematic representation of the Monte Carlo event generation process in particle physics. Colouring of vertices and particles indicates the event generation stage: hard scattering process (big red blob), QCD radiation (blue), hadronisation (light green), showering (dark green), and a secondary vertex (purple). The Figure is taken from \cite{sherpa_1}.}
 \end{figure}
 \label{sec:mc_training_data}
@@ -30,11 +30,10 @@ This is because, for the reconstruction of the physics objects, such as jets, le
 During the training phase, the model is presented with a set of input features derived from the reco-level event variables, along with their corresponding target outputs, which are typically derived from the parton-level event variables. The model learns to map the input features to the target outputs by minimizing a loss function that quantifies the difference between the predicted and true values. Common loss functions include mean squared error for regression tasks and cross-entropy loss \cite{cross-entropy} for classification tasks.
 The training process involves iteratively (each step is called \textit{epoch}) updating the model's parameters using an optimization algorithm to minimise the loss function.
 
-
 \subsection{Validation and Testing}
 To evaluate the performance of the trained model, it is essential to validate and test it on independent datasets that were not used during training. This helps to assess the model's generalization capabilities and ensures that it can make accurate predictions on unseen data. A common practice is to split the available data into training, validation, and test sets. The validation set is used to tune hyperparameters and monitor the model's performance during training, while the test set is reserved for the final evaluation of the model's performance.
 
-Since in particle physics, simulated data is often used for training and background modelling, one typically employs a k-folding strategy, where the data is divided into k subsets. The model is trained k times, each time using a different subset as the validation set and the remaining subsets for training. This approach helps to use the available data more efficiently.
+Since in particle physics, simulated data is often used for training and background modelling, one typically employs a k-folding strategy \cite{k-folding}, where the data is divided into k subsets. The model is trained k times, each time using a different subset as the validation set and the remaining subsets for training. This approach helps to use the available data more efficiently.
 
 \section{Regression and Conditional Density Learning}
 To highlight some important distinctions between different machine learning tasks, it is useful to briefly discuss regression and conditional density learning.
@@ -95,7 +94,7 @@ Dense neural networks require their inputs to have a fixed size. However, in man
 
 RNNs consist of a series of interconnected neurons that process input data sequentially. At each time step, the RNN takes an input vector and combines it with the hidden state from the previous time step to produce a new hidden state. This hidden state is then used to generate the output for the current time step. The recurrent connections allow the RNN to retain information from previous inputs, enabling it to learn temporal dependencies in the data. One common variant of RNNs is the Long Short-Term Memory (LSTM) network \cite{lstm}, which addresses the vanishing gradient problem and allows for learning long-term dependencies more effectively. Another caveat of RNNs is that they are inherently sequential, making them less suited for data without inherent order, such as sets of particles in an event.
 
-\subsection{Transformer}
+\subsection{Transformer Networks}
 \label{sec:transformer}
 \begin{figure}[ht]
     \centering
@@ -132,6 +131,6 @@ In many applications, including particle physics, the input data exhibits certai
 The attention mechanism has inherent permutation equivariances, that can be exploited. Self-attention is permutation equivariant to the input sequence, meaning that permuting the input elements results in a corresponding permutation of the output elements. This property is particularly useful when dealing with sets or unordered data, where the order of the elements does not carry any inherent meaning. Cross-attention is permutation equivariant to permutations of the query inputs and separately to permutations of the key/value inputs. This allows the model to effectively relate information between two different sequences, regardless of their order.
 
 \subsection{Training Neural Networks}
-Training neural networks involves optimizing the model's parameters (weights and biases) to minimise the loss function. The number of parameters in a neural network can be quite large, especially in deep architectures, making the optimization process computationally intensive. The most commonly used optimization algorithm for training neural networks is stochastic gradient descent (SGD) \cite{sgd}, which iteratively updates the model's parameters based on the gradients of the loss function with respect to the parameters. Modern variants of SGD, such as Adam \cite{adam}, incorporate adaptive learning rates and momentum to improve convergence.
+Training neural networks involves optimizing the model's parameters (weights and biases) to minimise the loss function. The number of parameters in a neural network can rise rapidly, especially in deep architectures, making the optimization process computationally intensive. The most commonly used optimization algorithm for training neural networks is stochastic gradient descent (SGD) \cite{sgd}, which iteratively updates the model's parameters based on the gradients of the loss function with respect to the parameters. Modern variants of SGD, such as Adam \cite{adam}, incorporate adaptive learning rates and momentum to improve convergence.
 The backpropagation algorithm \cite{backpropagation} is used to efficiently compute the gradients of the loss function with respect to the model's parameters. It involves propagating the error signal backward through the network, allowing for the calculation of gradients at each layer. These gradients are then used by the optimization algorithm to update the parameters. The algorithm relies on the chain rule and nested structure of the neural network to compute the gradients efficiently.
-Regularization techniques, such as dropout \cite{dropout} and weight decay, are often employed during training to prevent overfitting and improve the model's generalization capabilities. Dropout randomly deactivates a fraction of the neurons during training, forcing the network to learn more robust features. Weight decay adds a penalty term to the loss function based on the magnitude of the weights, discouraging overly complex models and promoting generalization.
+Regularization techniques, such as dropout \cite{dropout} and weight decay, are often employed during training to prevent overfitting and improve the model's generalization capabilities. Dropout randomly deactivates a fraction of the neurons during training, forcing the network to learn more robust features. Weight decay \cite{adamW} adds a penalty term to the loss function based on the magnitude of the weights, discouraging overly complex models and promoting generalization.

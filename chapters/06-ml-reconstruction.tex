@@ -1,15 +1,15 @@
-\chapter{Machine Learning Based Reconstruction}
+\chapter{ML-Based Reconstruction of Dileptonic Top-Quark Pair Events}
 \label{chap:ml-reconstruction}
 
 
 In addition to the outline reconstruction methods described in \Cref{chap:reconstruction-methods}, this chapter focuses on the development of a machine learning-based reconstruction strategies for the dileptonic \ttbar channel. Machine learning-based reconstruction techniques have gained significant traction in recent years. One major example for this, is their use in flavour tagging algorithms \cite{flavour_tagging_review}. For this, machine learning models are trained to address both challenges of jet assignment and neutrino regression, by learning from simulated data to predict the correct jet-parton assignments and neutrino momenta.
 
-For the high permutation complexity of jet assignments in all-hadronic channels, SPANet \cite{spanet} has demonstrated significant improvements over traditional methods. These architectures leverage attention mechanisms to improve the accuracy by leveraging the full event information and utilising permutation equivariant architectures to handle the combinatorial nature of the problem.
-Based on these successes, this thesis explores the adaptation of similar architectures for the dileptonic \ttbar channel, which presents unique challenges due to the presence of two neutrinos and fewer jets.
+For the high permutation multiplicity of jet assignments in all-hadronic channels, SPANet \cite{spanet} has demonstrated significant improvements over traditional methods. These architectures leverage attention mechanisms to improve the accuracy by leveraging the full event information and utilising permutation equivariant architectures to handle the combinatorial nature of the problem.
+Based on these successes, this thesis explores the adaptation of similar architectures for the dileptonic \ttbar channel, which presents unique challenges due to the presence of two neutrinos and fewer jets. This topic has been largely understudied in the literature, with most efforts focusing on neutrino regression. Thus, this work aims to fill this gap by developing a machine learning model specifically tailored for the jet assignment problem in the dileptonic channel, and investigating how it can be combined with neutrino regression methods to offer a full reconstruction pipeline.
 
 On the other hand, for neutrino regression, $\nu^2$-Flows \cite{nu_square_flows} has shown promise in improving the reconstruction of neutrino momenta by modelling the underlying probability distributions of the neutrino kinematics.
 
-This thesis investigates, how machine learning can be used to provide a full reconstruction pipeline for the dileptonic \ttbar channel, by combining jet assignment and neutrino regression.
+Despite both tasks being highly interconnected, both of them are mostly studied independently and the potential synergies between them remain largely unexplored. This thesis investigates how the jet assignment and neutrino regression tasks can be combined in a unified machine learning framework, allowing for a more holistic approach to event reconstruction in the dileptonic \ttbar channel.
 
 \section{Jet-Assignment}
 \label{sec:jet-assignment}
@@ -17,13 +17,23 @@ This thesis investigates, how machine learning can be used to provide a full rec
 \subsection{Neural Network Architectures}
 \label{sec:nn-architectures}
 
-
 \subsection{Training Procedure}
 \label{sec:training-procedure}
 
 \subsection{Hyperparameter Optimisation}
 \label{sec:hyperparameter-optimisation}
 
-\section{Neutrino Regression}
-\label{sec:neutrino-regression}
+\section{Combination with Neutrino Regression}
+\label{sec:combination-with-neutrino-regression}
 
+\subsection{Unified Model Architecture}
+\label{sec:unified-model-architecture}
+
+\subsection{Training Strategy}
+\label{sec:training-strategy}
+
+\subsection{Performance Evaluation}
+\label{sec:performance-evaluation}
+
+\subsection{Multitask Learning Benefits}
+\label{sec:multitask-learning-benefits}
