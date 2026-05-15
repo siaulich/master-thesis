@@ -13,7 +13,7 @@ Machine learning can be broadly categorised into supervised and unsupervised lea
 \begin{figure}
     \centering
     \includegraphics[width=0.6\textwidth]{figures/event_svg-tex.pdf}
-    \caption{Schematic representation of the Monte Carlo event generation process in particle physics. Colouring of vertices and particles indicates the event generation stage: hard scattering process (big red blob), QCD radiation (blue), hadronisation (light green), showering (dark green), and a secondary vertex (purple). The Figure is taken from \cite{sherpa_1}.}
+    \caption{Schematic representation of the Monte Carlo event generation process in particle physics. Colouring of vertices and particles indicates the event generation stage: hard scattering process (big red blob), QCD radiation (blue), hadronisation (light green), showering (dark green), and a secondary vertex (purple). The Figure is taken from Reference~\cite{sherpa_1}.}
 \end{figure}
 \label{sec:mc_training_data}
 Events are usually simulated using a cascade of different programs, each simulating a different state of the event. First the hard scattering process is simulated using matrix element generators. These programs calculate the probabilities of different particle interactions based on the underlying physics theories, such as the Standard Model. Using these probabilities, they generate events that represent the initial state of the particles after the collision. The possible kinematic phase space is sampled according to these probabilities, resulting in a set of particles with specific momenta and energies. This type of event variables is often referred to as \textit{parton-level}.
@@ -83,17 +83,6 @@ A dense neural network (DNN), also known as a fully connected neural network \ci
 
 A DNN consists of an input layer, one or more hidden layers, and an output layer. The input layer receives the input features, while the hidden layers perform a series of transformations on the data using the weights and biases associated with each neuron. The output layer produces the final predictions. Each layer applies an activation function to the weighted sum of inputs from the previous layer, enabling the network to learn non-linear mappings. The depth (number of layers) and width (number of neurons per layer) of the network can be adjusted.
 
-\subsection{Recurrent Neural Networks}
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.6\textwidth]{figures/machine-learning/rnn.pdf}
-    \caption{Schematic of a recurrent neural network (RNN). The RNN processes sequences of data by maintaining a hidden state that captures information from previous time steps. The unfolded representation illustrates how the RNN operates over multiple time steps.}
-    \label{fig:rnn}
-\end{figure}
-Dense neural networks require their inputs to have a fixed size. However, in many applications, including particle physics, the input data can vary in size. For example, the number of particles detected in an event can differ from one event to another. To handle such sequential data, recurrent neural networks (RNNs) \cite{rnn} are employed. RNNs are designed to process sequences of data by maintaining a hidden state that captures information from previous time steps. A schematic of an RNN is shown in \Cref{fig:rnn}.
-
-RNNs consist of a series of interconnected neurons that process input data sequentially. At each time step, the RNN takes an input vector and combines it with the hidden state from the previous time step to produce a new hidden state. This hidden state is then used to generate the output for the current time step. The recurrent connections allow the RNN to retain information from previous inputs, enabling it to learn temporal dependencies in the data. One common variant of RNNs is the Long Short-Term Memory (LSTM) network \cite{lstm}, which addresses the vanishing gradient problem and allows for learning long-term dependencies more effectively. Another caveat of RNNs is that they are inherently sequential, making them less suited for data without inherent order, such as sets of particles in an event.
-
 \subsection{Transformer Networks}
 \label{sec:transformer}
 \begin{figure}[ht]
@@ -119,7 +108,7 @@ RNNs consist of a series of interconnected neurons that process input data seque
     \caption{Different components of the transformer architecture from smallest to largest unit: (a) Scaled Dot-Product Attention, (b) Multi-Head Attention, and (c) Transformer Layer.}
     \label{fig:attention}
 \end{figure}
-The transformer architecture deals with sequential data, similar to RNNs, but it does so using an attention mechanism rather than recurrent connections. This allows transformers to process information in parallel, making them more efficient for training on large datasets. Additionally, transformer can capture long-range dependencies in the data more effectively than RNNs, as they relate all elements of the input sequence to each other through attention mechanisms.
+The transformer architecture deals with sequential data using an attention mechanism. This allows transformers to process information in parallel, making them efficient for training on large datasets. Additionally, transformer can capture long-range dependencies in the data very effectively, as they relate all elements of the input sequence to each other through attention mechanisms.
 
 The core component of the transformer architecture is the attention mechanism, which allows the model to focus on different parts of the input sequence when making predictions. The most commonly used attention mechanism is the scaled dot-product attention \cite{attention_is_all_you_need}, illustrated in \Cref{fig:dpa}. In this mechanism, three vectors are computed for each input element: the query ($q$), key ($k$), and value ($v$) vectors. The attention scores are calculated by taking the dot product of the query and key vectors, scaling them by the square root of the dimension of the key vectors, and applying a softmax function to obtain attention weights. These weights are then used to compute a weighted sum of the value vectors, producing the output of the attention mechanism.
 Multi-head attention, shown in \Cref{fig:mha}, extends the scaled dot-product attention by allowing the model to attend to different parts of the input sequence simultaneously. This is achieved by using multiple parallel attention heads, each with its own set of learned linear transformations for the query, key, and value vectors. The outputs of all attention heads are concatenated and linearly transformed to produce the final output.

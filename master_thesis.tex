@@ -27,7 +27,7 @@
 \usepackage{dcolumn}
 \usepackage{bm}
 \usepackage{siunitx}
-\usepackage{svg}
+%\usepackage{svg}
 \usepackage{xspace}
 \usepackage{lmodern}
 \usepackage{todonotes}
@@ -79,7 +79,7 @@
 
   Inspired by the success of machine learning architectures in tackling the assignment challenge for hadronic decay channels, this work investigates using a transformer model for the dilepton channel. An architecture specifically tailored to this channel's topology is shown to outperform all existing methods in assigning reconstructed particles to their parent partons, improving the resolution of relevant physics observables. Furthermore, it is investigated how these efforts can be combined with neutrino regression methods to offer a full reconstruction pipeline. Applying these methods to existing and upcoming analyses promises further enhancements in the sensitivity and precision of searches and measurements alike.
   \bigskip\par
-  \textbf{Keywords:} Top Quark, Dileptonic Decay,  Event Reconstruction, Machine Learning, Transformer Networks
+  \textbf{Keywords:} Top Quark, Dileptonic Decay, Event Reconstruction, Machine Learning, Transformer Networks
 \end{abstract}
 
 \cleardoublepage
@@ -88,8 +88,8 @@
 
 \include{chapters/01-introduction}
 \include{chapters/02-background}
-\include{chapters/03-methods}
-\include{chapters/04-atlas-detector}
+\include{chapters/03-atlas-detector}
+\include{chapters/04-methods}
 \include{chapters/05-reconstruction-methods}
 \include{chapters/06-ml-reconstruction}
 \include{chapters/07-performance-evaluation}
@@ -108,10 +108,13 @@
 
 \bibliography{bthesis_datenbank}
 
-%\chapter*{Danksagung}
-%Dank\dots
+% \chapter*{Acknowledgements}
+% First and foremost, I would like to express my deepest gratitude to Katharina Behr. She took me on as a student and provided me with the opportunity to work on this topic. Her guidance, support, and encouragement have been invaluable throughout this journey. She always supported me in pursuing my ideas and provided me with the freedom to explore different approaches, which has been crucial for the development of this thesis. She also pushed me to present my work at conferences and workshops, which has been an invaluable experience for me. I am truly grateful for her mentorship and the opportunities she has given me.
 
-%\begin{otherlanguage}{ngerman}
-%\Declaration
-%\end{otherlanguage}
+
+
+
+\begin{otherlanguage}{ngerman}
+\Declaration
+\end{otherlanguage}
 \end{document}
