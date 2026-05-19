@@ -162,9 +162,14 @@
 \draw[arrow, color=green, opacity=0.5, blend mode=multiply] (jet_1) -- (dnn_1);
 \draw[arrow, color=green, opacity=0.5, blend mode=multiply] (jet_n) -- (dnn_n);
 \draw[arrow, color=blue, opacity=0.5, blend mode=multiply] (lepton_1) -- ++(1.5,0) |- (dnn_1.west);
+
+
 \draw[arrow, color=blue, opacity=0.5, blend mode=multiply] (lepton_2) -- ++(1.5,0) |- (dnn_n.west);
 \draw[arrow, color=red, opacity=0.5, blend mode=multiply] (met) -- ++(1.5,0) |- (dnn_1.west);
 \draw[arrow, color=red, opacity=0.5, blend mode=multiply] (met) -- ++(1.5,0) |- (dnn_n.west);
+
+\node[fill=white, inner sep = 0.1cm, outer sep = 0] at ($(jet_1)+(1.5,0)$) (conact_jet_1) {$\bigoplus$};
+\node[fill=white, inner sep = 0.1cm, outer sep = 0] at ($(jet_n)+(1.5,0)$) (conact_jet_n) {$\bigoplus$};
 
 % Arrows from embeddings to transformer
 \draw[arrow] (dnn_1.east) -- ++(1,0);

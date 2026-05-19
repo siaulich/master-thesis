@@ -1,1 +1,59 @@
 \chapter{Additional Plots}
+\label{chap:add-plots}
+
+\section{Hyperparameter Optimisation Results}
+\label{sec:hyperparams}
+
+\subsection{FeatureConcatTransformer}
+\begin{figure}[H]
+    \begin{subfigure}{1.0\textwidth}
+        \centering
+        \includegraphics[width=0.7\textwidth]{plots/hyperparams_assignment/FeatureConcatTransformer_assignment_accuracy_embedding_dimension_vs_num_layers.pdf}
+        \caption{Assignment Accuracy}
+        \label{fig:hyperparams_fct_acc}
+    \end{subfigure}
+    \begin{subfigure}{1.0\textwidth}
+        \centering
+        \includegraphics[width=0.7\textwidth]{plots/hyperparams_assignment/FeatureConcatTransformer_num_trainable_parameters_embedding_dimension_vs_num_layers.pdf}
+        \caption{Number of Trainable Parameters}
+        \label{fig:hyperparams_fct_params}
+    \end{subfigure}
+    \caption{The Figures \subrefb{fig:hyperparams_fct_acc} and \subrefb{fig:hyperparams_fct_params} show the assignment accuracy and the number of trainable parameters of the FeatureConcatTransformer architecture as a function of the embedding dimension and the number of transformer layers.}
+    \label{fig:hyperparams_fct}
+\end{figure}
+
+\subsection{CrossAttentionTransformer}
+\begin{figure}[H]
+    \begin{subfigure}{1.0\textwidth}
+        \centering
+        \includegraphics[width=0.7\textwidth]{plots/hyperparams_assignment/CrossAttentionTransformer_assignment_accuracy_embedding_dimension_vs_num_layers.pdf}
+        \caption{Assignment Accuracy}
+        \label{fig:hyperparams_cat_acc}
+    \end{subfigure}
+    \begin{subfigure}{1.0\textwidth}
+        \centering
+        \includegraphics[width=0.7\textwidth]{plots/hyperparams_assignment/CrossAttentionTransformer_num_trainable_parameters_embedding_dimension_vs_num_layers.pdf}
+        \caption{Number of Trainable Parameters}
+        \label{fig:hyperparams_cat_params}
+    \end{subfigure}
+    \caption{The Figures \subrefb{fig:hyperparams_cat_acc} and \subrefb{fig:hyperparams_cat_params} show the assignment accuracy and the number of trainable parameters of the CrossAttentionTransformer architecture as a function of the embedding dimension and the number of transformer layers.}
+    \label{fig:hyperparams_cat}
+\end{figure}
+
+\subsection{CompactTransformer}
+\begin{figure}[H]
+    \begin{subfigure}{1.0\textwidth}
+        \centering
+        \includegraphics[width=0.7\textwidth]{plots/hyperparams_assignment/CompactTransformer_assignment_accuracy_embedding_dimension_vs_num_layers.pdf}
+        \caption{Assignment Accuracy}
+        \label{fig:hyperparams_compact_acc}
+    \end{subfigure}
+    \begin{subfigure}{1.0\textwidth}
+        \centering
+        \includegraphics[width=0.7\textwidth]{plots/hyperparams_assignment/CompactTransformer_num_trainable_parameters_embedding_dimension_vs_num_layers.pdf}
+        \caption{Number of Trainable Parameters}
+        \label{fig:hyperparams_compact_params}
+    \end{subfigure}
+    \caption{The Figures \subrefb{fig:hyperparams_compact_acc} and \subrefb{fig:hyperparams_compact_params} show the assignment accuracy and the number of trainable parameters of the CompactTransformer architecture as a function of the embedding dimension and the number of transformer layers.}
+    \label{fig:hyperparams_compact}
+\end{figure}

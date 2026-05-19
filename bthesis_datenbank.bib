@@ -1,25 +1,21 @@
-%% This BibTeX bibliography file was created using BibDesk.
-%% http://bibdesk.sourceforge.net/
 
+ @software{keras,
+  title        = {Keras},
+  author       = {Chollet, Fran\c{c}ois and others},
+  year         = {2015},
+  howpublished = {\url{https://keras.io}}
+} 
 
-
-%% Saved with string encoding Unicode (UTF-8) 
-
-@article{k-folding,
-    author = {Stone, M.},
-    title = {Cross-Validatory Choice and Assessment of Statistical Predictions},
-    journal = {Journal of the Royal Statistical Society: Series B (Methodological)},
-    volume = {36},
-    number = {2},
-    pages = {111-133},
-    year = {1974},
-    month = {01},
-    abstract = {A generalized form of the cross-validation criterion is applied to the choice and assessment of prediction using the data-analytic concept of a prescription. The examples used to illustrate the application are drawn from the problem areas of univariate estimation, linear regression and analysis of variance.},
+@software{tensorflow_developers_2026_18894642,
+  author    = {{TensorFlow Developers}},
+  title     = {TensorFlow},
+  month     = mar,
+  year      = 2026,
+  publisher = {Zenodo},
+  version   = {v2.21.0},
+  doi       = {10.5281/zenodo.18894642},
+  url       = {https://doi.org/10.5281/zenodo.18894642}
 }
-
-
-
-
 
 @software{TopCPToolkit,
   author    = {{ATLAS Collaboration}},
@@ -27,6 +23,42 @@
   publisher = {Zenodo},
   doi       = {10.5281/zenodo.19683083},
   url       = {https://doi.org/10.5281/zenodo.19683083}
+}
+
+@article{k-folding,
+  author   = {Stone, M.},
+  title    = {Cross-Validatory Choice and Assessment of Statistical Predictions},
+  journal  = {Journal of the Royal Statistical Society: Series B (Methodological)},
+  volume   = {36},
+  number   = {2},
+  pages    = {111-133},
+  year     = {1974},
+  month    = {01},
+  abstract = {A generalized form of the cross-validation criterion is applied to the choice and assessment of prediction using the data-analytic concept of a prescription. The examples used to illustrate the application are drawn from the problem areas of univariate estimation, linear regression and analysis of variance.}
+}
+
+@article{permutation-importance,
+  author   = {Altmann, André and Toloşi, Laura and Sander, Oliver and Lengauer, Thomas},
+  title    = {Permutation importance: a corrected feature importance measure},
+  journal  = {Bioinformatics},
+  volume   = {26},
+  number   = {10},
+  pages    = {1340-1347},
+  year     = {2010},
+  month    = {05},
+  abstract = {Motivation: In life sciences, interpretability of machine learning models is as important as their prediction accuracy. Linear models are probably the most frequently used methods for assessing feature relevance, despite their relative inflexibility. However, in the past years effective estimators of feature relevance have been derived for highly complex or non-parametric models such as support vector machines and RandomForest (RF) models. Recently, it has been observed that RF models are biased in such a way that categorical variables with a large number of categories are preferred.Results: In this work, we introduce a heuristic for normalizing feature importance measures that can correct the feature importance bias. The method is based on repeated permutations of the outcome vector for estimating the distribution of measured importance for each variable in a non-informative setting. The P-value of the observed importance provides a corrected measure of feature importance. We apply our method to simulated data and demonstrate that (i) non-informative predictors do not receive significant P-values, (ii) informative variables can successfully be recovered among non-informative variables and (iii) P-values computed with permutation importance (PIMP) are very helpful for deciding the significance of variables, and therefore improve model interpretability. Furthermore, PIMP was used to correct RF-based importance measures for two real-world case studies. We propose an improved RF model that uses the significant variables with respect to the PIMP measure and show that its prediction accuracy is superior to that of other existing models.Availability: R code for the method presented in this article is available at http://www.mpi-inf.mpg.de/∼altmann/download/PIMP.RContact:  altmann@mpi-inf.mpg.de, laura.tolosi@mpi-inf.mpg.deSupplementary information:  Supplementary data are available at Bioinformatics online.},
+  issn     = {1367-4803}
+}
+
+@inproceedings{shap_values,
+  author    = {Lundberg, Scott M and Lee, Su-In},
+  booktitle = {Advances in Neural Information Processing Systems},
+  editor    = {I. Guyon and U. Von Luxburg and S. Bengio and H. Wallach and R. Fergus and S. Vishwanathan and R. Garnett},
+  pages     = {},
+  publisher = {Curran Associates, Inc.},
+  title     = {A Unified Approach to Interpreting Model Predictions},
+  volume    = {30},
+  year      = {2017}
 }
 
 @inproceedings{normalizing_flows,
@@ -46,7 +78,6 @@
   year      = {1951},
   publisher = {Institute of Mathematical Statistics}
 }
-
 
 @article{cross-entropy,
   author  = {Shannon, C. E.},
@@ -80,21 +111,29 @@
   author  = {A. Brandenburg and Z.G. Si and P. Uwer}
 }
 
-
-@techreport{atlas_toponium,
-  collaboration = {ATLAS},
-  title         = {{Observation of a cross-section enhancement near the
-                   $t\bar{t}$ production threshold in $\sqrt{s}=13$ TeV $pp$
-                   collisions with the ATLAS detector}},
-  institution   = {CERN},
-  reportnumber  = {ATLAS-CONF-2025-008},
-  address       = {Geneva},
-  year          = {2025},
-  url           = {https://cds.cern.ch/record/2937636},
-  note          = {All figures including auxiliary figures are available at
-                   https://atlas.web.cern.ch/Atlas/GROUPS/PHYSICS/CONFNOTES/ATLAS-CONF-2025-008}
+@article{fuks_toponium,
+  title     = {Simulating toponium formation signals at the LHC},
+  volume    = {85},
+  issn      = {1434-6052},
+  number    = {2},
+  journal   = {The European Physical Journal C},
+  publisher = {Springer Science and Business Media LLC},
+  author    = {Fuks, Benjamin and Hagiwara, Kaoru and Ma, Kai and Zheng, Ya-Juan},
+  year      = {2025},
+  month     = Feb
 }
 
+@article{atlas_toponium,
+  year      = {2026},
+  month     = {may},
+  publisher = {IOP Publishing},
+  volume    = {89},
+  number    = {5},
+  pages     = {057801},
+  author    = {{ATLAS Collaboration}},
+  title     = {Observation of a cross-section enhancement near the $t\bar{t}$ production threshold in $\sqrt{s} = 13$ TeV pp collisions with the ATLAS detector},
+  journal   = {Reports on Progress in Physics}
+}
 
 @article{bernreuther_spin_observables,
   author  = {Bernreuther, Werner and Heisler, Dennis and Si, Zong-Guo},
@@ -127,8 +166,6 @@
   year    = {2001}
 }
 
-
-
 @article{gn2_btagger,
   abstract      = {Jet flavour tagging enables the identification of jets originating from heavy-flavour quarks in proton--proton collisions at the Large Hadron Collider, playing a critical role in its physics programmes. This paper presents GN2, a transformer-based flavour tagging algorithm deployed by the ATLAS Collaboration that represents a different methodology compared to previous approaches. Designed to classify jets based on the flavour of their constituent particles, GN2 processes low-level tracking information in an end-to-end architecture and incorporates physics-informed auxiliary training objectives to enhance both interpretability and performance. Its performance is validated in both simulation and collision data. The measured c-jet (light-jet) rejection in data is improved by a factor of 3.5 (1.8) for a 70{\%} b-jet tagging efficiency, compared to the previous algorithm. GN2 provides substantial benefits for physics analyses involving heavy-flavour jets, such as measurements of Higgs boson pair production and the couplings of bottom and charm quarks to the Higgs boson, and demonstrates the impact of advanced machine learning methods in experimental particle physics.},
   collaboration = {{ATLAS Collaboration}},
@@ -140,7 +177,6 @@
   volume        = {17},
   year          = {2026}
 }
-
 
 @article{flavour_tagging_review,
   author  = {Mondal, Spandan and Mastrolorenzo, Luca},
@@ -154,8 +190,6 @@
   year    = {2024}
 }
 
-
-
 @article{spanet,
   title     = {{SPANet: Generalized permutationless set assignment for particle physics using symmetry preserving attention}},
   author    = {Alexander Shmakov and Michael James Fenton and Ta-Wei Ho and Shih-Chieh Hsu and Daniel Whiteson and Pierre Baldi},
@@ -165,7 +199,6 @@
   year      = {2022},
   publisher = {SciPost}
 }
-
 
 @article{spanet_2,
   abstract = {Reconstructing unstable heavy particles requires sophisticated techniques to sift through the large number of possible permutations for assignment of detector objects to the underlying partons. An approach based on a generalized attention mechanism, symmetry preserving attention networks (SPA-NET), has been previously applied to top quark pair decays at the Large Hadron Collider which produce only hadronic jets. Here we extend the SPA-NET architecture to consider multiple input object types, such as leptons, as well as global event features, such as the missing transverse momentum. In addition, we provide regression and classification outputs to supplement the parton assignment. We explore the performance of the extended capability of SPA-NET in the context of semi-leptonic decays of top quark pairs as well as top quark pairs produced in association with a Higgs boson. We find significant improvements in the power of three representative studies: a search for {\$}{\$}t{$\backslash$}bar{\{}t{\}}H{\$}{\$}, a measurement of the top quark mass, and a search for a heavy {\$}{\$}{\{}Z{\}}\^{}{\{}{\{}{$\backslash$}prime{\}} {\}}{\$}{\$}decaying to top quark pairs. We present ablation studies to provide insight on what the network has learned in each case.},
@@ -179,7 +212,6 @@
   volume   = {7},
   year     = {2024}
 }
-
 
 @inproceedings{attention_is_all_you_need,
   author    = {Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob and Jones, Llion and Gomez, Aidan N and Kaiser, \L ukasz and Polosukhin, Illia},
@@ -202,7 +234,6 @@
   year    = {2014}
 }
 
-
 @inproceedings{weight_decay,
   title     = {Comparing Biases for Minimal Network Construction with Back-Propagation},
   author    = {Hanson, Stephen Jose and Pratt, Lorien Y.},
@@ -211,7 +242,6 @@
   pages     = {177--185},
   year      = {1989}
 }
-
 
 @article{sgd,
   title     = {Stochastic Estimation of the Maximum of a Regression Function},
@@ -223,7 +253,6 @@
   year      = {1952},
   publisher = {JSTOR}
 }
-
 
 @article{adam,
   title   = {Adam: A Method for Stochastic Optimization},
@@ -239,7 +268,6 @@
   year    = {2019}
 }
 
-
 @article{backpropagation,
   author  = {Rumelhart, David E. and Hinton, Geoffrey E. and Williams, Ronald J.},
   date    = {1986/10/01},
@@ -251,8 +279,6 @@
   volume  = {323},
   year    = {1986}
 }
-
-
 
 @article{lstm,
   author   = {Hochreiter, Sepp and Schmidhuber, Jürgen},
@@ -278,8 +304,6 @@
   author  = {Jeffrey L. Elman}
 }
 
-
-
 @inproceedings{relu,
   author    = {Nair, Vinod and Hinton, Geoffrey E.},
   title     = {Rectified linear units improve restricted boltzmann machines},
@@ -294,7 +318,6 @@
   series    = {ICML'10}
 }
 
-
 @article{perceptron,
   author  = {Rosenblatt, F.},
   journal = {Psychol. Rev.},
@@ -304,7 +327,6 @@
   volume  = {65},
   year    = {1958}
 }
-
 
 @article{PDG2024,
   title         = {Review of Particle Physics},
@@ -331,7 +353,6 @@
   month     = {Jan},
   publisher = {American Physical Society}
 }
-
 
 @article{neutrino_weighting_method,
   title         = {Measurement of the top quark mass in final states with two leptons},
@@ -360,7 +381,6 @@
   publisher = {American Physical Society}
 }
 
-
 @article{ellipse_method,
   title   = {Measurement of the top quark mass in the dilepton channel},
   journal = {Phys. Lett. B},
@@ -385,7 +405,6 @@
   publisher = {American Physical Society}
 }
 
-
 @article{NRQCD_toponium_1,
   title     = {Signatures of toponium formation in LHC run 2 data},
   author    = {Fuks, Benjamin and Hagiwara, Kaoru and Ma, Kai and Zheng, Ya-Juan},
@@ -398,7 +417,6 @@
   month     = {Aug},
   publisher = {American Physical Society}
 }
-
 
 @article{NRQCD_toponium_2,
   abstract = {We present a method to simulate toponium formation events at the LHC using the Green's function of non-relativistic QCD in the Coulomb gauge, which governs the momentum distribution of top quarks in the presence of the QCD potential. This Green's function can be employed to re-weight any matrix elements relevant for {\$}{\$}t{\{}{$\backslash$}bar{\{}t{\}}{\}}{\$}{\$}production and decay processes where a colour-singlet top--antitop pair is produced in the S-wave at threshold. As an example, we study the formation of {\$}{\$}{$\backslash$}eta {\_}t{\$}{\$}toponium states in the gluon fusion channel at the LHC, combining the re-weighted matrix elements with parton showering.},
@@ -413,7 +431,6 @@
   volume   = {85},
   year     = {2025}
 }
-
 
 @article{peres_criterion,
   title     = {Separability Criterion for Density Matrices},
@@ -441,7 +458,6 @@
   year    = {2021}
 }
 
-
 @article{entanglement_two_qbits,
   title     = {Entanglement of Formation of an Arbitrary State of Two Qubits},
   author    = {Wootters, William K.},
@@ -454,8 +470,6 @@
   month     = {Mar},
   publisher = {American Physical Society}
 }
-
-
 
 @article{schrödinger_entanglement,
   title   = {Discussion of Probability Relations between Separated Systems},
@@ -508,7 +522,6 @@
   year    = {2020}
 }
 
-
 @article{spin_decorrelation_time,
   title     = {Spin correlation effects in top quark pair production at the LHC},
   author    = {Mahlon, Gregory and Parke, Stephen J.},
@@ -521,7 +534,6 @@
   month     = {Apr},
   publisher = {American Physical Society}
 }
-
 
 @article{hadronization_time,
   author  = {Ferreres-Solé, Silvia and Sjöstrand, Torbjörn},
@@ -544,7 +556,6 @@
   author  = {I. Bigi and Y. Dokshitzer and V. Khoze and J. Kühn and P. Zerwas}
 }
 
-
 @article{bottom_discovery,
   title     = {Experimental Observation of a Heavy Particle $J$},
   author    = {Aubert, J. J. and Becker, U. and Biggs, P. J. and Burger, J. and Chen, M. and Everhart, G. and Goldhagen, P. and Leong, J. and McCorriston, T. and Rhoades, T. G. and Rohde, M. and Ting, Samuel C. C. and Wu, Sau Lan and Lee, Y. Y.},
@@ -557,7 +568,6 @@
   month     = {Dec},
   publisher = {American Physical Society}
 }
-
 
 @article{parton_shower,
   title   = {Simulation of QCD jets including soft gluon interference},
@@ -605,7 +615,6 @@
   journal   = {J. High Energy Phys.}
 }
 
-
 @article{WU_Exp,
   title     = {Experimental Test of Parity Conservation in Beta Decay},
   author    = {Wu, C. S. and Ambler, E. and Hayward, R. W. and Hoppes, D. D. and Hudson, R. P.},
@@ -620,7 +629,6 @@
   doi       = {10.1103/PhysRev.105.1413},
   url       = {https://link.aps.org/doi/10.1103/PhysRev.105.1413}
 }
-
 
 @article{Parity_Violation_Theory,
   title     = {Question of Parity Conservation in Weak Interactions},
@@ -2694,8 +2702,6 @@
   year    = {2008}
 }
 
-
-
 @article{cms_physics_tdr,
   collaboration = {CMS},
   journal       = {CERN/LHCC, 2006 (unpublished)},
@@ -4265,7 +4271,6 @@
   pages   = {040},
   year    = {2004}
 }
-
 
 @article{madevent_1,
   author       = {Stelzer, T. and Long, W.~F.},
@@ -6141,8 +6146,6 @@
   title   = {Study of ATLAS sensitivity to FCNC top decays}
 }
 
-
-
 @article{higgs_atlas,
   author        = {{ATLAS Collaboration}},
   title         = {{Observation of a new particle in the search for the Standard Model Higgs boson with the ATLAS detector at the LHC}},
@@ -6675,17 +6678,6 @@
   journal       = {ATLAS-CONF-2019-021},
   month         = {6},
   year          = {2019}
-}
-
-
-@misc{atlas_toponium_preprint,
-  title         = {Observation of a cross-section enhancement near the $t\bar{t}$ production threshold in $\sqrt{s}=13$ TeV $pp$ collisions with the ATLAS detector},
-  collaboration = {{ATLAS Collaboration}},
-  year          = {2026},
-  eprint        = {2601.11780},
-  archiveprefix = {arXiv},
-  primaryclass  = {hep-ex},
-  url           = {https://arxiv.org/abs/2601.11780}
 }
 
 @inproceedings{relu_boltzmann,

@@ -1113,42 +1113,6 @@ FUNCTION {phdthesis}
   format.url output
   fin.entry
 }
-
-FUNCTION {proceedings}
-{ output.bibitem
-  editor empty$
-    { organization "organization" bibinfo.check output
-    }
-    { format.editors output.nonnull }
-  if$
-  format.btitle "title" output.check
-  format.bvolume output
-  format.number.series output
-  editor empty$
-    { publisher empty$
-        'skip$
-        {
-          format.publisher.address output
-        }
-      if$
-    }
-    { publisher empty$
-        {
-          format.organization.address output }
-        {
-          organization "organization" bibinfo.check output
-          format.publisher.address output
-        }
-      if$
-     }
-  if$
-      format.date "year" output.check
-  format.note output
-  format.eprint output
-  format.url output
-  fin.entry
-}
-
 FUNCTION {techreport}
 { output.bibitem
   format.authors "author" output.check

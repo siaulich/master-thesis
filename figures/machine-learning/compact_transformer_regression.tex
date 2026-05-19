@@ -145,8 +145,8 @@
       \node[yshift=0.05cm] at ($(jet_1_prob_bbar)!0.5!(jet_n_prob_bbar)$) (output_bbar_dots) {$\vdots$};
 
       % Regression DNN
-      \node[dnn_block, right=2cm of lepton_1_output, minimum height = 0.8cm] (lepton_1_reg) {Reg. DNN};
-      \node[dnn_block, right=2cm of lepton_2_output,minimum height = 0.8cm] (lepton_2_reg) {Reg. DNN};
+      \node[dnn_block, right=2.5cm of lepton_1_output, minimum height = 0.8cm] (lepton_1_reg) {Reg. DNN};
+      \node[dnn_block, right=2.5cm of lepton_2_output,minimum height = 0.8cm] (lepton_2_reg) {Reg. DNN};
 
       % Regression Output
       \node[output, right=0.5cm of lepton_1_reg] (lepton_1_reg_output) {$\vec{p}(\nu_1)$};
@@ -264,7 +264,10 @@
 
       \draw[arrow] (met_dnn.east -| transformer_n.east) -|  ($(lepton_2_reg.west)+(-0.6,0)$) --  (lepton_2_reg.west);
 
-      \draw[arrow] (met_dnn.east -| transformer_n.east) -| node[pos=0.7, fill=white, draw, rectangle] {$\oplus$} ($(lepton_1_reg.west)+(-0.6,0)$) --  (lepton_1_reg.west);
+      \draw[arrow] (met_dnn.east -| transformer_n.east) -| ($(lepton_1_reg.west)+(-0.6,0)$) --  (lepton_1_reg.west);
+      
+      \node[fill=white, inner sep = 0.1cm, outer sep = 0] at ($(lepton_1_reg.west)+(-0.6,0)$) (conact_jet_1) {$\bigoplus$};
+      \node[fill=white, inner sep = 0.1cm, outer sep = 0] at ($(lepton_2_reg.west)+(-0.6,0)$) (conact_jet_1) {$\bigoplus$};
 
 
       % Arrows from regression DNNs to regression outputs
