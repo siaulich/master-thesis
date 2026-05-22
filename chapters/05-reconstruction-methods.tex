@@ -33,7 +33,8 @@ The reconstruction of physics objects—electrons, muons, jets, and missing tran
 \label{sec:event-selection}
 Events are selected to contain exactly two oppositely charged leptons (electrons or muons). One of the leptons must have \pt $> 25~\unit{\giga\electronvolt}$, while the other must have \pt $> 5~\unit{\giga\electronvolt}$. At least two jets are required, with at least one being $b$-tagged at the $77\%$ working point (WP). Additional selection criteria are applied to suppress background contributions, which will be detailed in the final thesis.
 
-For the training and evaluation of the reconstruction methods, only events that pass the selection criteria and have a successful parton matching are considered.
+For the training and evaluation of the reconstruction methods, only events that pass the selection criteria and have a successful parton matching are considered. Fully parton-matched events, make up about $60\%$ of the whole sample. Events with jets or leptons of the \ttbar-process end up outside the detector acceptance are typically the main cause for an event being unmatchable. Thus, training with only parton-matched events might introduce a bias with respect to certain event topologies, if they are disfavoured to have a parton-matching.
+
 
 \section{Reconstruction of Top-Quark Pairs}
 \label{sec:reconstruction-methods}

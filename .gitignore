@@ -270,7 +270,11 @@ TSWLatexianTemp*
 *.lpz
 *.xwm
 
+# Data files
+*.csv
+
 # Plot folders
-plots/
+# plots/
 **.DS_Store
 .vscode/
+scp_plots.sh
