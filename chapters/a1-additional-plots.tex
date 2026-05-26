@@ -1,6 +1,59 @@
 \chapter{Additional Plots}
 \label{chap:add-plots}
 
+\section{Data Feature Plots}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{plots/feature_plots/btagging_performance_by_jet_multiplicity.pdf}
+    \caption{This plot shows the b-tagging performance for different numbers of jets in the event. For each jet multiplicity, the number of events, with only jets from top-decays being b-tagged }
+\end{figure}
+
+\subsubsection{Threshold Topology}
+\label{sec:threshold_topology}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{plots/feature_plots/ttbar_mass_vs_dR_l1l2.pdf}
+    \caption{This plot shows the distribution of events binned in the parton-level $m(t\bar{t})$ and the angular distance $\Delta R(\ell_1,\ell_2)$.}
+    \label{fig:feature_2d_mttbar_dR_l1l2}
+\end{figure}
+
+
+\begin{figure}[H]
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=1.0\textwidth]{plots/feature_plots/relational_jet_lepton_deltaR_distribution.pdf}
+        \caption{Inclusive}
+        \label{fig:deltaR_pairing:inclusive}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=1.0\textwidth]{plots/feature_plots/relational_jet_lepton_deltaR_distribution_m_tt_390GeV.pdf}
+        \caption{Near-Threshold}
+        \label{fig:deltaR_pairing:threshold}
+    \end{subfigure}
+    \caption{Distribution of $\Delta R(\ell,j)$ for correct and incorrect pairing of jets and leptons. Evaluated on the full sample in \subrefb{fig:deltaR_pairing:inclusive} and near-threshold in \subrefb{fig:deltaR_pairing:threshold}.}
+    \label{fig:deltaR_pairing}
+\end{figure}
+
+\begin{figure}[H]
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=1.0\textwidth]{plots/feature_plots/relational_jet_lepton_full_inv_mass_distribution.pdf}
+        \caption{Inclusive}
+        \label{fig:invariant_mass_pairing:inclusive}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=1.0\textwidth]{plots/feature_plots/relational_jet_lepton_full_inv_mass_distribution_m_tt_390GeV.pdf}
+        \caption{Near-Threshold}
+        \label{fig:invariant_mass_pairing:threshold}
+    \end{subfigure}
+    \caption{Distribution of $m(\ell,\nu, j)$ for correct and incorrect pairing of jets and leptons. Evaluated on the full sample in \subrefb{fig:invariant_mass_pairing:inclusive} and near-threshold in \subrefb{fig:invariant_mass_pairing:threshold}.}
+    \label{fig:invariant_mass_pairing}
+\end{figure}
+
+
+
 \section{Hyperparameter Optimisation Results}
 \label{sec:hyperparams}
 
@@ -58,57 +111,6 @@
     \label{fig:hyperparams_compact}
 \end{figure}
 
-
-\section{Data Feature Plots}
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\textwidth]{plots/feature_plots/btagging_performance_by_jet_multiplicity.pdf}
-    \caption{This plot shows the b-tagging performance for different numbers of jets in the event. For each jet multiplicity, the number of events, with only jets from top-decays being b-tagged }
-\end{figure}
-
-\subsubsection{Threshold Topology}
-\label{sec:threshold_topology}
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\textwidth]{plots/feature_plots/ttbar_mass_vs_dR_l1l2.pdf}
-    \caption{This plot shows the distribution of events binned in the parton-level $m(t\bar{t})$ and the angular distance $\Delta R(\ell_1,\ell_2)$.}
-    \label{fig:feature_2d_mttbar_dR_l1l2}
-\end{figure}
-
-
-\begin{figure}[H]
-    \begin{subfigure}{0.49\textwidth}
-        \centering
-        \includegraphics[width=1.0\textwidth]{plots/feature_plots/relational_jet_lepton_deltaR_distribution.pdf}
-        \caption{Inclusive}
-        \label{fig:deltaR_pairing:inclusive}
-    \end{subfigure}
-    \begin{subfigure}{0.49\textwidth}
-        \centering
-        \includegraphics[width=1.0\textwidth]{plots/feature_plots/relational_jet_lepton_deltaR_distribution_m_tt_390GeV.pdf}
-        \caption{Near-Threshold}
-        \label{fig:deltaR_pairing:threshold}
-    \end{subfigure}
-    \caption{Distribution of $\Delta R(\ell,j)$ for correct and incorrect pairing of jets and leptons. Evaluated on the full sample in \subrefb{fig:deltaR_pairing:inclusive} and near-threshold in \subrefb{fig:deltaR_pairing:threshold}.}
-    \label{fig:deltaR_pairing}
-\end{figure}
-
-\begin{figure}[H]
-    \begin{subfigure}{0.49\textwidth}
-        \centering
-        \includegraphics[width=1.0\textwidth]{plots/feature_plots/relational_jet_lepton_full_inv_mass_distribution.pdf}
-        \caption{Inclusive}
-        \label{fig:invariant_mass_pairing:inclusive}
-    \end{subfigure}
-    \begin{subfigure}{0.49\textwidth}
-        \centering
-        \includegraphics[width=1.0\textwidth]{plots/feature_plots/relational_jet_lepton_full_inv_mass_distribution_m_tt_390GeV.pdf}
-        \caption{Near-Threshold}
-        \label{fig:invariant_mass_pairing:threshold}
-    \end{subfigure}
-    \caption{Distribution of $m(\ell,\nu, j)$ for correct and incorrect pairing of jets and leptons. Evaluated on the full sample in \subrefb{fig:invariant_mass_pairing:inclusive} and near-threshold in \subrefb{fig:invariant_mass_pairing:threshold}.}
-    \label{fig:invariant_mass_pairing}
-\end{figure}
 
 
 \section{Performance Plots}
