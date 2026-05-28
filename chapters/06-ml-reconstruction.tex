@@ -191,6 +191,25 @@ As the evaluation for the assignment models showed very minor difference in perf
 \end{figure}
 The \Cref{fig:regression_hyperparams} shows the performance of the MMT architecture in terms of the relative $L^2$-Norm deviation of the predicted neutrino momenta compared to the true values as a function of the number of trainable parameters. For comparison, the performance of the neutrino regression provided by $\nu^2$-Flows is plotted as a horizontal line, which serves as a baseline for evaluating the performance of the MMT architecture. From the results, two main observations can be made. First, the performance of the MMT architecture generally seems to outperform the $\nu^2$-Flows baseline across different embedding dimensions, which suggests that the model architecture can effectively leverage the interdependencies between the jet assignment and neutrino regression tasks to improve the performance of both. Second, there is a trend of improving performance with increasing number of trainable parameters, which indicates that the model benefits from having sufficient capacity to learn the underlying patterns in the data. However, it is also observed that the performance improvement tends to plateau for higher embedding dimensions, which may suggest that there is a point of diminishing returns where increasing the model size further does not lead to significant performance gains. Since no decrease in performance for higher number of parameters was found, despite being trained with the number of events, the model does not seem to show effects of overfitting for these model sizes. This is most likely to be attributed to the aggressive dropout and regularisation applied during the training.
 
+\subsection{Feature Importance}
+\label{sec:selection:feature_importance}
+\begin{figure}[ht]
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=1.0\textwidth]{plots/compact_reconstructor/ml_metrics/MultiModalTransformer_assignment_feature_importance.pdf}
+        \caption{Assignment Accuracy}
+        \label{fig:regression:perm_imp:assignemnt}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=1.0\textwidth]{plots/compact_reconstructor/ml_metrics/MultiModalTransformer_regression_feature_importance.pdf}
+        \caption{Regression MSE}
+        \label{fig:regression:perm_imp:regression}
+    \end{subfigure}
+    \caption{The Plots \subrefb{fig:regression:perm_imp:assignemnt} and \subrefb{fig:regression:perm_imp:regression} show the difference in assignment accuracy and regression MSE, respectively, of the CPT-model when permuting the input features. For each feature, five different permutation are performed. The features are ranked in decreasing order of the observed reduction.}
+    \label{fig:regression:perm_imp}
+\end{figure}%
+
+As for the models used for assignment, 
+
 
 \subsection{Multitask Learning Benefits}
 \label{sec:multitask-learning-benefits}
