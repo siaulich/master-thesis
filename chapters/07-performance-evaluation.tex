@@ -59,13 +59,18 @@ A combined comparison of both variables' impact is shown in \Cref{fig:accuracy_2
 The other methods' performances reduce much more in the rows of varied $m(t\bar{t})$, than they do in the columns of varied $\Delta R(\ell_1,\ell_2)$. This observation holds for all bins of energies and angular separations considered here.
 From this, it can be concluded, that the near-threshold region introduces special challenges for assigning the jets. For the traditional methods, these can be explained quite well, but even the transformer, which is able to leverage very complex correlations between variables, only performs slightly better than the baseline methods.
 While some impact factors could be identified, i.e. angular separation of the leptons and off-shell tops, the complete picture why this region is particularly challenging remains elusive. Due to the increased efforts to study quantum effects or quasi-bound state effects at the production threshold, this remains a very relevant question to be addressed by future investigations.
-
+While it was found, that other kinematic variables have regimes with quite different performance in the assignment accuracy, none had an impact as severe as the invariant mass $m(t\bar{t})$. One to mention here, is the transverse momenta of the top-quark pair system. This variable is very sensitive to initial state radiation. Thus, a high $p_T$ is often accompanied by increased number of jets, as seen in \Cref{fig:feature_2d_ttbar_pt_njets}. However, it was found, that the $p_T(t\bar{t})$ seems to have no impact on the accuracy of the ml-based assignment, while it degrades both the baseline-methods. The corresponding binned accuracy evaluation is can be seen in \Cref{fig:accuracy_vs_ttbar_pt} in the Appendix. This shows, that the transformer seems to be particularly insensitive to initial state radiation compared to the other methods. Another object of study were the aforementioned spin-sensitive variables. As these have been used in recent analyses, it is interesting to study whether particular regions are more or less sensitive to misassignments. To mimic the definition of signal regions used in \cite{atlas_toponium}, a double-binned plot, resembling the different signal regions in  \chel and  \chan, shows the assignment accuracy in \Cref{fig:accuracy_2d_c_hel_c_han}. While all methods are slightly sensitive to these variables, no major differences are found in these bins. What can be seen, however, is that the methods show slightly varying dependencies on the variables. All methods increase in performance for higher values of \chel, but for \chan the $\Delta R(\ell,j)$-Method becomes more accurate at higher values, while for the other methods the opposite is true.
 
 
 
 \section{Neutrino Regression}
 \label{sec:neutrino-regression}
-
+This chapter will analyse and compare the neutrino regression of the MultiModalTransformer with respect to existing baseline methods. Different metrics will be used to assess the quality of the method.
+\begin{table}
+    \centering
+    \input{plots/compact_reconstructor/neutrino_deviations/neutrino_regression_errors_table.tex}
+    \caption{}
+\end{table}
 
 
 \section{Variable Reconstruction}

@@ -134,18 +134,36 @@
 
 \section{Performance Plots}
 \subsection{Assignment Performance}
-\begin{figure}[H]
+
+\begin{figure}[ht]
     \centering
-    \includegraphics[width=0.7\textwidth]{plots/compact_assigner/binned_performance/N_jets/binned_selection_accuracies_N_jets.pdf}
-    \caption{Selection accuracy as a function of the number of jets in the event for different reconstruction methods. The background histograms show of the distribution of events as a function of the number of jets. The uncertainties represent the statistical variations in the evaluation dataset.}
-    \label{fig:selection_accuracy_vs_n_jets}
+    \includegraphics[width=0.7\textwidth]{plots/compact_assigner/binned_performance/truth_ttbar_pt/binned_accuracies_truth_ttbar_pt.pdf}
+    \caption{Assignment accuracy binned in the transverse momentum of top-quark pair system. The background histograms show of the distribution of events as a function of the number of jets. The uncertainties represent the statistical variations in the evaluation dataset.}
+    \label{fig:accuracy_vs_ttbar_pt}
 \end{figure}
-
-
-
 \begin{figure}
     \centering
     \includegraphics[width=1.0\textwidth]{plots/compact_assigner/binned_2d_performance/truth_ttbar_mass_vs_dR_l1l2/2d_binned_accuracies_truth_ttbar_mass_dR_l1l2.pdf}
     \caption{Assignment accuracy binned with respect to parton-level $m(t\bar{t})$ and $\Delta R(\ell_1,\ell_2)$.}
     \label{fig:accuracy_2d_mttbar_dR_l1l2}
 \end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1.0\textwidth]{plots/compact_assigner/binned_2d_performance/truth_c_hel_vs_truth_c_han/2d_binned_accuracies_truth_c_hel_truth_c_han.pdf}
+    \caption{Assignment accuracy binned with respect to parton-level \chel and \chan.}
+    \label{fig:accuracy_2d_c_hel_c_han}
+\end{figure}
+
+\subsection{Selection Performance}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{plots/compact_assigner/binned_performance/N_jets/binned_selection_accuracies_N_jets.pdf}
+    \caption{Selection accuracy as a function of the number of jets in the event for different reconstruction methods.}
+    \label{fig:selection_accuracy_vs_n_jets}
+\end{figure}
+
+
+
+
+
