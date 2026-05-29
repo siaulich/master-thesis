@@ -65,12 +65,40 @@ While it was found, that other kinematic variables have regimes with quite diffe
 
 \section{Neutrino Regression}
 \label{sec:neutrino-regression}
-This chapter will analyse and compare the neutrino regression of the MultiModalTransformer with respect to existing baseline methods. Different metrics will be used to assess the quality of the method.
-\begin{table}
+This chapter will analyse and compare the neutrino regression of the MultiModalTransformer with respect to existing baseline methods. Further, the impact different loss-functions for the MultiModalTransformer is investigated. 
+Different metrics will be used to assess the quality of the method. It should also be noted, that evaluating the quality of the regression is much more nuanced compared to the assignment. As will be demonstrated below, ranking the performance of one method against the other is highly dependent on the metric one employs. This is because the reconstructed object is essentially a six-dimensional objects, whose deviation has to be projected in some way. But even quantifying a one-dimensional error comes with a great degeneracy; different power for example might put emphasis on larger or smaller deviations. Also, whether a relative or absolute deviation is considered, can make a huge difference. 
+To account for this, different metrics will be.
+\begin{table}[ht]
     \centering
-    \input{plots/compact_reconstructor/neutrino_deviations/regression_neutrino_mae.tex}
-    \caption{}
+    \input{plots/compare_losses_nu_weighter/neutrino_deviations/regression_neutrino_mae.tex}
+    \caption{Summary of the mean absolute error (MAE) of the different neutrino regression methods for the cartesian coordinates of the neutrinos in the lab frame. For the MultiModalTransformer the loss-function used in the training is shown in the brackets. The uncertainties represent the statistical variations in the dataset.}
+    \label{tab:mae:cartesian}
 \end{table}
+The \Cref{tab:mae:cartesian} shows the mean-absolute error of the neutrino momentum components for the different methods. First off, it can be seen that, regardless of the loss-function, the MMT yields a lower error for all Cartesian components of the neutrino momenta. Further, among the models trained with different loss-functions, the one with the Cartesian-loss provides the lowest error overall. This is hardly surprising, given that this model was trained to minimise the deviation of exactly these components. However, it can be seen, that the other models trained with different loss-functions show some variations in the achieved performance. This highlights that the choice of the loss-function has a significant impact on the performance a model achieves with respect to certain variables.
+The only regression method, that does not rely on machine-learning is the $\nu$-Weighter, which is found to perform significantly worse, than all ml-based methods. The MultiModalTransformer is found to offer an improvement by a factor of $2$ for the mean absolute error, which is a significant improvement. This becomes even more impressive, when one considers the lower computational cost associated with the ml-based methods.
+Another, trivial remark that can be made, is that all method show the same performance for the two transverse components $x$ and $y$, which is expected as the detector and physics are rotation invariant with respect to the beam direction.\\
+\begin{table}[ht]
+    \centering
+    \input{plots/compare_losses_nu_weighter/neutrino_deviations/regression_neutrino_PtEtaPhiE_mae.tex}
+    \caption{Summary of the mean absolute error of the neutrinos' $p_T$, $\eta$, $\phi$, and $E$, evaluated for the different methods. Note, that the computation of the error in $\phi$ was performed periodically.}
+    \label{tab:mae:PtEtaPhiE}
+\end{table}%
+To highlight the performance variance between different metrics, \Cref{tab:mae:PtEtaPhiE} shows the mean absolute error for the $p_T$, $\eta$, $\phi$, and $E$ of the neutrinos. Notably, for all of these variables, the MMT trained with a Cartesian-loss also outperforms the baseline-methods too. However, for the other loss-functions, this is not necessarily true. It can be seen, that the predicted energy or transverse momenta of $\nu$-Flows seem to perform slights better than the MMT with PtEtaPhi-loss. The $\nu$-Weighter, however, remains the worst-performing method for all variables considered here. Some interesting observations arise from the comparison of the MMT architecture with the different loss-functions. The first observation is, that both the MagDir- and PtEtaPhi-loss can achieve a reduction of up to $20$ for the error of the neutrinos' pseudorapidities. Secondly, the PtEtaPhi-loss-trained model yields the highest absolute error for the $p_T$ and $E$ of the neutrinos for all MMT-models. Eventhough, this might appear counterintuitive, it is well explained by the fact that the PtEtaPhi-loss computes the relative deviation of the $p_T$. This changes the emphasis depending on the magnitude of transverse momenta during the training, which can lead to the model being less-sensitive to potentially large errors for larger $p_T$-values. To sum up, this reveals the strong dependence on the loss-function, despite using the same architecture. As different loss-function can lead to reductions in errors for some variables, while increasing the error for others, choosing the most appropriate loss-function depends on the variable of interest for the analysis.\\
+To avoid evaluating each loss-function for every of the following analyses, the main loss-function considered here will be the Cartesian-loss. Unless stated otherwise, the MMT will always be trained with the Cartesian-loss. 
+\begin{figure}{ht}
+    \centering
+    \includegraphics[width=0.7\textwidth]{plots/compact_reconstructor_nu_weighter/binned_performance/N_jets/binned_dev_relative_l2_N_jets.pdf}
+    \caption{
+        Relative $L^2$ distance of the neutrino vectors binned with respect to the number of jets. The background histogram show of the distribution of events as a function of the number of jets. The uncertainties represent the statistical variations in the evaluation dataset.
+    }
+    \label{fig:l2_dev_njets}
+\end{figure}
+The \Cref{fig:l2_dev_njets} shows the norm of the deviation of true and predicted neutrino vector binned with respect to the number of jets. Here it can be seen, that the $\nu$-Weighter seems to provide a very decent performance with respect to this metric. It outperforms the $\nu^2$-Flows in all bins and the MMT in the most populated bins. Another interesting observation to be made here, is that while both baseline methods show increasing relative errors for higher number of jets. The MMT, on the other hand, improves its performance for higher number of jets and for more than $3$ jets outperforms the $\nu$-Weighter. This might be a hint, that the additional context provided by the assignment tasks might be beneficial for events where jet-selection is non-trivial. However, the change of the relative error with the number is at about $10\%$ rather small.
+% The \Cref{fig:px_dev_njets,fig:pz_dev_njets} in the Appendix show the absolute error for the $x$- and $z$-component respectively. It shows a similar trend for all methods, while the performance for the $x$-component decreases with a higher number of jets, the performance for the $z$-component is mostly constant. 
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{plots/compact_reconstructor_nu_weighter/binned_performance/truth_ttbar_mass/binned_dev_angle_truth_ttbar_mass.pdf}
+\end{figure}
 
 
 \section{Variable Reconstruction}

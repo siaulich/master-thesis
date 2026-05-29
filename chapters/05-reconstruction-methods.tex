@@ -79,7 +79,7 @@ Both methods start by selecting the two $b$-jet candidates in the event based on
     \end{minipage}
 \end{figure}
 Note, that the $\chi^2$-Method relies on the reconstructed neutrino momenta to compute the invariant masses of the top quarks. Therefore, it is inherently linked to the neutrino regression method used. In contrast, the $\Delta R$-Method is independent of the neutrino momenta.
-Further, it should be noted, that due to its reliance on the neutrino reconstruction and the use of $\nu^2$-Flows here, the $\chi^2$-method should, technically, be considered a machine learning based approach too.
+For the analysis here, the regression from $\nu^2$-Flows was found to deliver a much better performance for the assignment. Thus, ultimately, the $\chi^2$-Method was used in conjunction with the prediction of $\nu^2$-Flows instead of the $\nu$-Weighter.
 
 Empiric evidence for the validity of both can be found in \Cref{fig:jet_lepton_pairing}, which shows the distributions of the reconstructed invariant mass of the top quark and the $\Delta R$ between the jet and lepton for correct and incorrect jet-lepton pairs. The correct pairs show a clear peak around the top quark mass in the invariant mass distribution and a smaller $\Delta R$ compared to incorrect pairs, which supports the use of these variables for jet assignment.
 
@@ -97,13 +97,14 @@ The $\Delta R$-Method was used in previous \atlas analyses \cite{ATLAS2024Entang
         \caption{$\Delta R$-Method}
         \label{subfig:delta_R_method}
     \end{subfigure}
-    \caption{Distributions for pairing up correct and incorrect jet-lepton pairs for the reconstructed invariant mass of the top quark (a) and the $\Delta R$ between the jet and lepton (b). The correct pairs are shown in blue, while the incorrect pairs are shown in red. The distributions are normalised to unit area.}
+    \caption{Distributions for pairing up correct and incorrect jet-lepton pairs for the reconstructed invariant mass of the top quark (a) and the $\Delta R$ between the jet and lepton (b). The correct pairs are shown in blue, while the incorrect pairs are shown in red. The distributions are normalised to unit area. Note, that the reconstructed invariant mass for the $\chi^2$-Method includes the neutrino prediction from $\nu^2$-Flows.}
     \label{fig:jet_lepton_pairing}
 \end{figure}
 
 \subsection{Neutrino Regression Methods}
 \label{sec:neutrino_regression}
-Due to the limited availability of kinematic reconstruction methods in the \atlas software framework, only one method for neutrino regression has been implemented and evaluated in this thesis. For completeness, two additional methods that have been used in previous \atlas analyses are described here, but they have not been implemented or evaluated in this thesis.
+Due to the limited availability of kinematic reconstruction methods in the \atlas software framework, two methods for neutrino regression are implemented and evaluated in this thesis. For completeness, the Ellipse-method, which has been used in previous \atlas analyses is described as well, but they have not been implemented or evaluated in this thesis.
+
 
 \subsubsection{Ellipse-Method}
 The ellipse method \cite{ellipse_method} is a kinematic reconstruction technique that exploits the constraints of the event to solve for the neutrino momenta. The method uses the measured \met and the momenta of the leptons and jets to construct a system of equations based on the invariant mass constraints of the $W$ bosons and top quarks. By solving this system of equations, one can obtain possible solutions for the neutrino momenta. The method typically yields multiple solutions, and additional criteria are used to select the most likely solution based on the event kinematics. In previous \atlas analyses, the solution yielding the lowest $m(t\bar{t})$ was chosen as the reconstructed neutrino momenta.
