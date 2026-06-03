@@ -19,7 +19,7 @@
     \centering
     \includegraphics[width=.7\textwidth]{plots/feature_plots/N_jets_vs_ttbar_mass.pdf}
     \caption{This plot shows the b-tagging performance for different bins of the invariant mass $m(t\bar{t})$ at parton-level. For each bin, the number of events, with only jets from top-decays being b-tagged and the number of events with additional or missing b-tagged jets is stacked. The percentage shows the fraction of events with only jets from top-decay being b-tagged.}
-    \label{fig:feature_2d_mttbar_njets}
+    \label{fig:feature_2d_ttbar_mass_njets}
 \end{figure}
 \begin{figure}[H]
     \centering
@@ -32,7 +32,15 @@
     \centering
     \includegraphics[width=0.7\textwidth]{plots/feature_plots/ttbar_mass_vs_dR_l1l2.pdf}
     \caption{This plot shows the distribution of events binned in the parton-level $m(t\bar{t})$ and the angular distance $\Delta R(\ell_1,\ell_2)$.}
-    \label{fig:feature_2d_mttbar_dR_l1l2}
+    \label{fig:feature_2d_ttbar_mass_dR_l1l2}
+\end{figure}
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{plots/feature_plots/ttbar_mass_vs_lep_nu_angle.pdf}
+    \caption{This plot shows the distribution of events binned in the parton-level $m(t\bar{t})$ and the angle $ \theta(\nu,\ell)$ between the lepton and neutrino at parton-level.}
+    \label{fig:feature_2d_ttbar_mass_angle_nu_lep}
 \end{figure}
 
 \subsubsection{Threshold Topology}
@@ -75,6 +83,16 @@
 
 \section{Hyperparameter Optimisation Results}
 \label{sec:hyperparams}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.7\textwidth]{plots/hyperparams_regression/assignment_accuracy_vs_inference_time.pdf}
+    \caption{
+        Assignment accuracy compared to the true values for the MultiModalTransformer and the RegressionTransformer as a function of the number of trainable parameters.
+    }
+    \label{fig:regression_transformer_assignment}
+\end{figure}
+
 
 \subsection{FeatureConcatTransformer}
 \begin{figure}[H]
@@ -153,7 +171,7 @@
     \centering
     \includegraphics[width=1.0\textwidth]{plots/compact_assigner/binned_2d_performance/truth_ttbar_mass_vs_dR_l1l2/2d_binned_accuracies_truth_ttbar_mass_dR_l1l2.pdf}
     \caption{Assignment accuracy binned with respect to parton-level $m(t\bar{t})$ and $\Delta R(\ell_1,\ell_2)$.}
-    \label{fig:accuracy_2d_mttbar_dR_l1l2}
+    \label{fig:accuracy_2d_ttbar_mass_dR_l1l2}
 \end{figure}
 
 \begin{figure}[H]
@@ -169,19 +187,25 @@
 \label{sec:neutrino_regression:plots}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{plots/compact_reconstructor_nu_weighter/binned_performance/N_jets/binned_dev_px_N_jets.pdf}
+    \includegraphics[width=0.7\textwidth]{plots/compact_reconstructor_nu_weighter/binned_performance/truth_tt_boost_parameter/binned_dev_px_truth_tt_boost_parameter.pdf}
     \caption{
-        Mean absolute error of the neutrinos' $p_x$ component binned in number jets.
+        Mean absolute error of the neutrinos' $p_x$ component binned with respect to the boost parameters.
     }
-    \label{fig:px_dev_njets}
+    \label{fig:px_dev_ttbar_beta}
 \end{figure}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{plots/compact_reconstructor_nu_weighter/binned_performance/N_jets/binned_dev_pz_N_jets.pdf}
+    \includegraphics[width=0.7\textwidth]{plots/compact_reconstructor_nu_weighter/binned_performance/truth_tt_boost_parameter/binned_dev_pz_truth_tt_boost_parameter.pdf}
     \caption{
-        Mean absolute error of the neutrinos' $p_z$ component binned in number jets.
+        Mean absolute error of the neutrinos' $p_z$ component binned with respect to the boost parameters.
     }
-    \label{fig:pz_dev_njets}
+    \label{fig:pz_dev_ttbar_beta}
 \end{figure}
 
 
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=1.0\textwidth]{plots/compact_reconstructor_nu_weighter/binned_2d_performance/truth_ttbar_mass_vs_truth_lepton_nu_angle_mean/2d_binned_dev_angle_truth_ttbar_mass_truth_lepton_nu_angle_mean.pdf}
+    \caption{Mean angle between true and predicted neutrino binned in the parton-level $m(t\bar{t})$ and parton-level angle between lepton and neutrino.}
+    \label{fig:dev_angle_ttbar_mass_angle_nu_lep}
+\end{figure}
