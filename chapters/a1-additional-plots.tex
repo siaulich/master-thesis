@@ -203,9 +203,18 @@
 \end{figure}
 
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1.0\textwidth]{plots/compact_reconstructor_nu_weighter/binned_2d_performance/truth_ttbar_mass_vs_truth_lepton_nu_angle_mean/2d_binned_dev_angle_truth_ttbar_mass_truth_lepton_nu_angle_mean.pdf}
     \caption{Mean angle between true and predicted neutrino binned in the parton-level $m(t\bar{t})$ and parton-level angle between lepton and neutrino.}
     \label{fig:dev_angle_ttbar_mass_angle_nu_lep}
 \end{figure}
+
+
+\subsection{Variable Reconstruction}
+\begin{table}[H]
+    \centering
+    \input{plots/true_assignment/deviations/ttbar_mass_reconstruction_metrics_table.tex}
+    \caption{Summary table showing the mean relative deviation and relative resolution for the invariant mass of the \ttbar-system. Compared are the baseline-methods for assignment, the CompactTransformer, and the true assignment, all in conjunction with $\nu^2$-Flows.}
+    \label{tab:assignment:ttbar_mass_reconstruction}
+\end{table}
