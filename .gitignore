@@ -272,9 +272,16 @@ TSWLatexianTemp*
 
 # Data files
 *.csv
+*.root
+*.yaml
+*.yml
+*.txt
+*.xml
+*.config
 
 # Plot folders
 # plots/
 **.DS_Store
 .vscode/
 scp_plots.sh
+scp_plots_backup.sh

@@ -145,8 +145,8 @@
       \node[yshift=0.05cm] at ($(jet_1_prob_bbar)!0.5!(jet_n_prob_bbar)$) (output_bbar_dots) {$\vdots$};
 
       % Regression DNN
-      \node[dnn_block, right=2.5cm of lepton_1_output, minimum height = 0.8cm] (lepton_1_reg) {Reg. DNN};
-      \node[dnn_block, right=2.5cm of lepton_2_output,minimum height = 0.8cm] (lepton_2_reg) {Reg. DNN};
+      \node[dnn_block, right=3cm of lepton_1_output, minimum height = 0.8cm] (lepton_1_reg) {Reg. DNN};
+      \node[dnn_block, right=3cm of lepton_2_output,minimum height = 0.8cm] (lepton_2_reg) {Reg. DNN};
 
       % Regression Output
       \node[output, right=0.5cm of lepton_1_reg] (lepton_1_reg_output) {$\vec{p}(\nu_1)$};
@@ -246,6 +246,9 @@
       \draw[arrow] (lep_dnn_2.east) -- (transformer_1.west |- lep_dnn_2.east);
       \draw[arrow] (met_dnn.east) -- (transformer_1.west |- met_dnn.east);
 
+
+
+
       % Arrows from transformer to cross-attention
       \draw[arrow](jet_dnn_1.east -| transformer_n.east) -- (jet_dnn_1.east -| cross_attention.west) node[midway, fill=white, draw, rectangle] {Q};
       \draw[arrow] (jet_dnn_n.east -| transformer_n.east) -- (jet_dnn_n.east -| cross_attention.west)  node[midway, fill=white, draw, rectangle] {Q};
@@ -259,16 +262,30 @@
 
 
       % Arrows from transformer to regression DNNs
+
+      \coordinate (concat_lepton_1) at ($(lepton_1_reg.west)+(-0.65,0)$);
+      \coordinate (concat_lepton_2) at ($(lepton_2_reg.west)+(-0.65,0)$);
+
+
       \draw[arrow] (lep_dnn_2.east -| transformer_n.east) -- (lepton_2_reg.west);
       \draw[arrow] (lep_dnn_1.east -| transformer_n.east) -- (lepton_1_reg.west);
 
-      \draw[arrow] (met_dnn.east -| transformer_n.east) -|  ($(lepton_2_reg.west)+(-0.6,0)$) --  (lepton_2_reg.west);
+      \draw[arrow] (met_dnn.east -| transformer_n.east) -|  (concat_lepton_2) --  (lepton_2_reg.west);
 
-      \draw[arrow] (met_dnn.east -| transformer_n.east) -| ($(lepton_1_reg.west)+(-0.6,0)$) --  (lepton_1_reg.west);
-      
-      \node[fill=white, inner sep = 0.1cm, outer sep = 0] at ($(lepton_1_reg.west)+(-0.6,0)$) (conact_jet_1) {$\bigoplus$};
-      \node[fill=white, inner sep = 0.1cm, outer sep = 0] at ($(lepton_2_reg.west)+(-0.6,0)$) (conact_jet_1) {$\bigoplus$};
+      \draw[arrow] (met_dnn.east -| transformer_n.east) -| (concat_lepton_1)  --  (lepton_1_reg.west);
 
+
+
+      % Arrows from cross-attention to regression DNNs
+
+      \draw[arrow] (cross_attention.east |- jet_1_output) -| (concat_lepton_1) -- (lepton_1_reg.west);
+      \draw[arrow] (cross_attention.east |- jet_n_output) -| (concat_lepton_1) -- (lepton_1_reg.west);
+      \draw[arrow] (cross_attention.east |- jet_1_output) -| (concat_lepton_2) -- (lepton_2_reg.west);
+      \draw[arrow] (cross_attention.east |- jet_n_output) -| (concat_lepton_2) -- (lepton_2_reg.west);
+
+
+      \node[fill=white, inner sep = 0.1cm, outer sep = 0] at (concat_lepton_1) {$\bigoplus$};
+      \node[fill=white, inner sep = 0.1cm, outer sep = 0] at (concat_lepton_2) {$\bigoplus$};
 
       % Arrows from regression DNNs to regression outputs
       \draw[arrow] (lepton_1_reg.east) -- (lepton_1_reg_output.west);
