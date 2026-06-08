@@ -11,14 +11,14 @@
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{plots/feature_plots/btagging_performance_by_ttbar_mass.pdf}
-    \caption{This plot shows the b-tagging performance for different bins of the invariant mass $m(t\bar{t})$ at parton-level.}
+    \caption{This plot shows the b-tagging performance for different bins of the invariant mass $m(t\bar{t})$ at parton level.}
     \label{fig:b_tag_performance_ttbar_mass}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=.7\textwidth]{plots/feature_plots/N_jets_vs_ttbar_mass.pdf}
-    \caption{This plot shows the b-tagging performance for different bins of the invariant mass $m(t\bar{t})$ at parton-level. For each bin, the number of events, with only jets from top-decays being b-tagged and the number of events with additional or missing b-tagged jets is stacked. The percentage shows the fraction of events with only jets from top-decay being b-tagged.}
+    \caption{This plot shows the b-tagging performance for different bins of the invariant mass $m(t\bar{t})$ at parton level. For each bin, the number of events, with only jets from top-decays being b-tagged and the number of events with additional or missing b-tagged jets is stacked. The percentage shows the fraction of events with only jets from top-decay being b-tagged.}
     \label{fig:feature_2d_ttbar_mass_njets}
 \end{figure}
 \begin{figure}[H]
@@ -39,7 +39,7 @@
 \begin{figure}
     \centering
     \includegraphics[width=0.7\textwidth]{plots/feature_plots/ttbar_mass_vs_lep_nu_angle.pdf}
-    \caption{This plot shows the distribution of events binned in the parton-level $m(t\bar{t})$ and the angle $ \theta(\nu,\ell)$ between the lepton and neutrino at parton-level.}
+    \caption{This plot shows the distribution of events binned in the parton-level $m(t\bar{t})$ and the angle $ \theta(\nu,\ell)$ between the lepton and neutrino at parton level.}
     \label{fig:feature_2d_ttbar_mass_angle_nu_lep}
 \end{figure}
 
@@ -185,6 +185,22 @@
 
 \subsection{Neutrino Regression}
 \label{sec:neutrino_regression:plots}
+\begin{table}[ht]
+    \centering
+    \caption{Summary of the mean absolute error (MAE) of the different neutrino regression methods for the cartesian coordinates of the neutrinos in the lab frame. For the MultiModalTransformer, the bracket shows whether the mean of the Gaussian or a random sampling was used. The uncertainties represent the statistical variations in the dataset.}
+    \input{plots/gaussian_loss_nu_weighter/neutrino_deviations/regression_neutrino_mae.tex}
+    \label{tab:gaussian_loss:mae:cartesian}
+\end{table}
+
+\begin{table}[ht]
+    \centering
+    \caption{Summary of the mean absolute error of the neutrinos' $p_T$, $\eta$, $\phi$, and $E$, evaluated for the different methods. For the MultiModalTransformer, the bracket shows whether the mean of the Gaussian or a random sampling was used.  Note, that the computation of the error in $\phi$ was performed periodically.}
+    \input{plots/compare_losses_nu_weighter/neutrino_deviations/regression_neutrino_PtEtaPhiE_mae.tex}
+    \label{tab:gaussian_loss:mae:PtEtaPhiE}
+\end{table}%
+
+
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{plots/compact_reconstructor_nu_weighter/binned_performance/truth_tt_boost_parameter/binned_dev_px_truth_tt_boost_parameter.pdf}

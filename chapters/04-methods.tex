@@ -16,7 +16,7 @@ Machine learning can be broadly categorised into supervised and unsupervised lea
     \caption{Schematic representation of the Monte Carlo event generation process in particle physics. Colouring of vertices and particles indicates the event generation stage: hard scattering process (big red blob), QCD radiation (blue), hadronisation (light green), showering (dark green), and a secondary vertex (purple). The Figure is taken from Reference~\cite{sherpa_1}.}
 \end{figure}
 \label{sec:mc_training_data}
-Events are usually simulated using a cascade of different programs, each simulating a different state of the event. First the hard scattering process is simulated using matrix element generators. These programs calculate the probabilities of different particle interactions based on the underlying physics theories, such as the Standard Model. Using these probabilities, they generate events that represent the initial state of the particles after the collision. The possible kinematic phase space is sampled according to these probabilities, resulting in a set of particles with specific momenta and energies. This type of event variables is often referred to as \textit{parton-level}.
+Events are usually simulated using a cascade of different programs, each simulating a different state of the event. First the hard scattering process is simulated using matrix element generators. These programs calculate the probabilities of different particle interactions based on the underlying physics theories, such as the Standard Model. Using these probabilities, they generate events that represent the initial state of the particles after the collision. The possible kinematic phase space is sampled according to these probabilities, resulting in a set of particles with specific momenta and energies. This type of event variables is often referred to as \textit{parton level}.
 
 Next, the parton showering and hadronization processes are simulated. Parton showering models the emission of additional particles from the initial partons, while hadronization simulates the formation of hadrons from quarks and gluons. These processes are crucial for accurately modelling the final state particles observed in detectors.
 
@@ -36,6 +36,7 @@ To evaluate the performance of the trained model, it is essential to validate an
 Since in particle physics, simulated data is often used for training and background modelling, one typically employs a k-folding strategy \cite{k-folding}, where the data is divided into k subsets. The model is trained k times, each time using a different subset as the validation set and the remaining subsets for training. This approach helps to use the available data more efficiently.
 
 \section{Regression and Conditional Density Learning}
+\label{sec:regression_vs_conditional_density}
 To highlight some important distinctions between different machine learning tasks, it is useful to briefly discuss regression and conditional density learning.
 \subsection{Supervised Learning as Risk Minimisation}
 In supervised learning, the goal is to learn a parametrised function $f_\theta$ that maps input data $\mathbf{x}$ to output predictions $\mathbf{y}$. This can be formalised as a risk minimisation problem, where the objective is to minimise the expected loss over the joint distribution of inputs and outputs. The expected risk can be expressed as:
@@ -44,22 +45,24 @@ In supervised learning, the goal is to learn a parametrised function $f_\theta$ 
 \end{equation}
 where $L$ is the loss function that quantifies the discrepancy between the true output $\mathbf{y}$ and the predicted output $f_\theta(\mathbf{x})$. The goal of training is to find the parameters $\theta$ that minimise this expected risk, which is typically approximated using empirical risk minimisation on the training dataset.
 \subsection{Regression}
+\label{sec:regression}
 In regression tasks, the output $\mathbf{y}$ is a continuous variable, and the model is trained to predict a specific value for each input $\mathbf{x}$. The loss function commonly used for regression is the mean squared error (MSE), which measures the average squared difference between the predicted values and the true values:
 \begin{equation}
     L_{\text{MSE}}(\mathbf{y}, f(\mathbf{x})) = \frac{1}{N} \sum_{i=1}^{N} (y_i - f_\theta(\mathbf{x}_i))^2
 \end{equation}
-where $N$ is the number of samples in the dataset. The model learns to minimise this loss function. If the labels are not deterministic, meaning that there is inherent uncertainty in the target values, one can describe the labels using a conditional probability distribution $p(\mathbf{y}|\mathbf{x})$. In this case, minimising the MSE corresponds to learning the conditional mean of the distribution (see \Cref{chap:supplementary_computations_and_proofs} for a proof):
+where $N$ is the number of samples in the dataset. The model learns to minimise this loss function. If the labels are not deterministic, meaning that there is inherent uncertainty in the target values, one can describe the labels using a conditional probability distribution $p(\mathbf{y}|\mathbf{x})$. In this case, minimising the MSE corresponds to learning the conditional mean of the distribution (see \Cref{app:mse_mean} for a proof):
 \begin{equation}
     f_\theta(\mathbf{x}) = \mathbb{E}[\mathbf{y}|\mathbf{x}] = \int \mathbf{y} p(\mathbf{y}|\mathbf{x}) d\mathbf{y}\,.
 \end{equation}
 Depending on the loss-function used, the model can learn different statistics of the conditional distribution. For example, using the mean absolute error (MAE) loss function would lead to learning the conditional median instead of the mean.
 
 \subsection{Conditional Density Learning}
+\label{sec:conditional_density}
 In contrast to regression, conditional density learning aims to learn the entire conditional probability distribution $p(\mathbf{y}|\mathbf{x})$ rather than just a point estimate. This is particularly useful when the target variable has inherent uncertainty or when multiple outcomes are possible for a given input. To quantify the difference between the true conditional distribution and the model's predicted distribution, the Kullback-Leibler (KL) divergence is often used as a loss function \cite{kl_divergence}
 \begin{equation}
     L_{\text{KL}}(p, q) = \int p(\mathbf{y}|\mathbf{x}) \log \left( \frac{p(\mathbf{y}|\mathbf{x})}{q_\theta(\mathbf{y}|\mathbf{x})} \right) d\mathbf{y}
 \end{equation}
-where $p(\mathbf{y}|\mathbf{x})$ is the true conditional distribution and $q_\theta(\mathbf{y}|\mathbf{x})$ is the model's predicted distribution. Minimizing this loss function encourages the model to produce a predicted distribution that closely matches the true distribution, allowing for a more comprehensive understanding of the uncertainty and variability in the target variable. In practice, computing KL divergence can be challenging, since the true distribution might be unknown or difficult to estimate. In such cases, one relies on the data to provide an empirical estimate of the true distribution, and the loss function is approximated using samples from the dataset. It can be shown that minimizing the KL divergence is equivalent to maximizing the likelihood of the observed data under the model's predicted distribution, which is a common approach in training probabilistic models. For the case of a discrete target variable, this corresponds to minimising the cross-entropy loss, which is widely used in classification tasks \cite{cross-entropy}.
+where $p(\mathbf{y}|\mathbf{x})$ is the true conditional distribution and $q_\theta(\mathbf{y}|\mathbf{x})$ is the model's predicted distribution. Minimizing this loss function encourages the model to produce a predicted distribution that closely matches the true distribution, allowing for a more comprehensive understanding of the uncertainty and variability in the target variable. In practice, computing KL divergence can be challenging, since the true distribution might be unknown or difficult to estimate. In such cases, one relies on the data to provide an empirical estimate of the true distribution, and the loss function is approximated using samples from the dataset. It can be shown that minimizing the KL divergence is equivalent to maximizing the likelihood of the observed data under the model's predicted distribution, which is a common approach in training probabilistic models, for this see \Cref{app:ml_kld}. One notable case is that of a discrete target variable, were this corresponds to minimising the cross-entropy loss, which is widely used in classification tasks \cite{cross-entropy}.
 
 \section{Neural Networks}
 \begin{figure}[ht]
