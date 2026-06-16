@@ -1,39 +1,71 @@
 \chapter{Data-Driven Validation Studies}
 \label{chap:physics-analysis}
+This chapter will showcase the use of the developed tools in an analysis setting. For this, a setup that resembles the one employed in the study of Quasi-bound states effect \cite{atlas_toponium} will be used to perform an Asimov-fit. This serves to show the performance of the tool in a full-scale analysis, and it allows estimating whether enhancements in the sensitivity of measurements can be expected. Lastly, plots comparing the simulated distributions with experimental data taken by \atlas during the year 2018 will be used, to validate the agreement of model outputs between simulation and data.
 
-\section{Run 2 Data Sample}
-\label{sec:run-2-data-sample}
+
+\section{Data and Simulation Samples}
+\label{sec:samples}
+While the previous chapters used the nominal sample of Top-quark pairs introduced in \Cref{sec:data-and-simulation} to set up and evaluate the ml-tools, analysing event data requires a more comprehensive treatment of the contributing physics-processes.
+Since the focus of this thesis lies on the machine-learning methods and their evaluation, an in-depth discussion of the samples, used here, is omitted. The samples used in this chapter mostly follow the Reference \cite{atlas_toponium}.
+Modelling the production of top-quark pairs follows the description in \Cref{sec:data-and-simulation}, with a reweighting applied to match the cross-section calculation at next-to-next-to-leading order. This contribution will be called pQCD -- short for perturbative QCD.
+
+Additionally, bound state effects arise due to contributions from non-relativistic QCD interactions, shortened to NRQCD, which can modify the cross-section with respect to the pQCD-calculation. 
+For this analysis, these contributions are modelled according to the description in the Reference \cite{NRQCD_toponium_2}. The details of the implementation into the event generation and samples used here, can be found in \cite{atlas_toponium}.
+
+Lastly, other Standard Model processes with similar experimental signatures have to be considered. These processes contribute to the event yield in the signal, without stemming from the process of interest -- here the \ttbar-production.
+They will be called backgrounds in the following.
+As before, this follows closely the description in \cite{atlas_toponium}. The inclusion of backgrounds only serves to provide a realistic benchmark to test the different reconstruction methods in an analysis, and to show agreement of the tools between simulation and data. 
+For simplicity, only the two leading background processes will be considered here. 
+One of these processes is the production of a top quark in association with a W-Boson ($tW$). It was found to contribute about $4\%$ of the total event yield in the signal regions. Related background contributions from other processes involving the production of a single or pair of top-quarks in conjunction with other particle, were neglected here, as they were found to make up only $0.5\%$ of the yield in the signal region \cite{atlas_toponium}.
+The second background process to be considered here, is the so-called $Z$+jets process, which mostly encompasses leptonically decaying $Z$-Bosons from Drell-Yan production, with additional hadronic content in the event. 
+Modelling this background comes with significant uncertainties, thus it's contribution controlled and adjusted to the data in a dedicated control region.
+Further contributions include so-called fakes, where at least one fake or non-prompt lepton fulfils the lepton identification criteria described earlier. These stem mostly from \ttbar-production with hadronic decays. Such processes were found to contribute around $1.5\%$ of the total event yields \cite{atlas_toponium}. Therefore, fakes were not considered for the analysis-setup used in this work.
+
 
 \section{Analysis Setup}
 \label{sec:analysis-setup}
-\begin{table}[h]
-\centering
-%
-\caption{Summary of event selection criteria for the SRs and CRs in the analysis. The letter $\ell$ refers to $e$ and $\mu$, and OSSF refers to a lepton pair with opposite charge and the same flavour.}
-\begin{tabular}{c|c|c}
-\toprule
-\textbf{SRs} & \textbf{CR-Z} & \textbf{CR-Fakes} \\
-\midrule
-\multicolumn{3}{c}{$=2\ell$ with $\pt(\ell) \geq 10~\GeV$} \\
-\multicolumn{3}{c}{$\geq 1$ trigger-matched lepton with $\pt \geq 25/27/28~\GeV$} \\
-\multicolumn{3}{c}{$\geq 2$ jets with $\pt \geq 25~\GeV$} \\
-\multicolumn{3}{c}{$\geq 1$ $b$-tagged jet (70\% efficiency WP)} \\
-\multicolumn{3}{c}{$m_{\ell\ell} \geq 15~\GeV$ for $ee$ and $\mu\mu$ events} \\
-\multicolumn{3}{c}{$m_{t\bar{t}} \leq 500~\GeV$} \\
-\midrule
-\multicolumn{2}{c|}{$\met \geq 60~\GeV$ for OSSF events} & --- \\
-\midrule
-$\ell^\pm\ell^{'\mp}$ & $e^\pm e^\mp/\mu^\pm\mu^\mp$ & $\ell^\pm\ell^{'\pm}$ \\
-$|m_{\ell\ell} - m_Z| \geq 10~\GeV$ & $|m_{\ell\ell} - m_Z| \leq 10~\GeV$ & $|m_{\ell\ell} - m_Z| \geq 10~\GeV$ \\
-%
-%
-%
-%
-\bottomrule
-\end{tabular}
-\label{tab:selection_2l}
+\begin{table}[ht]
+    \centering
+    \caption{Summary of event selection criteria for the SRs and CRs in the analysis. The letter $\ell$ refers to $e$ and $\mu$.}
+    \begin{tabular}{c|c|c}
+        \toprule
+        \textbf{SRs} & \textbf{CR-Z} & \textbf{CRs}\\
+        \midrule
+        \multicolumn{3}{c}{$\ell^\pm \ell'^\mp$ with $\pt(\ell) \geq 10~\GeV$}\\
+        \multicolumn{3}{c}{$\geq 1$ trigger-matched lepton with $\pt \geq 28~\GeV$}\\
+        \multicolumn{3}{c}{$\geq 2$ jets with $\pt \geq 25~\GeV$}\\
+        \multicolumn{3}{c}{$\geq 1$ $b$-tagged jet (85\% efficiency WP)}\\
+        \multicolumn{3}{c}{$m_{\ell\ell} \geq 15~\GeV$ for $ee$ and $\mu\mu$ events}\\
+         \multicolumn{3}{c}{ $\met \geq 60~\GeV$ for $ee$ and $\mu\mu$ events}\\
+        \midrule
+        \multicolumn{2}{c|}{$m_{t\bar{t}} \leq 500~\GeV$} & $m_{t\bar{t}} > 500~\GeV$\\
+        \midrule
+        $|m_{\ell\ell} - m_Z| \geq 10~\GeV$ & $|m_{\ell\ell} - m_Z| \leq 10~\GeV$ & $|m_{\ell\ell} - m_Z| \geq 10~\GeV$ \\
+        \bottomrule
+    \end{tabular}
+    \label{tab:selection_2l}
 \end{table}
 
+The setup of the analysis setup again follows what was developed in Reference \cite{atlas_toponium}, however, minor simplification are made. To extract the parameter of interest, i.e. the cross-section of the ${t\bar{t}}_{\text{NRQCD}}$-contribution, events are required to pass selection-criteria and are then further categorised into different regions. An overview over the selection criteria for the different regions are shown in \Cref{tab:selection_2l}. The different regions can categorised as signal and control regions, abbreviated to SR and CR, respectively. Both share the same preselection, which puts the focus to events, that contain the particle demanded by the final-state of dileptonic \ttbar-production, i.e. two opposite charged leptons and at least two jets. Further requirement to these observed particle were found to reduce the contribution of background events. Events passing these criteria, are then further divided.
+For the data-driven validation, three control regions are used. They are defined by having an invariant mass $m(t\bar{t})>500~\GeV$ and have a dilepton mass outside a window of $10~\GeV$ around the $Z$-Boson mass. The latter cut aims to reduce the yields of events stemming from resonant Drell-Yan-production. The selection of events with high invariant mass $m(t\bar{t})$ ensures that these regions are disjunct to the signal regions, which are sensitive to the Quasi-bound state effects. This is part of the blinding protocol, and allows comparing data and simulation without biasing future analyses in the sensitive regions. Lastly, the three different control regions are defined based on the possible lepton flavour combinations, i.e. $ee$, $\mu\mu$, and $e\mu$.
 
-\section{Results}
+The SRs and CR-Z both require the events to have an invariant mass $m(t\bar{t})\leq 500~\GeV$ to enhance the contribution of non-relativistic QCD effects, which are dominant close to the production threshold. For the signal region, events are once again, required to have a dilepton mass outside the $10~\GeV$-windows around the $Z$-Boson mass. Events that are within this dilepton mass-windows make up the CR-Z, which is used to extract the normalisation of the $Z$+jets background.
+
+While a full analysis, requires an in-depth investigation of systematic uncertainties from various sources, only statistical uncertainties are considered here. This is due the scope of this thesis; statistical uncertainties are sufficient to evaluate the methods with respect to their sensitive and validate the method on event data. 
+
+All fits are performed as binned profile-likelihood fits, where specific binning variables are used for each region. The fit-parameters are so-called normalisation factors, which measure the quotient of the measured cross-section and the prediction
+\begin{equation}
+    \mu_X=\frac{\sigma_{\text{exp.}}(X)}{\sigma_{\text{pred.}}(X)}\,,
+\end{equation} where $\sigma_{\text{exp.}/\text{pred.}}(X)$ denote the measured and predicted cross-section of a process $X$, respectively.
+
+
+
+
+
+\section{Asimov Fit}
+For the Asimov-fit, only the SRs and the CR-Z will be used. Due to the reduced fit-setup applied here, 
+
+
+\section{Validation Using ATLAS 2018 Data}
 \label{sec:results}
+

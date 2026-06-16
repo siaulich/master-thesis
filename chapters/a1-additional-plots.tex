@@ -11,14 +11,14 @@
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{plots/feature_plots/btagging_performance_by_ttbar_mass.pdf}
-    \caption{This plot shows the b-tagging performance for different bins of the invariant mass $m(t\bar{t})$ at parton level.}
+    \caption{This plot shows the b-tagging performance for different bins of the invariant mass \mttbar at parton level.}
     \label{fig:b_tag_performance_ttbar_mass}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=.7\textwidth]{plots/feature_plots/N_jets_vs_ttbar_mass.pdf}
-    \caption{This plot shows the b-tagging performance for different bins of the invariant mass $m(t\bar{t})$ at parton level. For each bin, the number of events, with only jets from top-decays being b-tagged and the number of events with additional or missing b-tagged jets is stacked. The percentage shows the fraction of events with only jets from top-decay being b-tagged.}
+    \caption{This plot shows the b-tagging performance for different bins of the invariant mass \mttbar at parton level. For each bin, the number of events, with only jets from top-decays being b-tagged and the number of events with additional or missing b-tagged jets is stacked. The percentage shows the fraction of events with only jets from top-decay being b-tagged.}
     \label{fig:feature_2d_ttbar_mass_njets}
 \end{figure}
 \begin{figure}[H]
@@ -31,7 +31,7 @@
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{plots/feature_plots/ttbar_mass_vs_dR_l1l2.pdf}
-    \caption{This plot shows the distribution of events binned in the parton-level $m(t\bar{t})$ and the angular distance $\Delta R(\ell_1,\ell_2)$.}
+    \caption{This plot shows the distribution of events binned in the parton-level \mttbar and the angular distance $\Delta R(\ell_1,\ell_2)$.}
     \label{fig:feature_2d_ttbar_mass_dR_l1l2}
 \end{figure}
 
@@ -39,7 +39,7 @@
 \begin{figure}
     \centering
     \includegraphics[width=0.7\textwidth]{plots/feature_plots/ttbar_mass_vs_lep_nu_angle.pdf}
-    \caption{This plot shows the distribution of events binned in the parton-level $m(t\bar{t})$ and the angle $ \theta(\nu,\ell)$ between the lepton and neutrino at parton level.}
+    \caption{This plot shows the distribution of events binned in the parton-level \mttbar and the angle $ \theta(\nu,\ell)$ between the lepton and neutrino at parton level.}
     \label{fig:feature_2d_ttbar_mass_angle_nu_lep}
 \end{figure}
 
@@ -170,7 +170,7 @@
 \begin{figure}[H]
     \centering
     \includegraphics[width=1.0\textwidth]{plots/compact_assigner/binned_2d_performance/truth_ttbar_mass_vs_dR_l1l2/2d_binned_accuracies_truth_ttbar_mass_dR_l1l2.pdf}
-    \caption{Assignment accuracy binned with respect to parton-level $m(t\bar{t})$ and $\Delta R(\ell_1,\ell_2)$.}
+    \caption{Assignment accuracy binned with respect to parton-level \mttbar and $\Delta R(\ell_1,\ell_2)$.}
     \label{fig:accuracy_2d_ttbar_mass_dR_l1l2}
 \end{figure}
 
@@ -195,7 +195,7 @@
 \begin{table}[ht]
     \centering
     \caption{Summary of the mean absolute error of the neutrinos' $p_T$, $\eta$, $\phi$, and $E$, evaluated for the different methods. For the MultiModalTransformer, the bracket shows whether the mean of the Gaussian or a random sampling was used.  Note, that the computation of the error in $\phi$ was performed periodically.}
-    \input{plots/compare_losses_nu_weighter/neutrino_deviations/regression_neutrino_PtEtaPhiE_mae.tex}
+    \input{plots/gaussian_loss_nu_weighter/neutrino_deviations/regression_neutrino_PtEtaPhiE_mae.tex}
     \label{tab:gaussian_loss:mae:PtEtaPhiE}
 \end{table}%
 
@@ -222,7 +222,7 @@
 \begin{figure}[H]
     \centering
     \includegraphics[width=1.0\textwidth]{plots/compact_reconstructor_nu_weighter/binned_2d_performance/truth_ttbar_mass_vs_truth_lepton_nu_angle_mean/2d_binned_dev_angle_truth_ttbar_mass_truth_lepton_nu_angle_mean.pdf}
-    \caption{Mean angle between true and predicted neutrino binned in the parton-level $m(t\bar{t})$ and parton-level angle between lepton and neutrino.}
+    \caption{Mean angle between true and predicted neutrino binned in the parton-level \mttbar and parton-level angle between lepton and neutrino.}
     \label{fig:dev_angle_ttbar_mass_angle_nu_lep}
 \end{figure}
 
@@ -234,3 +234,35 @@
     \caption{Summary table showing the mean relative deviation and relative resolution for the invariant mass of the \ttbar-system. Compared are the baseline-methods for assignment, the CompactTransformer, and the true assignment, all in conjunction with $\nu^2$-Flows.}
     \label{tab:assignment:ttbar_mass_reconstruction}
 \end{table}
+\begin{table}[H]
+    \centering
+    \input{plots/compare_losses/deviations/ttbar_mass_reconstruction_metrics_table.tex}
+    \caption{Summary table showing the mean relative deviation and relative resolution for the invariant mass of the \ttbar-system. Compared are MMT models trained with different losses as well as the CPT interfaced with $\nu^2$-Flows}
+    \label{tab:losses:ttbar_mass_reconstruction}
+\end{table}
+
+
+\begin{figure}[H]
+    \begin{subfigure}[c]{1.0\textwidth}
+        \centering
+        \includegraphics[width=0.7\textwidth]{plots/compact_reconstructor/binned_performance/truth_ttbar_mass/binned_deviation_ttbar_mass_truth_ttbar_mass.pdf}
+        \caption{Mean Relative Deviation of \mttbar}
+        \label{fig:full_reco:ttbar_mass_binned_deviation_ttbar_mass}
+    \end{subfigure}
+    \begin{subfigure}[c]{1.0\textwidth}
+        \centering
+        \includegraphics[width=0.7\textwidth]{plots/compact_reconstructor/binned_performance/truth_ttbar_mass/binned_deviation_c_hel_truth_ttbar_mass.pdf}
+        \caption{Mean Deviation of \chel}
+        \label{fig:full_reco:ttbar_mass_binned_deviation_c_hel}
+    \end{subfigure}
+    \caption{Mean (Relative) Deviation of \mttbar \subrefb{fig:full_reco:ttbar_mass_binned_reso_ttbar_mass} and \chel \subrefb{fig:full_reco:ttbar_mass_binned_reso_c_hel} computed in bins of the parton-level invariant mass of the \ttbar-system. The different setups for assignment and regression are compared. The displayed error bars represent the statistical uncertainties of the dataset obtained using bootstrapping.}
+    \label{fig:full_reco:ttbar_mass_binned_deviation}
+\end{figure}%
+
+
+\begin{figure}{H}
+    \centering
+    \includegraphics[width=1.0\textwidth]{plots/gaussian_loss/distributions/ttbar_mass_distributions.pdf}
+    \caption{Comparison of variable distributions at reco- and truth-level for the different regression settings of the MultiModalTransformer trained with the Gaussian-loss.}
+    \label{fig:gaussian_loss:ttbar_mass_dist}
+\end{figure}

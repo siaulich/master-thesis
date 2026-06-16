@@ -1,20 +1,22 @@
 \chapter{Analysis and Reconstruction of Dileptonic Top-Quark Pair Events}
 \label{chap:reconstruction-methods}
+
+
+
+
 \section{Data and Simulation}
 \label{sec:data-and-simulation}
 
 This section describes the data and simulation samples used in this analysis. At the current stage of this thesis, only simulation samples have been studied; the data samples will be described in the final version. The simulated samples are produced using Monte Carlo (MC) event generators as described in \Cref{sec:mc_training_data}.
 
-While a complete analysis requires detailed investigation of background processes contributing to the signal regions, this thesis focuses on developing and evaluating reconstruction methods. Therefore, only the signal process of \ttbar production with dileptonic decays is described here. The background processes and their simulation will be discussed in the final thesis.
+While a complete analysis requires detailed investigation of background processes contributing to the signal regions, the following chapters focuses on developing and evaluating machine-learning methods applied to \ttbar events.
+Therefore, only the signal process of \ttbar production with dileptonic decays is described here. The background processes and their simulation will be discussed in the later \Cref{chap:physics-analysis}, that provides a data-driven validation of the method.
 
 \subsection{Simulation of Dileptonic Top-Quark Pair Events}
 \label{sec:nominal_ttbar}
-The signal process of \ttbar production with dileptonic decays is simulated using \powheg~\cite{powheg} at next-to-leading order (NLO) in perturbative quantum chromodynamics (QCD). The \powheg generator is interfaced with \pythia~\cite{pythia} for parton showering, hadronization, and underlying event modelling.
+The signal process of \ttbar production with dileptonic decays is simulated using \powheg~\cite{powheg} at next-to-leading order (NLO) in perturbative quantum chromodynamics (QCD). The \powheg generator is interfaced with \pythia~\cite{pythia} for parton showering, hadronization, and underlying event modelling. A more detailed description can be found in Reference \cite{atlas_toponium}. The samples used here are created with the hvq-model.
 
 To link the reco-level particles to the parton-level objects, a parton matching is performed. The parton-level objects are defined as the top quarks and their decay products after final state radiation before hadronization. The matching is done by iteratively associating reconstructed jets to partons based on angular distance criteria. The decay products of the top quarks are matched within a cone of $\Delta R \leq 0.3$ and $\Delta R\leq 0.1$ for jets and leptons ($e$,$\mu$) respectively. If multiple reconstructed objects are found within this cone, the one with the smallest $\Delta R$ is chosen.
-
-\subsection{Simulation of Non-Relativistic Quasi-Bound State Resonance}
-
 
 
 \subsection{Object Definition}
@@ -31,7 +33,7 @@ The reconstruction of physics objects—electrons, muons, jets, and missing tran
 
 \subsection{Event Selection}
 \label{sec:event-selection}
-Events are selected to contain exactly two oppositely charged leptons (electrons or muons). One of the leptons must have \pt $> 25~\unit{\giga\electronvolt}$, while the other must have \pt $> 5~\unit{\giga\electronvolt}$. At least two jets are required, with at least one being $b$-tagged at the $77\%$ working point (WP). Additional selection criteria are applied to suppress background contributions, which will be detailed in the final thesis.
+Events are selected to contain exactly two oppositely charged leptons (electrons or muons). One of the leptons must have \pt $> 25~\unit{\giga\electronvolt}$, while the other must have \pt $> 5~\unit{\giga\electronvolt}$. At least two jets are required, with at least one being $b$-tagged at the $85\%$ working point (WP). Additional selection criteria are applied to suppress background contributions, which will be detailed in the final thesis.
 
 For the training and evaluation of the reconstruction methods, only events that pass the selection criteria and have a successful parton matching are considered. Fully parton-matched events, make up about $60\%$ of the whole sample. Events with jets or leptons of the \ttbar-process end up outside the detector acceptance are typically the main cause for an event being unmatchable. Thus, training with only parton-matched events might introduce a bias with respect to certain event topologies, if they are disfavoured to have a parton-matching.
 
@@ -108,7 +110,7 @@ Due to the limited availability of kinematic reconstruction methods in the \atla
 
 \subsubsection{Ellipse-Method}
 \label{sec:ellipse_method}
-The ellipse method \cite{ellipse_method} is a kinematic reconstruction technique that exploits the constraints of the event to solve for the neutrino momenta, outlined in \Cref{sec:kinematic_constraints}. The method uses the measured \met and the momenta of the leptons and jets to construct a system of equations based on the invariant mass constraints of the $W$ bosons and top quarks. By solving this system of equations, one can obtain possible solutions for the neutrino momenta. The method typically yields multiple solutions, and additional criteria are used to select the most likely solution based on the event kinematics. In previous \atlas analyses, the solution yielding the lowest $m(t\bar{t})$ was typically chosen as the reconstructed neutrino momenta.
+The ellipse method \cite{ellipse_method} is a kinematic reconstruction technique that exploits the constraints of the event to solve for the neutrino momenta, outlined in \Cref{sec:kinematic_constraints}. The method uses the measured \met and the momenta of the leptons and jets to construct a system of equations based on the invariant mass constraints of the $W$ bosons and top quarks. By solving this system of equations, one can obtain possible solutions for the neutrino momenta. The method typically yields multiple solutions, and additional criteria are used to select the most likely solution based on the event kinematics. In previous \atlas analyses, the solution yielding the lowest \mttbar was typically chosen as the reconstructed neutrino momenta.
 
 \subsubsection{Neutrino-Weighter}
 \label{sec:nu_weighter}
