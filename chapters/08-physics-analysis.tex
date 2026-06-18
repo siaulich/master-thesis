@@ -27,29 +27,37 @@ Further contributions include so-called fakes, where at least one fake or non-pr
 \begin{table}[ht]
     \centering
     \caption{Summary of event selection criteria for the SRs and CRs in the analysis. The letter $\ell$ refers to $e$ and $\mu$.}
-    \begin{tabular}{c|c|c}
+    \newlength{\mycolw}
+    \setlength{\mycolw}{3cm}  % adjust to taste
+    \newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+    \begin{tabular}{c|P{\mycolw}|P{\mycolw}|c}
+        \multicolumn{2}{c|}{\textbf{Asimov-Fit}} & \multicolumn{2}{|c}{\textbf{Data-Validation}}\\
         \toprule
-        \textbf{SRs} & \textbf{CR-Z} & \textbf{CRs}\\
+        \textbf{SRs} & \textbf{CR-Z} & \textbf{CR-Z} & \textbf{CR-$\ell\ell$}\\
         \midrule
-        \multicolumn{3}{c}{$\ell^\pm \ell'^\mp$ with $\pt(\ell) \geq 10~\GeV$}\\
-        \multicolumn{3}{c}{$\geq 1$ trigger-matched lepton with $\pt \geq 28~\GeV$}\\
-        \multicolumn{3}{c}{$\geq 2$ jets with $\pt \geq 25~\GeV$}\\
-        \multicolumn{3}{c}{$\geq 1$ $b$-tagged jet (85\% efficiency WP)}\\
-        \multicolumn{3}{c}{$m_{\ell\ell} \geq 15~\GeV$ for $ee$ and $\mu\mu$ events}\\
-         \multicolumn{3}{c}{ $\met \geq 60~\GeV$ for $ee$ and $\mu\mu$ events}\\
+        \multicolumn{4}{c}{$\ell^\pm \ell'^\mp$ with $\pt(\ell) \geq 10~\GeV$}\\
+        \multicolumn{4}{c}{$\geq 1$ trigger-matched lepton with $\pt \geq 28~\GeV$}\\
+        \multicolumn{4}{c}{$\geq 2$ jets with $\pt \geq 25~\GeV$}\\
+        \multicolumn{4}{c}{$\geq 1$ $b$-tagged jet (85\% efficiency WP)}\\
+        \multicolumn{4}{c}{$m_{\ell\ell} \geq 15~\GeV$ for $ee$ and $\mu\mu$ events}\\
+         \multicolumn{4}{c}{ $\met \geq 60~\GeV$ for $ee$ and $\mu\mu$ events}\\
         \midrule
-        \multicolumn{2}{c|}{$m_{t\bar{t}} \leq 500~\GeV$} & $m_{t\bar{t}} > 500~\GeV$\\
+        \multicolumn{2}{c|}{$m_{t\bar{t}} \leq 500~\GeV$} & \multicolumn{2}{c}{$m_{t\bar{t}} > 500~\GeV$}\\
         \midrule
-        $|m_{\ell\ell} - m_Z| \geq 10~\GeV$ & $|m_{\ell\ell} - m_Z| \leq 10~\GeV$ & $|m_{\ell\ell} - m_Z| \geq 10~\GeV$ \\
+        $|m_{\ell\ell} - m_Z| > 10~\GeV$ & \multicolumn{2}{c|}{$|m_{\ell\ell} - m_Z| \leq 10~\GeV$} & $|m_{\ell\ell} - m_Z| \leq 10~\GeV$\\
         \bottomrule
     \end{tabular}
     \label{tab:selection_2l}
 \end{table}
 
 The setup of the analysis setup again follows what was developed in Reference \cite{atlas_toponium}, however, minor simplification are made. To extract the parameter of interest, i.e. the cross-section of the ${t\bar{t}}_{\text{NRQCD}}$-contribution, events are required to pass selection-criteria and are then further categorised into different regions. An overview over the selection criteria for the different regions are shown in \Cref{tab:selection_2l}. The different regions can categorised as signal and control regions, abbreviated to SR and CR, respectively. Both share the same preselection, which puts the focus to events, that contain the particle demanded by the final-state of dileptonic \ttbar-production, i.e. two opposite charged leptons and at least two jets. Further requirement to these observed particle were found to reduce the contribution of background events. Events passing these criteria, are then further divided.
-For the data-driven validation, three control regions are used. They are defined by having an invariant mass $m(t\bar{t})>500~\GeV$ and have a dilepton mass outside a window of $10~\GeV$ around the $Z$-Boson mass. The latter cut aims to reduce the yields of events stemming from resonant Drell-Yan-production. The selection of events with high invariant mass $m(t\bar{t})$ ensures that these regions are disjunct to the signal regions, which are sensitive to the Quasi-bound state effects. This is part of the blinding protocol, and allows comparing data and simulation without biasing future analyses in the sensitive regions. Lastly, the three different control regions are defined based on the possible lepton flavour combinations, i.e. $ee$, $\mu\mu$, and $e\mu$.
+For the data-driven validation, four control regions are used. All control-regions that will be used for the data-driven validation, require a cut on the invariant mass $m(t\bar{t})>500~\GeV$. The selection of events with high invariant mass $m(t\bar{t})$ ensures that these regions are disjunct to the signal regions, which are sensitive to the Quasi-bound state effects. This is part of the blinding protocol, and allows comparing data and simulation without biasing future analyses in the sensitive regions.
+The CR-Z will be used for the normalisation of the $Z$+jets contribution. For this region, the invariant mass of the two leptons is required to be in a window of $10~\GeV$ around the nominal $Z$-Boson mass. This enhances the contribution of events with leptons from resonant Drell-Yan-production.
+The regions used for the validation of data and simulation is exactly disjunct with respect to the CR-Z; it features the same event-selection but enforce events to be outside the dilepton-mass window.
+For these events, three different control regions are defined based on the possible lepton flavour combinations, i.e. $ee$, $\mu\mu$, and $e\mu$.
 
-The SRs and CR-Z both require the events to have an invariant mass $m(t\bar{t})\leq 500~\GeV$ to enhance the contribution of non-relativistic QCD effects, which are dominant close to the production threshold. For the signal region, events are once again, required to have a dilepton mass outside the $10~\GeV$-windows around the $Z$-Boson mass. Events that are within this dilepton mass-windows make up the CR-Z, which is used to extract the normalisation of the $Z$+jets background.
+
+A slightly different set of regions is defined for the Asimov-fit. While they share the pre-selection, the SRs and CR-Z both require the events to have an invariant mass $m(t\bar{t})\leq 500~\GeV$. This aims to enhance the contribution of non-relativistic QCD effects, which are dominant close to the production threshold. For the signal region, events are once again, required to have a dilepton mass outside the $10~\GeV$-windows around the $Z$-Boson mass. Events that are within this dilepton mass-windows make up the CR-Z, which is used to extract the normalisation of the $Z$+jets background.
 
 While a full analysis, requires an in-depth investigation of systematic uncertainties from various sources, only statistical uncertainties are considered here. This is due the scope of this thesis; statistical uncertainties are sufficient to evaluate the methods with respect to their sensitive and validate the method on event data. 
 
@@ -58,12 +66,15 @@ All fits are performed as binned profile-likelihood fits, where specific binning
     \mu_X=\frac{\sigma_{\text{exp.}}(X)}{\sigma_{\text{pred.}}(X)}\,,
 \end{equation} where $\sigma_{\text{exp.}/\text{pred.}}(X)$ denote the measured and predicted cross-section of a process $X$, respectively.
 
-
-
-
-
 \section{Asimov Fit}
-For the Asimov-fit, only the SRs and the CR-Z will be used. Due to the reduced fit-setup applied here, 
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=.5\textwidth]{figures/signal_regions.png}
+    \caption{Categorisation of the signal regions used in the fit. The events are divided based on their reconstructed values of the spin-sensitive variables \chel and \chan. The Figure is adapted from Reference \cite{atlas_toponium}.}
+    \label{fig:def:sr}
+\end{figure}
+For the Asimov-fit, only the SRs and the CR-Z will be used. Due to the reduced fit-setup applied here, the fit parameters are  $\mu(t\bar{t}_{\text{NRQCD}})$, $\mu(t\bar{t}_{\text{pQCD}})$, and $\mu(t\bar{t}_{Z\text{+jets}})$. The latter will be fitted in the CR-Z regions, with events binned with respect to the dilepton-mass. Normalisation factors for the \ttbar-production processes will be adjusted in 9 signal regions, which require the event selection described in the previous section and further categorised in SRs defined in \Cref{fig:def:sr} according to their values of \chel and \chan. Within these regions, the events are binned with respect to the reconstructed $m(t\bar{t})$ with a width of $50~\GeV$. Defining the signal regions with respect to the spin-sensitive variables allows a more sophisticated test of the spin-structure of the cross-section enhancement at the threshold. As it was outlined in \Cref{sec:spin_sensitive_variables}, different spin states show distinctive distributions of the markers \chel and \chan, making the fit sensitive to not only the enhancement of the cross-section but also the internal structure of the decaying \ttbar-system.
+The Asimov-data used for fitting, is obtained by summing all samples with normalisation factors set to $1$. 
 
 
 \section{Validation Using ATLAS 2018 Data}
