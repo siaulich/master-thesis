@@ -9,7 +9,7 @@
 This section provides a brief overview on the modelling and reconstruction of top-quark pair events. The simulated sampled of \ttbar-events is generated using a Monte-Carlo event generation as described in \Cref{sec:mc_training_data}.
 
 While a complete analysis requires detailed investigation of background processes contributing to the signal regions, the following chapters focuses on developing and evaluating machine-learning methods applied to \ttbar events.
-Therefore, only the signal process of \ttbar production with dileptonic decays is described here. The background processes and their simulation will be discussed in the later \Cref{chap:physics-analysis}, that provides a data-driven validation of the method.
+Therefore, only the signal process of \ttbar production with dileptonic decays is described here. The background processes and their simulation is discussed in the later \Cref{chap:physics-analysis}, that provides a data-driven validation of the method.
 
 \subsection{Simulation of Dileptonic Top-Quark Pair Events}
 \label{sec:nominal_ttbar}
@@ -32,7 +32,7 @@ The reconstruction of physics objects—electrons, muons, jets, and missing tran
 
 \subsection{Event Selection}
 \label{sec:event-selection}
-Events are selected to contain exactly two oppositely charged leptons (electrons or muons). One of the leptons must have \pt $> 25~\unit{\giga\electronvolt}$, while the other must have \pt $> 5~\unit{\giga\electronvolt}$. At least two jets are required, with at least one being $b$-tagged at the $85\%$ working point (WP). Additional selection criteria are applied to suppress background contributions, which will be detailed in the final thesis.
+Events are selected to contain exactly two oppositely charged leptons (electrons or muons). One of the leptons must have \pt $> 25~\unit{\giga\electronvolt}$, while the other must have \pt $> 5~\unit{\giga\electronvolt}$. At least two jets are required, with at least one being $b$-tagged at the $85\%$ working point (WP). Additional selection criteria are applied to suppress background contributions, which is outlined in the later \Cref{chap:physics-analysis}.
 
 For the training and evaluation of the reconstruction methods, only events that pass the selection criteria and have a successful parton matching are considered. Fully parton-matched events, make up about $60\%$ of the whole sample. Events with jets or leptons of the \ttbar-process end up outside the detector acceptance are typically the main cause for an event being unmatchable. Thus, training with only parton-matched events might introduce a bias with respect to certain event topologies, if they are disfavoured to have a parton-matching.
 
