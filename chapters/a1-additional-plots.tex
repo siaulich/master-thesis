@@ -260,9 +260,107 @@
 \end{figure}%
 
 
-\begin{figure}{H}
+\begin{figure}[H]
     \centering
     \includegraphics[width=1.0\textwidth]{plots/gaussian_loss/distributions/ttbar_mass_distributions.pdf}
     \caption{Comparison of variable distributions at reco- and truth-level for the different regression settings of the MultiModalTransformer trained with the Gaussian-loss.}
     \label{fig:gaussian_loss:ttbar_mass_dist}
 \end{figure}
+
+
+
+\section{Fit Results}
+\subsection{Asimov-Fit}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=1.\textwidth]{plots/asimov_fit/asimov_dilep_assigner/my_fit/Plots/dilep_assigner_sr9_dilep_assigner_ttbar_mass_postFit.pdf}
+        \caption{MultiModalTransformer}
+        \label{fig:sr_9_post_asimov_fit:mmt}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=1.\textwidth]{plots/asimov_fit/asimov_nu_flows/my_fit/Plots/nu_flows_sr9_nu_flows_ttbar_mass_postFit.pdf}
+        \caption{$\nu^2$-Flows}
+        \label{fig:sr_9_post_asimov_fit:nu_flows}
+    \end{subfigure}
+        \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=1.\textwidth]{plots/asimov_fit/asimov_nu_weighter/my_fit/Plots/nu_weighter_sr9_nu_weighter_ttbar_mass_postFit.pdf}
+        \caption{$\nu$-Weighter}
+        \label{fig:sr_9_post_asimov_fit:nu_weighter}
+    \end{subfigure}
+    \caption{Plots of SR 9 for the different reconstruction methods used. The upper panels show the stacked event yield per bin from different components. The lower panels show the ratio of signal over background in the corresponding bins, where signal refers to the contribution from non-relativistic QCD and the background correspondingly all other contributions.}
+    \label{fig:sr_9_post_asimov_fit}
+\end{figure}
+
+
+\subsection{Data-Driven Validation}
+\begin{table}[H]
+    \centering
+    \caption{Fit results for the baseline-methods obtained by fitting the simulated processes for dileptonic decay \ttbar-production with data collected by \atlas in 2018.}
+    \label{tab:fit_result_baseline}
+    \begin{tabular}{ccc}
+        \toprule
+        Method & $\mu(t\bar{t}_{\text{pQCD}})$ & $\mu(Z\text{+jets})$\\
+        \midrule
+        $\nu$-Weighter  &$0.963^{+0.0017}_{-0.0017}$ & $1.01^{+0.02}_{-0.02}$ \\
+        $\nu^2$-Flows &$0.958^{+0.0018}_{-0.0018}$ & $1.073^{+0.02}_{-0.02}$\\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=1.0\textwidth]{plots/data_mc_plots/data_validation_nu_flows/my_fit/Plots/nu_flows_cr_ee_nu_flows_top_mass_postFit.pdf}
+        \caption{CR $ee$}
+        \label{fig:cr_ee:top_mass_nu_flows}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=1.0\textwidth]{plots/data_mc_plots/data_validation_nu_flows/my_fit/Plots/nu_flows_cr_mumu_nu_flows_top_mass_postFit.pdf}
+        \caption{CR $\mu\mu$}
+        \label{fig:cr_mumu:top_mass_nu_flows}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=1.0\textwidth]{plots/data_mc_plots/data_validation_nu_flows/my_fit/Plots/nu_flows_cr_emu_nu_flows_top_mass_postFit.pdf}
+        \caption{CR $e\mu$}
+        \label{fig:cr_emu:top_mass_nu_flows}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=1.0\textwidth]{plots/data_mc_plots/data_validation_nu_flows/my_fit/Plots/nu_flows_crZ_dilepton_mass_postFit.pdf}
+        \caption{CR Z}
+        \label{fig:cr_z_dilep_mass_nu_flows}
+    \end{subfigure}
+    \caption{Plots showing the comparison between data and simulation of top-quark pair production and its leading backgrounds. The different control regions used in the fits are shown as stacked histogrmas of the different distributions, where the normalisations for $t\bar{t}_{\text{pQCD}}$ and $Z$+jets are extracted from the fit as summarised in \Cref{eg:data_validation:results}. Note, that the reconstruction of the \ttbar-system is performed using $\nu^2$-Flows.}
+    \label{fig:cr_data_nu_flows}
+\end{figure}
+
+
+
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=1.0\textwidth]{plots/data_mc_plots/data_validation_nu_weighter/my_fit/Plots/nu_weighter_cr_ee_nu_weighter_top_mass_postFit.pdf}
+        \caption{CR $ee$}
+        \label{fig:cr_ee:top_mass_nu_weighter}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=1.0\textwidth]{plots/data_mc_plots/data_validation_nu_weighter/my_fit/Plots/nu_weighter_cr_mumu_nu_weighter_top_mass_postFit.pdf}
+        \caption{CR $\mu\mu$}
+        \label{fig:cr_mumu:top_mass_nu_weighter}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=1.0\textwidth]{plots/data_mc_plots/data_validation_nu_weighter/my_fit/Plots/nu_weighter_cr_emu_nu_weighter_top_mass_postFit.pdf}
+        \caption{CR $e\mu$}
+        \label{fig:cr_emu:top_mass_nu_weighter}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=1.0\textwidth]{plots/data_mc_plots/data_validation_nu_weighter/my_fit/Plots/nu_weighter_crZ_dilepton_mass_postFit.pdf}
+        \caption{CR Z}
+        \label{fig:cr_z_dilep_mass_nu_weighter}
+    \end{subfigure}
+    \caption{Plots showing the comparison between data and simulation of top-quark pair production and its leading backgrounds. The different control regions used in the fits are shown as stacked histogrmas of the different distributions, where the normalisations for $t\bar{t}_{\text{pQCD}}$ and $Z$+jets are extracted from the fit as summarised in \Cref{eg:data_validation:results}. Note, that the reconstruction of the \ttbar-system is performed using $\nu$-Weighter.}
+    \label{fig:cr_data_nu_weighter}
+\end{figure}
+

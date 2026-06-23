@@ -54,7 +54,7 @@ The identification of $b$-jets is crucial for the reconstruction of \ttbar event
 \subsection{Jet Assignment Methods}
 \label{sec:jet_assignment}
 This thesis explores several methods for jet assignment, ranging from traditional algorithms to machine learning approaches. While the leptons can be assigned to the $W$ bosons based on their charge, the assignment of jets to the $b$-quarks is not straightforward due to the presence of multiple jets in the event. All the methods presented here, utilise kinematic relationships to make an assignment which jet and lepton stem from the same top quark decay.
-From recent publications e.g. \cite{ATLAS2024Entanglement}, two conventional methods have been implemented as baselines:
+From recent publications e.g. \cite{atlas_entanglement}, two conventional methods have been implemented as baselines:
 
 \paragraph{Jet-Selection}
 Both methods start by selecting the two $b$-jet candidates in the event based on the $b$-tagging at the $77\%$ WP. If more than two $b$-tagged jets are present, the two with the highest \pt are chosen. If only one $b$-tagged jet is found, the non-tagged jet with the highest $b$-tagging score is selected as the second candidate.
@@ -84,7 +84,7 @@ For the analysis here, the regression from $\nu^2$-Flows was found to deliver a 
 
 Empiric evidence for the validity of both can be found in \Cref{fig:jet_lepton_pairing}, which shows the distributions of the reconstructed invariant mass of the top quark and the $\Delta R$ between the jet and lepton for correct and incorrect jet-lepton pairs. The correct pairs show a clear peak around the top quark mass in the invariant mass distribution and a smaller $\Delta R$ compared to incorrect pairs, which supports the use of these variables for jet assignment.
 
-The $\Delta R$-Method was used in previous \atlas analyses \cite{ATLAS2024Entanglement} for events, that failed the kinematic reconstruction required for the $\chi^2$-Method. However, in this thesis, both methods are evaluated on the full dataset for comparison. 
+The $\Delta R$-Method was used in previous \atlas analyses \cite{atlas_entanglement} for events, that failed the kinematic reconstruction required for the $\chi^2$-Method. However, in this thesis, both methods are evaluated on the full dataset for comparison. 
 
 \begin{figure}
     \centering
