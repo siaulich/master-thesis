@@ -107,8 +107,9 @@ In the CR-$\ell\ell$ the normalisation of the top-quark production is fitted. No
     \mu(t\bar{t}_{\text{pQCD}})&=0.966^{+0.002}_{-0.002},& \mu(Z\text{+jets})&=1.08^{+0.03}_{-0.03}.
     \label{eg:data_validation:results}
 \end{align}
-For both processes, the normalisations are close to the nominal value of one. While the normalisation for the top-quark pair production deviates from one beyond its uncertainties, this can be attributed to the simplified modelling of the background and the lack of systematic uncertainties. This is further supported by the observation, that the norm factors show similar departures from the nominal values for the baseline reconstruction methods. The corresponding fit results can be found in \Cref{tab:fit_result_baseline} in the Appendix. \Cref{fig:cr_data} summarises the distributions in the different regions with fit-adjusted normalisations (Post-fit). Generally, the data seems to be in superb agreement with the simulation. The distribution match very closely in all bins with sufficient events. This verifies, that the MultiModalTransformer is expected to behave similarly on data as it does on the simulated events, which is important for its application in future analyses.
-
+For both processes, the normalisations are close to the nominal value of one. While the normalisation for the top-quark pair production deviates from one beyond its uncertainties, this can be attributed to the simplified modelling of the background and the lack of systematic uncertainties. This is further supported by the observation, that the norm factors show similar departures from the nominal values for the baseline reconstruction methods. The corresponding fit results can be found in \Cref{tab:fit_result_baseline} in the Appendix. \Cref{fig:cr_data} summarises the distributions in the different regions with fit-adjusted normalisations (Post-fit). Generally, the data seems to be in superb agreement with the simulation. The distribution match very closely in all bins with sufficient events. Moreover, the distributions are very similar for the different leptons. Notably, all distributions show a peak for the reconstructed top-quark mass significantly below the nominal value. This is consistent with the biases discussed in the Chapters before. 
+Other variables insensitive variables that rely on reconstruction and neutrino assignment were investigated, such as $p_T(t/W),E(t/W),\eta(t/W)$. For these variables, a similar agreement between the data and simulation was found.
+It can be concluded, that the MultiModalTransformer is expected to behave similarly on data as it does on the simulated events, which is important for its application in future analyses.
 
 \begin{figure}
     \centering
@@ -132,6 +133,6 @@ For both processes, the normalisations are close to the nominal value of one. Wh
         \caption{CR Z}
         \label{fig:cr_z_dilep_mass}
     \end{subfigure}
-    \caption{Plots showing the comparison between data and simulation of top-quark pair production and its leading backgrounds. The different control regions used in the fits are shown as stacked histogrmas of the different distributions, where the normalisations for $t\bar{t}_{\text{pQCD}}$ and $Z$+jets are extracted from the fit as summarised in \Cref{eg:data_validation:results}. Note, that the reconstruction of the \ttbar-system is performed using the MultiModalTransformer.}
+    \caption{Plots showing the comparison between data and simulation of top-quark pair production and its leading backgrounds. The different control regions used in the fits are shown as stacked histograms of the Post-fit distributions. Note, that the reconstruction of the \ttbar-system is performed using the MultiModalTransformer.}
     \label{fig:cr_data}
 \end{figure}

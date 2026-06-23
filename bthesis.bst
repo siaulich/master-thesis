@@ -43,6 +43,7 @@ ENTRY
     booktitle
     chapter
     collaboration
+    doi
     edition
     editor
     eid
@@ -64,6 +65,7 @@ ENTRY
     type
     url
     volume
+    version
     year
   }
   {}
@@ -389,6 +391,12 @@ FUNCTION {format.url}
 { url empty$
     { "" }
     { "\urlprefix\url{" url * "}" * }
+  if$
+}
+FUNCTION {format.doi}
+{ doi empty$
+    { "" }
+    { "\href{https://www.doi.org/" doi * "}{" * doi * "}" * }
   if$
 }
 
@@ -939,8 +947,8 @@ FUNCTION {book}
   format.edition output
   format.date "year" output.check
   format.note output
-  format.eprint output
-  format.url output
+  % format.eprint output
+  % format.url output
   fin.entry
 }
 FUNCTION {booklet}
@@ -951,10 +959,31 @@ FUNCTION {booklet}
   address "address" bibinfo.check output
   format.date output
   format.note output
-  format.eprint output
-  format.url output
+  % format.eprint output
+  % format.url output
   fin.entry
 }
+
+FUNCTION {format.version}
+{ version
+}
+
+FUNCTION {format.publisher}
+{ publisher "publisher" bibinfo.warn format.org.or.pub
+}
+
+
+FUNCTION {software}
+{ output.bibitem
+  format.authors output
+  format.title "title" output.check
+  format.version output
+  format.publisher output
+  format.date output
+  format.doi output
+  fin.entry
+}
+
 
 FUNCTION {inbook}
 { output.bibitem
@@ -984,8 +1013,8 @@ FUNCTION {inbook}
   format.edition output
   format.date "year" output.check
   format.note output
-  format.eprint output
-  format.url output
+  % format.eprint output
+  % format.url output
   fin.entry
 }
 
@@ -1007,8 +1036,8 @@ FUNCTION {incollection}
     }
   if$
   format.note output
-  format.eprint output
-  format.url output
+  % format.eprint output
+  % format.url output
   fin.entry
 }
 FUNCTION {inproceedings}
@@ -1033,8 +1062,8 @@ FUNCTION {inproceedings}
     }
   if$
   format.note output
-  format.eprint output
-  format.url output
+  % format.eprint output
+  % format.url output
   fin.entry
 }
 FUNCTION {conference} { inproceedings }
@@ -1067,8 +1096,8 @@ FUNCTION {manual}
   format.edition output
   format.date output
   format.note output
-  format.eprint output
-  format.url output
+  % format.eprint output
+  % format.url output
   fin.entry
 }
 
