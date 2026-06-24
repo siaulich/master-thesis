@@ -158,16 +158,17 @@ The spin-analysing power measures, to which extent the spin-information of the p
 
 \subsection{Top-Quark Pair Qausi-Bound-State Effects}
 \label{sec:ttbar_toponium}
-Even though the top quark decays before it can hadronise, near the production threshold of top-quark pairs, the strong interaction between the top and top antiquarks can lead to the formation of transient bound states, coined as toponium~\cite{toponium_1,toponium_2,toponium_3}. These bound state effects can influence the production cross section and kinematic distributions of top-quark pairs near threshold. The \cms and \atlas collaborations have recently observed an excess in the invariant mass distribution of top-quark pairs near threshold, consistent with the presence of toponium bound state effects~\cite{CMS2025Pseudoscalar,atlas_toponium}. The modelling of these effects is based on non-relativistic QCD (NRQCD) calculations, which account for the strong interaction dynamics between the top and top antiquarks in the near-threshold region~\cite{NRQCD_toponium_1, NRQCD_toponium_2}. The leading contributions arise from the formation of colour-singlet $^1S_0$, which enhance the cross-section due to an attractive QCD potential, the differential cross-sections related to the different colour-states can be found in \Cref{fig:toponium_mttbar}. A proper introduction to the physics behind this effect would exceed the scope of this thesis, which focusses on reconstruction techniques. Thus, for further reference, the reader is pointed to the aforementioned References \cite{NRQCD_toponium_1, NRQCD_toponium_2}. 
-
-Understanding and accurately modelling these bound state effects is crucial for precision measurements of top-quark properties and for searches for new physics in top-quark pair production. One notable example is the measurement of quantum effects, where the strength of the observed entanglement properties is influenced by the bound-states effect, and their effect on the spin-structure of the top-quark pair system. The measurement of these effects relies on a reconstruction of the top-quark system at the production threshold and uses angular correlations between the top-quark's decay products similar to the study of quantum effects.
-
 \begin{figure}[ht]
     \centering
     \includegraphics[width=.7\textwidth]{figures/toponium/xs2lhc14.pdf}
     \caption{Differential cross-section of top-quark pair production in a colour- singlet or -octet state. The Figure is taken from Reference \cite{toponium_2}, which provides further details on the underlying modelling.}
     \label{fig:toponium_mttbar}
 \end{figure}
+
+Even though the top quark decays before it can hadronise, near the production threshold of top-quark pairs, the strong interaction between the top and top antiquarks can lead to the formation of transient bound states, coined as toponium~\cite{toponium_1,toponium_2,toponium_3}. These bound state effects can influence the production cross section and kinematic distributions of top-quark pairs near threshold. The \cms and \atlas collaborations have recently observed an excess in the invariant mass distribution of top-quark pairs near threshold, consistent with the presence of toponium bound state effects~\cite{CMS2025Pseudoscalar,atlas_toponium}. The modelling of these effects is based on non-relativistic QCD (NRQCD) calculations, which account for the strong interaction dynamics between the top and top antiquarks in the near-threshold region~\cite{NRQCD_toponium_1, NRQCD_toponium_2}. The leading contributions arise from the formation of colour-singlet $^1S_0$, which enhance the cross-section due to an attractive QCD potential, the differential cross-sections related to the different colour-states can be found in \Cref{fig:toponium_mttbar}. A proper introduction to the physics behind this effect would exceed the scope of this thesis, which focusses on reconstruction techniques. Thus, for further reference, the reader is pointed to the aforementioned References \cite{NRQCD_toponium_1, NRQCD_toponium_2}. 
+
+Understanding and accurately modelling these bound state effects is crucial for precision measurements of top-quark properties and for searches for new physics in top-quark pair production. One notable example is the measurement of quantum effects, where the strength of the observed entanglement properties is influenced by the bound-states effect, and their effect on the spin-structure of the top-quark pair system. The measurement of these effects relies on a reconstruction of the top-quark system at the production threshold and uses angular correlations between the top-quark's decay products similar to the study of quantum effects.
+
 
 
 
@@ -196,12 +197,13 @@ If one assumes the neutrinos to be massless, these six equations provide constra
 \label{sec:spin_sensitive_variables}
 To study spin correlations and entanglement in top-quark pairs, a spin-sensitive angular variable is used. For the measurements of the quasi-bound-state effects, an additional angular variable is employed. Both variables are defined using the charged leptons from the dileptonic decay of the top-quark pair.
 
-To define the variables, the momenta of the leptons are first boosted into their respective parent top-quark rest frames $\hat \ell_{t}^+$ and $\hat \ell^-_t$. The inner product of these unit vectors then defines the variable
+To compute the variables, top-quarks and leptons are boosted to the rest frame of the \ttbar-system.
+Their momentum vectors are boosted once more into their respective parent top-quark's rest frame. The normalised vector of these transformed momenta are labelled as $\hat \ell_{t}^+$ and $\hat \ell^-_{t}$. The inner product of these unit vectors then defines the variable
 \begin{equation}
     \label{eq:c_hel}
     c_{\text{hel}} = \hat \ell_{t}^+ \cdot \hat \ell_{t}^-\,.
 \end{equation}
-Analogously, one can define the variable \chan, where either of the lepton momenta components parallel to the parent top-quark momentum in the \ttbar rest frame is flipped before taking the inner product \cite{bernreuther_nlospin_2004,bernreuther_spin_observables}. This variable adds important context by enabling isolation of scalar states. Differential cross-section of the spin-states obtained from simulation are found in \Cref{fig:spin_sensitive_theory}.
+Analogously, one can define the variable \chan, where either of the lepton momenta components parallel to the parent top-quark momentum in the \ttbar rest frame is flipped before taking the inner product \cite{bernreuther_nlospin_2004,bernreuther_spin_observables}. This variable adds important context by enabling isolation of scalar states. Differential cross-section of the spin-states obtained from simulation are found in \Cref{fig:spin_sensitive_theory}. The distributions clearly show the distinctive shapes of the different spin states. Further, a stark difference in the slope for perturbative QCD computation and a modelling of the quasi-bound state can be found. This highlights the variables' sensitivity to the spin-structure of the \ttbar-system.
 
 \begin{figure}[ht]
     \centering
@@ -218,6 +220,6 @@ Analogously, one can define the variable \chan, where either of the lepton momen
         \caption{\chan}
         \label{fig:c_han_theory}
     \end{subfigure}
-    \caption{Simulation of the distributions of  \chel and \chan for dileptonic decaying top-quark pairs produced near threshold for different spin states and combinations thereof. The distributions are normalised to unity and computed at parton level. The Figures are taken from Reference~\cite{atlas_toponium}.}
+    \caption{Simulation of the distributions of  \chel and \chan for dileptonic decaying top-quark pairs produced near threshold. Distributions are shown for different spin states, as well as calculations using perturbative QCD (pQCD) or a modelling of the quasi-bound-state effects using a Green's Function Reweighting (GFRW) \cite{NRQCD_toponium_2}. The distributions are normalised to unity and computed at parton level. The Figures are taken from Reference~\cite{atlas_toponium}.}
     \label{fig:spin_sensitive_theory}
 \end{figure}

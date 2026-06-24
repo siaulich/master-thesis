@@ -1,9 +1,9 @@
 \chapter{Experimental Setup}
 \label{chap:experiment_setup}
 \section{The LHC}
-The Large Hadron Collider (\lhc) at \cern is a synchrotron designed to accelerate protons and lead nuclei. This work focuses on the proton-proton collisions during \LHCrunii. During \LHCrunii from 2015 to 2018, the \lhc operated at a centre of mass energy of $\sqrt{s}=13\,\unit{\tera\electronvolt}$ with an integrated luminosity of $\mathcal{L}_{int}\approx 140\,\unit{\femto\barn^{-1}}$ \cite{ATLAS:2019pzw}.
+The Large Hadron Collider (\lhc) at \cern is a synchrotron designed to accelerate protons and lead nuclei. This work focuses on the proton-proton collisions during \LHCrunii. During \LHCrunii from 2015 to 2018, the \lhc operated at a centre of mass energy of $\sqrt{s}=13\,\unit{\tera\electronvolt}$ with an integrated luminosity of $\mathcal{L}_{\text{int}}\approx 140\,\unit{\femto\barn^{-1}}$ \cite{ATLAS:2019pzw}.
 
-After completion of \LHCruniii in June 2026 and an operational pause, the \lhc will operate with increased luminosity as the High-Luminosity Large Hadron Collider (HL-\lhc). During this phase, it is planned to accumulate data with an integrated luminosity of around $\mathcal{L}=3\,\unit{\atto\barn^{-1}}$ \cite{Aberle:2749422}.
+After completion of \LHCruniii in June 2026 and an operational pause, the \lhc will operate with increased luminosity as the High-Luminosity Large Hadron Collider (HL-\lhc). During this phase, it is planned to accumulate data with an integrated luminosity of around $\mathcal{L}_{\text{int}}=3\,\unit{\atto\barn^{-1}}$ \cite{Aberle:2749422}.
 
 
 \section{The Detector}
@@ -47,7 +47,7 @@ The outermost part of the inner detector is the transition radiation tracker (TR
 \end{figure}\noindent
 The calorimeters are the detector layers following the inner detectors. Its structure is divided into the Electromagnetic calorimeter (ECal) and the hadronic calorimeter (HCal).
 \subsubsection{Electromagnetic Calorimeter}
-The ECal is used for the energy and position measurement of electric charged particles and photons. It utilises bremsstrahlung and pair production to create a cascade of charged particles which are measured. It offers full azimuthal coverage and is equipped with end caps in the longitudinal direction of the beam pipe. The \atlas ECal is a sampling calorimeter operating with lead as the passive and liquid Argon as the active medium. The innermost part of the ECal is a presampler which detects if the particle started showering before reaching the ECal.
+The ECal is used for the energy and position measurement of electric charged particles and photons. It utilises bremsstrahlung and pair production to create a cascade of charged particles which are measured. Apart from offering full azimuthal coverage, it is equipped with end caps in the longitudinal direction of the beam pipe. The \atlas ECal is a sampling calorimeter operating with lead as the passive and liquid Argon as the active medium. The innermost part of the ECal is a presampler which detects if the particle started showering before reaching the ECal.
 \subsubsection{Hadronic Calorimeter}
 The HCal measures the energy and position of baryons and mesons through strong interactions with the nuclei. In the range of $|\eta|<1.7$ it is a sampling calorimeter with steel as the passive and scintillators as the active medium. For the end cap, liquid Argon is deployed as the active medium. The HCal works with the same principle as the ECal but offers less precise measurements.
 
@@ -61,4 +61,4 @@ The muon spectrometer is the outermost part of the \atlas detector. Its purpose 
 
 
 \subsection{Trigger System}
-With a bunch spacing of $25\,\unit{\nano\second}$ \cite{ATLAS:2019pzw} collisions happen at a rate of $40\,\unit{\mega\hertz}$. Each collision involves up to hundreds of particles. To reduce the data to a feasible amount, triggers are employed to filter less interesting events. Different layers of triggers operate either at the hardware or software level. The L1 trigger is a hardware level trigger and acts as the first filter for the events. It makes decisions in less than $2.5\,\unit{\micro\second}$. The subsequent L2 trigger is a software level trigger and makes decisions in less than $200\,\unit{\micro \second}$. Combined, the trigger system reduces the event rate from $40\,\unit{\mega\hertz}$ to $1000\,\unit{\hertz}$ which are then stored at the \cern data centre.
+With a bunch spacing of $25\,\unit{\nano\second}$ \cite{ATLAS:2019pzw} collisions happen at a rate of $40\,\unit{\mega\hertz}$. Each collision involves hundreds of particles. To reduce the data to a feasible amount, triggers are employed to filter less interesting events. Different layers of triggers operate either at the hardware or software level. The L1 trigger is a hardware level trigger and acts as the first filter for the events. It makes decisions in less than $2.5\,\unit{\micro\second}$. The subsequent L2 trigger is a software level trigger and makes decisions in less than $200\,\unit{\micro \second}$. Combined, the trigger system reduces the event rate from $40\,\unit{\mega\hertz}$ to $1000\,\unit{\hertz}$. The events from this stream are then stored at the \cern data centre.
