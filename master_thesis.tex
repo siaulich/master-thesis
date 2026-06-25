@@ -1,15 +1,15 @@
 \documentclass[master,
-               oneside,
-               BCOR=10mm,
-               ngerman,
-               english,
-               %final,%% Endversion; draft fuer schnelles Kompilieren
-               ]{GAUBM}
+  oneside,
+  BCOR=10mm,
+  ngerman,
+  english,
+  %final,%% Endversion; draft fuer schnelles Kompilieren
+]{GAUBM}
 
 \usepackage{float}
 \usepackage{graphicx}
 \usepackage{placeins}
-\usepackage{wrapfig} 
+\usepackage{wrapfig}
 \usepackage{setspace}
 \usepackage{babel}
 \usepackage{calc}
@@ -33,7 +33,6 @@
 \usepackage{multirow}
 \usepackage[comma,numbers,sort&compress]{natbib}
 
-
 \makeatletter
 \newcommand{\subrefb}[1]{(\subref{#1})}
 \makeatother
@@ -46,27 +45,28 @@
 \usepackage{textcomp,gensymb}
 \usepackage{hyperref}
 \hypersetup{colorlinks=true,
-            allcolors=blue,
-            pdfstartview=FitH,
-            breaklinks=true,
-            bookmarksopen=true,
-            bookmarksnumbered=true}
+  allcolors=blue,
+  pdfstartview=FitH,
+  breaklinks=true,
+  bookmarksopen=true,
+bookmarksnumbered=true}
 \usepackage{cleveref}
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\argmax}{arg\,max}
-
 
 \begin{document}
 
 \ThesisAuthor{Siemen Henning}{Aulich}
 \PlaceOfBirth{Emden}
-\ThesisTitle{Improving the Reconstruction of Top-Quark Pairs in Dileptonic Final States in ATLAS Using Machine Learning}{}%{Verbesserung der Rekonstruktion von Top-Quark-Paaren in Dileptonischen Endzuständen im ATLAS-Experiment mit Maschinellem Lernen}
+\ThesisTitle{Improving the Reconstruction of Top-Quark Pairs in
+  Dileptonic Final States in ATLAS Using Machine
+Learning}{}%{Verbesserung der Rekonstruktion von Top-Quark-Paaren in
+% Dileptonischen Endzuständen im ATLAS-Experiment mit Maschinellem Lernen}
 \FirstReferee{Prof.~Dr.~Stan Lai}
 \Institute{DESY Hamburg}
 \SecondReferee{Dr.~Katharina Behr}
 
 \ReferenceNumber{II.Physik-UniGö-MSc-2026/10}
-
 
 \ThesisBegin{7}{4}{2025}
 \ThesisEnd{6}{7}{2026}
@@ -75,15 +75,48 @@
 \maketitle
 \cleardoublepage
 \begin{abstract}
-  \noindent Many of the recent highlights in particle physics research are related to top-quark physics. These include both the stringent tests of spin correlations and quantum effects in pairs of top quarks ($t\bar{t}$), and the observation of a possible quasi-bound state resonance in the $t\bar{t}$
-  invariant mass spectrum. The latter presents a very exciting opportunity to extend the current understanding of non-relativistic Quantum Chromodynamics. Both effects are predominantly studied in the dilepton decay channel of the top quark in a mass range close to the $t\bar{t}$ production threshold.
+  \noindent Many of the recent highlights in particle physics
+  research are related to top-quark physics. These include both the
+  stringent tests of spin correlations and quantum effects in pairs
+  of top quarks ($t\bar{t}$), and the observation of a possible
+  quasi-bound state resonance in the $t\bar{t}$
+  invariant mass spectrum. The latter presents a very exciting
+  opportunity to extend the current understanding of non-relativistic
+  Quantum Chromodynamics. Both effects are predominantly studied in
+  the dilepton decay channel of the top quark in a mass range close
+  to the $t\bar{t}$ production threshold.
 
-  The dilepton final state contains two neutrinos, besides two charged leptons and two $b$-quark jets. Probing this system requires a precise reconstruction of the top quarks, which is complicated by the presence of the two neutrinos.  While past reconstruction strategies primarily focussed on inferring the neutrino momenta, the problem of correctly assigning $b$-jets to their parent top quarks remained largely understudied. However, many of the sensitive variables used in $t\bar{t}$  precision measurements depend critically on the correct assignment of the jets.
+  The dilepton final state contains two neutrinos, besides two
+  charged leptons and two $b$-quark jets. Probing this system
+  requires a precise reconstruction of the top quarks, which is
+  complicated by the presence of the two neutrinos.  While past
+  reconstruction strategies primarily focussed on inferring the
+  neutrino momenta, the problem of correctly assigning $b$-jets to
+  their parent top quarks remained largely understudied. However,
+  many of the sensitive variables used in $t\bar{t}$  precision
+  measurements depend critically on the correct assignment of the jets.
 
-  Inspired by the success of machine learning architectures in tackling the assignment challenge for hadronic decay channels, as well as tools providing neutrino regression for the dilepton channel, this work demonstrates how both tasks can be performed by one model. For this, different models and setups are implemented and evaluated. A discussion of machine-learning related aspects of different architectures, is followed by an in-depth analysis of the method's strengths and merits. Lastly, using the example of a simplified analysis-setup, its ability to improve sensitive of measurements will be demonstrated. By comparing distributions of \atlas event data and simulated events, the model's readiness for usage in a full analysis-setting is shown. The method presented here, is the very first ml-tool to provide a full reconstruction of the dileptonic decay channel that is available in the \atlas-experiment's official software repository.
-  Applying the tools developed in this work to existing and upcoming analyses promises substantial enhancements in the sensitivity and precision of searches and measurements alike.
+  Inspired by the success of machine learning architectures in
+  tackling the assignment challenge for hadronic decay channels, as
+  well as tools providing neutrino regression for the dilepton
+  channel, this work demonstrates how both tasks can be performed by
+  one model. For this, different models and setups are implemented
+  and evaluated. A discussion of machine-learning related aspects of
+  different architectures, is followed by an in-depth analysis of the
+  method's strengths and merits. Lastly, using the example of a
+  simplified analysis-setup, its ability to improve sensitive of
+  measurements will be demonstrated. By comparing distributions of
+  \atlas event data and simulated events, the model's readiness for
+  usage in a full analysis-setting is shown. The method presented
+  here, is the very first ml-tool to provide a full reconstruction of
+  the dileptonic decay channel that is available in the
+  \atlas-experiment's official software repository.
+  Applying the tools developed in this work to existing and upcoming
+  analyses promises substantial enhancements in the sensitivity and
+  precision of searches and measurements alike.
   \bigskip\par
-  \textbf{Keywords:} Top Quark, Dileptonic Decay, Event Reconstruction, Machine Learning, Transformer Networks
+  \textbf{Keywords:} Top Quark, Dileptonic Decay, Event
+  Reconstruction, Machine Learning, Transformer Networks
 \end{abstract}
 
 \cleardoublepage
@@ -100,29 +133,40 @@
 \include{chapters/08-physics-analysis}
 \include{chapters/09-conclusion}
 
-
 \appendix
 \include{chapters/a1-additional-plots}
 \include{chapters/a3-proofs-computations}
 
-
 \cleardoublepage
-
 
 \bibliography{bthesis_datenbank}
 
 \chapter*{Acknowledgements}
-There are numerous people, that have supported me along my path, mentioning all of them here would certainly exceed the scope of this thesis. However, I still want to try to give credit to the people that made this entire thesis possible.
+There are numerous people, that have supported me along my path,
+mentioning all of them here would certainly exceed the scope of this
+thesis. However, I still want to try to give credit to the people
+that made this entire thesis possible.
 
-First and foremost, I would like to express my deepest gratitude to Dr. Katharina Behr. She took me on as a student and provided me with the opportunity to work on this topic. Her guidance, support, and encouragement have been invaluable throughout this journey. She always supported me in pursuing my ideas and provided me with the freedom to explore different approaches, which has been crucial for the development of this thesis. She also enabled me to present my work at conferences and workshops, which has been an invaluable experience for me. I am truly grateful for her mentorship and the opportunities she has given me.
+First and foremost, I would like to express my deepest gratitude to
+Dr. Katharina Behr. She took me on as a student and provided me with
+the opportunity to work on this topic. Her guidance, support, and
+encouragement have been invaluable throughout this journey. She
+always supported me in pursuing my ideas and provided me with the
+freedom to explore different approaches, which has been crucial for
+the development of this thesis. She also enabled me to present my
+work at conferences and workshops, which has been an invaluable
+experience for me. I am truly grateful for her mentorship and the
+opportunities she has given me.
 
-Next, I want to thank Prof. Dr. Stan Lai. Despite me not being engaged in his research, he took on the supervision of this thesis. He also guided me through the administrative jungle to finish this degree and helped me with applications for PhD-positions. Taking on all of this extra work, despite me not being part of your core research group, is incredibly kind and deserves admiration.
+Next, I want to thank Prof. Dr. Stan Lai. Despite me not being
+engaged in his research, he took on the supervision of this thesis.
+He also guided me through the administrative jungle to finish this
+degree and helped me with applications for PhD-positions. Taking on
+all of this extra work, despite me not being part of your core
+research group, is incredibly kind and deserves admiration.
 
-Furthermore, I want to express my thanks to all members of Dr. Behr's research group at DESY: Eleanor, Fiona, Lucas, and Constant.
-
-
-
-
+Furthermore, I want to express my thanks to all members of Dr. Behr's
+research group at DESY: Eleanor, Fiona, Lucas, and Constant.
 
 \begin{otherlanguage}{ngerman}
   \Declaration

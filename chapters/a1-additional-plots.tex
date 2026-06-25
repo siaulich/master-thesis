@@ -2,318 +2,405 @@
 \label{chap:add-plots}
 \section{Data Feature Plots}
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\textwidth]{plots/feature_plots/btagging_performance_by_jet_multiplicity.pdf}
-    \caption{This plot shows the b-tagging performance for different numbers of jets in the event. For each jet multiplicity, the number of events, with only jets from top-decays being b-tagged and the number of events with additional or missing b-tagged jets is stacked. The percentage shows the fraction of events with only jets from top-decay being b-tagged.}
-    \label{fig:b_tag_performance_njets}
+  \centering
+  \includegraphics[width=0.7\textwidth]{plots/feature_plots/btagging_performance_by_jet_multiplicity.pdf}
+  \caption{This plot shows the b-tagging performance for different
+    numbers of jets in the event. For each jet multiplicity, the number
+    of events, with only jets from top-decays being b-tagged and the
+    number of events with additional or missing b-tagged jets is
+    stacked. The percentage shows the fraction of events with only jets
+  from top-decay being b-tagged.}
+  \label{fig:b_tag_performance_njets}
 \end{figure}
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\textwidth]{plots/feature_plots/btagging_performance_by_ttbar_mass.pdf}
-    \caption{This plot shows the b-tagging performance for different bins of the invariant mass \mttbar at parton level.}
-    \label{fig:b_tag_performance_ttbar_mass}
+  \centering
+  \includegraphics[width=0.7\textwidth]{plots/feature_plots/btagging_performance_by_ttbar_mass.pdf}
+  \caption{This plot shows the b-tagging performance for different
+  bins of the invariant mass \mttbar at parton level.}
+  \label{fig:b_tag_performance_ttbar_mass}
 \end{figure}
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=.7\textwidth]{plots/feature_plots/N_jets_vs_ttbar_mass.pdf}
-    \caption{This plot shows the b-tagging performance for different bins of the invariant mass \mttbar at parton level. For each bin, the number of events, with only jets from top-decays being b-tagged and the number of events with additional or missing b-tagged jets is stacked. The percentage shows the fraction of events with only jets from top-decay being b-tagged.}
-    \label{fig:feature_2d_ttbar_mass_njets}
+  \centering
+  \includegraphics[width=.7\textwidth]{plots/feature_plots/N_jets_vs_ttbar_mass.pdf}
+  \caption{This plot shows the b-tagging performance for different
+    bins of the invariant mass \mttbar at parton level. For each bin,
+    the number of events, with only jets from top-decays being b-tagged
+    and the number of events with additional or missing b-tagged jets
+    is stacked. The percentage shows the fraction of events with only
+  jets from top-decay being b-tagged.}
+  \label{fig:feature_2d_ttbar_mass_njets}
 \end{figure}
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=.7\textwidth]{plots/feature_plots/N_jets_vs_ttbar_pt.pdf}
-    \caption{This plot shows the distribution of events binned in the parton-level $p_T(t\bar{t})$ and number of jets per event.}
-    \label{fig:feature_2d_ttbar_pt_njets}
+  \centering
+  \includegraphics[width=.7\textwidth]{plots/feature_plots/N_jets_vs_ttbar_pt.pdf}
+  \caption{This plot shows the distribution of events binned in the
+  parton-level $p_T(t\bar{t})$ and number of jets per event.}
+  \label{fig:feature_2d_ttbar_pt_njets}
 \end{figure}
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\textwidth]{plots/feature_plots/ttbar_mass_vs_dR_l1l2.pdf}
-    \caption{This plot shows the distribution of events binned in the parton-level \mttbar and the angular distance $\Delta R(\ell_1,\ell_2)$.}
-    \label{fig:feature_2d_ttbar_mass_dR_l1l2}
+  \centering
+  \includegraphics[width=0.7\textwidth]{plots/feature_plots/ttbar_mass_vs_dR_l1l2.pdf}
+  \caption{This plot shows the distribution of events binned in the
+  parton-level \mttbar and the angular distance $\Delta R(\ell_1,\ell_2)$.}
+  \label{fig:feature_2d_ttbar_mass_dR_l1l2}
 \end{figure}
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\textwidth]{plots/feature_plots/ttbar_mass_vs_lep_nu_angle.pdf}
-    \caption{This plot shows the distribution of events binned in the parton-level \mttbar and the angle $ \theta(\nu,\ell)$ between the lepton and neutrino at parton level.}
-    \label{fig:feature_2d_ttbar_mass_angle_nu_lep}
+  \centering
+  \includegraphics[width=0.7\textwidth]{plots/feature_plots/ttbar_mass_vs_lep_nu_angle.pdf}
+  \caption{This plot shows the distribution of events binned in the
+    parton-level \mttbar and the angle $ \theta(\nu,\ell)$ between the
+  lepton and neutrino at parton level.}
+  \label{fig:feature_2d_ttbar_mass_angle_nu_lep}
 \end{figure}
 \subsubsection{Threshold Topology}
 \label{sec:threshold_topology}
 \begin{figure}[H]
-    \begin{subfigure}{0.49\textwidth}
-        \centering
-        \includegraphics[width=1.0\textwidth]{plots/feature_plots/relational_jet_lepton_deltaR_distribution.pdf}
-        \caption{Inclusive}
-        \label{fig:deltaR_pairing:inclusive}
-    \end{subfigure}
-    \begin{subfigure}{0.49\textwidth}
-        \centering
-        \includegraphics[width=1.0\textwidth]{plots/feature_plots/relational_jet_lepton_deltaR_distribution_m_tt_390GeV.pdf}
-        \caption{Near-Threshold}
-        \label{fig:deltaR_pairing:threshold}
-    \end{subfigure}
-    \caption{Distribution of $\Delta R(\ell,j)$ for correct and incorrect pairing of jets and leptons. Evaluated on the full sample in \subrefb{fig:deltaR_pairing:inclusive} and near-threshold in \subrefb{fig:deltaR_pairing:threshold}.}
-    \label{fig:deltaR_pairing}
+  \begin{subfigure}{0.49\textwidth}
+    \centering
+    \includegraphics[width=1.0\textwidth]{plots/feature_plots/relational_jet_lepton_deltaR_distribution.pdf}
+    \caption{Inclusive}
+    \label{fig:deltaR_pairing:inclusive}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \centering
+    \includegraphics[width=1.0\textwidth]{plots/feature_plots/relational_jet_lepton_deltaR_distribution_m_tt_390GeV.pdf}
+    \caption{Near-Threshold}
+    \label{fig:deltaR_pairing:threshold}
+  \end{subfigure}
+  \caption{Distribution of $\Delta R(\ell,j)$ for correct and
+    incorrect pairing of jets and leptons. Evaluated on the full sample
+    in \subrefb{fig:deltaR_pairing:inclusive} and near-threshold in
+  \subrefb{fig:deltaR_pairing:threshold}.}
+  \label{fig:deltaR_pairing}
 \end{figure}
 \begin{figure}[H]
-    \begin{subfigure}{0.49\textwidth}
-        \centering
-        \includegraphics[width=1.0\textwidth]{plots/feature_plots/relational_jet_lepton_full_inv_mass_distribution.pdf}
-        \caption{Inclusive}
-        \label{fig:invariant_mass_pairing:inclusive}
-    \end{subfigure}
-    \begin{subfigure}{0.49\textwidth}
-        \centering
-        \includegraphics[width=1.0\textwidth]{plots/feature_plots/relational_jet_lepton_full_inv_mass_distribution_m_tt_390GeV.pdf}
-        \caption{Near-Threshold}
-        \label{fig:invariant_mass_pairing:threshold}
-    \end{subfigure}
-    \caption{Distribution of $m(\ell,\nu, j)$ for correct and incorrect pairing of jets and leptons. Evaluated on the full sample in \subrefb{fig:invariant_mass_pairing:inclusive} and near-threshold in \subrefb{fig:invariant_mass_pairing:threshold}. Note, that the regressed neutrino momenta from $nu^2$-Flows were used.}
-    \label{fig:invariant_mass_pairing}
+  \begin{subfigure}{0.49\textwidth}
+    \centering
+    \includegraphics[width=1.0\textwidth]{plots/feature_plots/relational_jet_lepton_full_inv_mass_distribution.pdf}
+    \caption{Inclusive}
+    \label{fig:invariant_mass_pairing:inclusive}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \centering
+    \includegraphics[width=1.0\textwidth]{plots/feature_plots/relational_jet_lepton_full_inv_mass_distribution_m_tt_390GeV.pdf}
+    \caption{Near-Threshold}
+    \label{fig:invariant_mass_pairing:threshold}
+  \end{subfigure}
+  \caption{Distribution of $m(\ell,\nu, j)$ for correct and incorrect
+    pairing of jets and leptons. Evaluated on the full sample in
+    \subrefb{fig:invariant_mass_pairing:inclusive} and near-threshold
+    in \subrefb{fig:invariant_mass_pairing:threshold}. Note that the
+  regressed neutrino momenta from $nu^2$-Flows were used.}
+  \label{fig:invariant_mass_pairing}
 \end{figure}
 \section{Hyperparameter Optimisation Results}
 \label{sec:hyperparams}
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\textwidth]{plots/hyperparams_regression/assignment_accuracy_vs_num_parameters.pdf}
-    \caption{
-        Assignment accuracy compared to the true values for the MultiModalTransformer and the RegressionTransformer as a function of the number of trainable parameters.
-    }
-    \label{fig:regression_transformer_assignment}
+  \centering
+  \includegraphics[width=0.7\textwidth]{plots/hyperparams_regression/assignment_accuracy_vs_num_parameters.pdf}
+  \caption{
+    Assignment accuracy compared to the true values for the
+    MultiModalTransformer and the RegressionTransformer as a function
+    of the number of trainable parameters.
+  }
+  \label{fig:regression_transformer_assignment}
 \end{figure}
 \subsection{FeatureConcatTransformer}
 \begin{figure}[H]
-    \begin{subfigure}{1.0\textwidth}
-        \centering
-        \includegraphics[width=0.7\textwidth]{plots/hyperparams_assignment/FeatureConcatTransformer_assignment_accuracy_embedding_dimension_vs_num_layers.pdf}
-        \caption{Assignment Accuracy}
-        \label{fig:hyperparams_fct_acc}
-    \end{subfigure}
-    \begin{subfigure}{1.0\textwidth}
-        \centering
-        \includegraphics[width=0.7\textwidth]{plots/hyperparams_assignment/FeatureConcatTransformer_num_trainable_parameters_embedding_dimension_vs_num_layers.pdf}
-        \caption{Number of Trainable Parameters}
-        \label{fig:hyperparams_fct_params}
-    \end{subfigure}
-    \caption{The Figures \subrefb{fig:hyperparams_fct_acc} and \subrefb{fig:hyperparams_fct_params} show the assignment accuracy and the number of trainable parameters of the FeatureConcatTransformer architecture as a function of the embedding dimension and the number of transformer layers.}
-    \label{fig:hyperparams_fct}
+  \begin{subfigure}{1.0\textwidth}
+    \centering
+    \includegraphics[width=0.7\textwidth]{plots/hyperparams_assignment/FeatureConcatTransformer_assignment_accuracy_embedding_dimension_vs_num_layers.pdf}
+    \caption{Assignment Accuracy}
+    \label{fig:hyperparams_fct_acc}
+  \end{subfigure}
+  \begin{subfigure}{1.0\textwidth}
+    \centering
+    \includegraphics[width=0.7\textwidth]{plots/hyperparams_assignment/FeatureConcatTransformer_num_trainable_parameters_embedding_dimension_vs_num_layers.pdf}
+    \caption{Number of Trainable Parameters}
+    \label{fig:hyperparams_fct_params}
+  \end{subfigure}
+  \caption{The Figures \subrefb{fig:hyperparams_fct_acc} and
+    \subrefb{fig:hyperparams_fct_params} show the assignment accuracy
+    and the number of trainable parameters of the
+    FeatureConcatTransformer architecture as a function of the
+  embedding dimension and the number of transformer layers.}
+  \label{fig:hyperparams_fct}
 \end{figure}
 \subsection{CrossAttentionTransformer}
 \begin{figure}[H]
-    \begin{subfigure}{1.0\textwidth}
-        \centering
-        \includegraphics[width=0.7\textwidth]{plots/hyperparams_assignment/CrossAttentionTransformer_assignment_accuracy_embedding_dimension_vs_num_layers.pdf}
-        \caption{Assignment Accuracy}
-        \label{fig:hyperparams_cat_acc}
-    \end{subfigure}
-    \begin{subfigure}{1.0\textwidth}
-        \centering
-        \includegraphics[width=0.7\textwidth]{plots/hyperparams_assignment/CrossAttentionTransformer_num_trainable_parameters_embedding_dimension_vs_num_layers.pdf}
-        \caption{Number of Trainable Parameters}
-        \label{fig:hyperparams_cat_params}
-    \end{subfigure}
-    \caption{The Figures \subrefb{fig:hyperparams_cat_acc} and \subrefb{fig:hyperparams_cat_params} show the assignment accuracy and the number of trainable parameters of the CrossAttentionTransformer architecture as a function of the embedding dimension and the number of transformer layers.}
-    \label{fig:hyperparams_cat}
+  \begin{subfigure}{1.0\textwidth}
+    \centering
+    \includegraphics[width=0.7\textwidth]{plots/hyperparams_assignment/CrossAttentionTransformer_assignment_accuracy_embedding_dimension_vs_num_layers.pdf}
+    \caption{Assignment Accuracy}
+    \label{fig:hyperparams_cat_acc}
+  \end{subfigure}
+  \begin{subfigure}{1.0\textwidth}
+    \centering
+    \includegraphics[width=0.7\textwidth]{plots/hyperparams_assignment/CrossAttentionTransformer_num_trainable_parameters_embedding_dimension_vs_num_layers.pdf}
+    \caption{Number of Trainable Parameters}
+    \label{fig:hyperparams_cat_params}
+  \end{subfigure}
+  \caption{The Figures \subrefb{fig:hyperparams_cat_acc} and
+    \subrefb{fig:hyperparams_cat_params} show the assignment accuracy
+    and the number of trainable parameters of the
+    CrossAttentionTransformer architecture as a function of the
+  embedding dimension and the number of transformer layers.}
+  \label{fig:hyperparams_cat}
 \end{figure}
 \subsection{CompactTransformer}
 \begin{figure}[H]
-    \begin{subfigure}{1.0\textwidth}
-        \centering
-        \includegraphics[width=0.7\textwidth]{plots/hyperparams_assignment/CompactTransformer_assignment_accuracy_embedding_dimension_vs_num_layers.pdf}
-        \caption{Assignment Accuracy}
-        \label{fig:hyperparams_compact_acc}
-    \end{subfigure}
-    \begin{subfigure}{1.0\textwidth}
-        \centering
-        \includegraphics[width=0.7\textwidth]{plots/hyperparams_assignment/CompactTransformer_num_trainable_parameters_embedding_dimension_vs_num_layers.pdf}
-        \caption{Number of Trainable Parameters}
-        \label{fig:hyperparams_compact_params}
-    \end{subfigure}
-    \caption{The Figures \subrefb{fig:hyperparams_compact_acc} and \subrefb{fig:hyperparams_compact_params} show the assignment accuracy and the number of trainable parameters of the CompactTransformer architecture as a function of the embedding dimension and the number of transformer layers.}
-    \label{fig:hyperparams_compact}
+  \begin{subfigure}{1.0\textwidth}
+    \centering
+    \includegraphics[width=0.7\textwidth]{plots/hyperparams_assignment/CompactTransformer_assignment_accuracy_embedding_dimension_vs_num_layers.pdf}
+    \caption{Assignment Accuracy}
+    \label{fig:hyperparams_compact_acc}
+  \end{subfigure}
+  \begin{subfigure}{1.0\textwidth}
+    \centering
+    \includegraphics[width=0.7\textwidth]{plots/hyperparams_assignment/CompactTransformer_num_trainable_parameters_embedding_dimension_vs_num_layers.pdf}
+    \caption{Number of Trainable Parameters}
+    \label{fig:hyperparams_compact_params}
+  \end{subfigure}
+  \caption{The Figures \subrefb{fig:hyperparams_compact_acc} and
+    \subrefb{fig:hyperparams_compact_params} show the assignment
+    accuracy and the number of trainable parameters of the
+    CompactTransformer architecture as a function of the embedding
+  dimension and the number of transformer layers.}
+  \label{fig:hyperparams_compact}
 \end{figure}
 \section{Performance Plots}
 \subsection{Assignment Performance}
 \label{sec:assignment:plots}
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\textwidth]{plots/compact_assigner/binned_performance/truth_ttbar_pt/binned_accuracies_truth_ttbar_pt.pdf}
-    \caption{Assignment accuracy binned in the transverse momentum of top-quark pair system. The background histograms show of the distribution of events as a function of the number of jets. The uncertainties represent the statistical variations in the evaluation dataset.}
-    \label{fig:accuracy_vs_ttbar_pt}
+  \centering
+  \includegraphics[width=0.7\textwidth]{plots/compact_assigner/binned_performance/truth_ttbar_pt/binned_accuracies_truth_ttbar_pt.pdf}
+  \caption{Assignment accuracy binned in the transverse momentum of
+    top-quark pair system. The background histograms show of the
+    distribution of events as a function of the number of jets. The
+  uncertainties represent the statistical variations in the evaluation dataset.}
+  \label{fig:accuracy_vs_ttbar_pt}
 \end{figure}
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\textwidth]{plots/compact_assigner/binned_performance/N_jets/binned_selection_accuracies_N_jets.pdf}
-    \caption{Selection accuracy as a function of the number of jets in the event for different reconstruction methods.}
-    \label{fig:selection_accuracy_vs_n_jets}
+  \centering
+  \includegraphics[width=0.7\textwidth]{plots/compact_assigner/binned_performance/N_jets/binned_selection_accuracies_N_jets.pdf}
+  \caption{Selection accuracy as a function of the number of jets in
+  the event for different reconstruction methods.}
+  \label{fig:selection_accuracy_vs_n_jets}
 \end{figure}
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=1.0\textwidth]{plots/compact_assigner/binned_2d_performance/truth_ttbar_mass_vs_dR_l1l2/2d_binned_accuracies_truth_ttbar_mass_dR_l1l2.pdf}
-    \caption{Assignment accuracy binned with respect to parton-level \mttbar and $\Delta R(\ell_1,\ell_2)$.}
-    \label{fig:accuracy_2d_ttbar_mass_dR_l1l2}
+  \centering
+  \includegraphics[width=1.0\textwidth]{plots/compact_assigner/binned_2d_performance/truth_ttbar_mass_vs_dR_l1l2/2d_binned_accuracies_truth_ttbar_mass_dR_l1l2.pdf}
+  \caption{Assignment accuracy binned with respect to parton-level
+  \mttbar and $\Delta R(\ell_1,\ell_2)$.}
+  \label{fig:accuracy_2d_ttbar_mass_dR_l1l2}
 \end{figure}
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=1.0\textwidth]{plots/compact_assigner/binned_2d_performance/truth_c_hel_vs_truth_c_han/2d_binned_accuracies_truth_c_hel_truth_c_han.pdf}
-    \caption{Assignment accuracy binned with respect to parton-level \chel and \chan.}
-    \label{fig:accuracy_2d_c_hel_c_han}
+  \centering
+  \includegraphics[width=1.0\textwidth]{plots/compact_assigner/binned_2d_performance/truth_c_hel_vs_truth_c_han/2d_binned_accuracies_truth_c_hel_truth_c_han.pdf}
+  \caption{Assignment accuracy binned with respect to parton-level
+  \chel and \chan.}
+  \label{fig:accuracy_2d_c_hel_c_han}
 \end{figure}
 \subsection{Neutrino Regression}
 \label{sec:neutrino_regression:plots}
 \begin{table}[H]
-    \centering
-    \caption{Summary of the mean absolute error (MAE) of the different neutrino regression methods for the cartesian coordinates of the neutrinos in the lab frame. For the MultiModalTransformer, the bracket shows whether the mean of the Gaussian or a random sampling was used. The uncertainties represent the statistical variations in the dataset.}
-    \input{plots/gaussian_loss_nu_weighter/neutrino_deviations/regression_neutrino_mae.tex}
-    \label{tab:gaussian_loss:mae:cartesian}
+  \centering
+  \caption{Summary of the mean absolute error (MAE) of the different
+    neutrino regression methods for the cartesian coordinates of the
+    neutrinos in the lab frame. For the MultiModalTransformer, the
+    bracket shows whether the mean of the Gaussian or a random sampling
+    was used. The uncertainties represent the statistical variations in
+  the dataset.}
+  \input{plots/gaussian_loss_nu_weighter/neutrino_deviations/regression_neutrino_mae.tex}
+  \label{tab:gaussian_loss:mae:cartesian}
 \end{table}
 \begin{table}[H]
-    \centering
-    \caption{Summary of the mean absolute error of the neutrinos' $p_T$, $\eta$, $\phi$, and $E$, evaluated for the different methods. For the MultiModalTransformer, the bracket shows whether the mean of the Gaussian or a random sampling was used.  Note, that the computation of the error in $\phi$ was performed periodically.}
-    \input{plots/gaussian_loss_nu_weighter/neutrino_deviations/regression_neutrino_PtEtaPhiE_mae.tex}
-    \label{tab:gaussian_loss:mae:PtEtaPhiE}
+  \centering
+  \caption{Summary of the mean absolute error of the neutrinos'
+    $p_T$, $\eta$, $\phi$, and $E$, evaluated for the different
+    methods. For the MultiModalTransformer, the bracket shows whether
+    the mean of the Gaussian or a random sampling was used.  Note that
+  the computation of the error in $\phi$ was performed periodically.}
+  \input{plots/gaussian_loss_nu_weighter/neutrino_deviations/regression_neutrino_PtEtaPhiE_mae.tex}
+  \label{tab:gaussian_loss:mae:PtEtaPhiE}
 \end{table}
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\textwidth]{plots/compact_reconstructor_nu_weighter/binned_performance/truth_tt_boost_parameter/binned_dev_px_truth_tt_boost_parameter.pdf}
-    \caption{
-        Mean absolute error of the neutrinos' $p_x$ component binned with respect to the boost parameters.
-    }
-    \label{fig:px_dev_ttbar_beta}
+  \centering
+  \includegraphics[width=0.7\textwidth]{plots/compact_reconstructor_nu_weighter/binned_performance/truth_tt_boost_parameter/binned_dev_px_truth_tt_boost_parameter.pdf}
+  \caption{
+    Mean absolute error of the neutrinos' $p_x$ component binned with
+    respect to the boost parameters.
+  }
+  \label{fig:px_dev_ttbar_beta}
 \end{figure}
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\textwidth]{plots/compact_reconstructor_nu_weighter/binned_performance/truth_tt_boost_parameter/binned_dev_pz_truth_tt_boost_parameter.pdf}
-    \caption{
-        Mean absolute error of the neutrinos' $p_z$ component binned with respect to the boost parameters.
-    }
-    \label{fig:pz_dev_ttbar_beta}
+  \centering
+  \includegraphics[width=0.7\textwidth]{plots/compact_reconstructor_nu_weighter/binned_performance/truth_tt_boost_parameter/binned_dev_pz_truth_tt_boost_parameter.pdf}
+  \caption{
+    Mean absolute error of the neutrinos' $p_z$ component binned with
+    respect to the boost parameters.
+  }
+  \label{fig:pz_dev_ttbar_beta}
 \end{figure}
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=1.0\textwidth]{plots/compact_reconstructor_nu_weighter/binned_2d_performance/truth_ttbar_mass_vs_truth_lepton_nu_angle_mean/2d_binned_dev_angle_truth_ttbar_mass_truth_lepton_nu_angle_mean.pdf}
-    \caption{Mean angle between true and predicted neutrino binned in the parton-level \mttbar and parton-level angle between lepton and neutrino.}
-    \label{fig:dev_angle_ttbar_mass_angle_nu_lep}
+  \centering
+  \includegraphics[width=1.0\textwidth]{plots/compact_reconstructor_nu_weighter/binned_2d_performance/truth_ttbar_mass_vs_truth_lepton_nu_angle_mean/2d_binned_dev_angle_truth_ttbar_mass_truth_lepton_nu_angle_mean.pdf}
+  \caption{Mean angle between true and predicted neutrino binned in
+  the parton-level \mttbar and parton-level angle between lepton and neutrino.}
+  \label{fig:dev_angle_ttbar_mass_angle_nu_lep}
 \end{figure}
 \subsection{Variable Reconstruction}
 \begin{table}[H]
-    \centering
-    \input{plots/true_assignment/deviations/ttbar_mass_reconstruction_metrics_table.tex}
-    \caption{Summary table showing the mean relative deviation and relative resolution for the invariant mass of the \ttbar-system. Compared are the baseline-methods for assignment, the CompactTransformer, and the true assignment, all in conjunction with $\nu^2$-Flows.}
-    \label{tab:assignment:ttbar_mass_reconstruction}
+  \centering
+  \input{plots/true_assignment/deviations/ttbar_mass_reconstruction_metrics_table.tex}
+  \caption{Summary table showing the mean relative deviation and
+    relative resolution for the invariant mass of the \ttbar-system.
+    Compared are the baseline-methods for assignment, the
+    CompactTransformer, and the true assignment, all in conjunction
+  with $\nu^2$-Flows.}
+  \label{tab:assignment:ttbar_mass_reconstruction}
 \end{table}
 \begin{table}[H]
-    \centering
-    \input{plots/compare_losses/deviations/ttbar_mass_reconstruction_metrics_table.tex}
-    \caption{Summary table showing the mean relative deviation and relative resolution for the invariant mass of the \ttbar-system. Compared are MMT models trained with different losses as well as the CPT interfaced with $\nu^2$-Flows}
-    \label{tab:losses:ttbar_mass_reconstruction}
+  \centering
+  \input{plots/compare_losses/deviations/ttbar_mass_reconstruction_metrics_table.tex}
+  \caption{Summary table showing the mean relative deviation and
+    relative resolution for the invariant mass of the \ttbar-system.
+    Compared are MMT models trained with different losses as well as
+  the CPT interfaced with $\nu^2$-Flows}
+  \label{tab:losses:ttbar_mass_reconstruction}
 \end{table}
 \begin{figure}[H]
-    \begin{subfigure}[c]{1.0\textwidth}
-        \centering
-        \includegraphics[width=0.7\textwidth]{plots/compact_reconstructor/binned_performance/truth_ttbar_mass/binned_deviation_ttbar_mass_truth_ttbar_mass.pdf}
-        \caption{Mean Relative Deviation of \mttbar}
-        \label{fig:full_reco:ttbar_mass_binned_deviation_ttbar_mass}
-    \end{subfigure}
-    \begin{subfigure}[c]{1.0\textwidth}
-        \centering
-        \includegraphics[width=0.7\textwidth]{plots/compact_reconstructor/binned_performance/truth_ttbar_mass/binned_deviation_c_hel_truth_ttbar_mass.pdf}
-        \caption{Mean Deviation of \chel}
-        \label{fig:full_reco:ttbar_mass_binned_deviation_c_hel}
-    \end{subfigure}
-    \caption{Mean (Relative) Deviation of \mttbar \subrefb{fig:full_reco:ttbar_mass_binned_reso_ttbar_mass} and \chel \subrefb{fig:full_reco:ttbar_mass_binned_reso_c_hel} computed in bins of the parton-level invariant mass of the \ttbar-system. The different setups for assignment and regression are compared. The displayed error bars represent the statistical uncertainties of the dataset obtained using bootstrapping.}
-    \label{fig:full_reco:ttbar_mass_binned_deviation}
+  \begin{subfigure}[c]{1.0\textwidth}
+    \centering
+    \includegraphics[width=0.7\textwidth]{plots/compact_reconstructor/binned_performance/truth_ttbar_mass/binned_deviation_ttbar_mass_truth_ttbar_mass.pdf}
+    \caption{Mean Relative Deviation of \mttbar}
+    \label{fig:full_reco:ttbar_mass_binned_deviation_ttbar_mass}
+  \end{subfigure}
+  \begin{subfigure}[c]{1.0\textwidth}
+    \centering
+    \includegraphics[width=0.7\textwidth]{plots/compact_reconstructor/binned_performance/truth_ttbar_mass/binned_deviation_c_hel_truth_ttbar_mass.pdf}
+    \caption{Mean Deviation of \chel}
+    \label{fig:full_reco:ttbar_mass_binned_deviation_c_hel}
+  \end{subfigure}
+  \caption{Mean (Relative) Deviation of \mttbar
+    \subrefb{fig:full_reco:ttbar_mass_binned_reso_ttbar_mass} and \chel
+    \subrefb{fig:full_reco:ttbar_mass_binned_reso_c_hel} computed in
+    bins of the parton-level invariant mass of the \ttbar-system. The
+    different setups for assignment and regression are compared. The
+    displayed error bars represent the statistical uncertainties of the
+  dataset obtained using bootstrapping.}
+  \label{fig:full_reco:ttbar_mass_binned_deviation}
 \end{figure}
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=1.0\textwidth]{plots/gaussian_loss/distributions/ttbar_mass_distributions.pdf}
-    \caption{Comparison of variable distributions at reco- and truth-level for the different regression settings of the MultiModalTransformer trained with the Gaussian-loss.}
-    \label{fig:gaussian_loss:ttbar_mass_dist}
+  \centering
+  \includegraphics[width=1.0\textwidth]{plots/gaussian_loss/distributions/ttbar_mass_distributions.pdf}
+  \caption{Comparison of variable distributions at reco- and
+    truth-level for the different regression settings of the
+  MultiModalTransformer trained with the Gaussian-loss.}
+  \label{fig:gaussian_loss:ttbar_mass_dist}
 \end{figure}
 \section{Fit Results}
 \subsection{Asimov-Fit}
 \begin{figure}[H]
-    \centering
-    \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=1.\textwidth]{plots/asimov_fit/asimov_dilep_assigner/my_fit/Plots/dilep_assigner_sr9_dilep_assigner_ttbar_mass_postFit.pdf}
-        \caption{MultiModalTransformer}
-        \label{fig:sr_9_post_asimov_fit:mmt}
-    \end{subfigure}
-    \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=1.\textwidth]{plots/asimov_fit/asimov_nu_flows/my_fit/Plots/nu_flows_sr9_nu_flows_ttbar_mass_postFit.pdf}
-        \caption{$\nu^2$-Flows}
-        \label{fig:sr_9_post_asimov_fit:nu_flows}
-    \end{subfigure}
-        \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=1.\textwidth]{plots/asimov_fit/asimov_nu_weighter/my_fit/Plots/nu_weighter_sr9_nu_weighter_ttbar_mass_postFit.pdf}
-        \caption{$\nu$-Weighter}
-        \label{fig:sr_9_post_asimov_fit:nu_weighter}
-    \end{subfigure}
-    \caption{Plots of SR 9 for the different reconstruction methods used. The upper panels show the stacked event yield per bin from different components. The lower panels show the ratio of signal over background in the corresponding bins, where signal refers to the contribution from non-relativistic QCD and the background correspondingly all other contributions.}
-    \label{fig:sr_9_post_asimov_fit}
+  \centering
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=1.\textwidth]{plots/asimov_fit/asimov_dilep_assigner/my_fit/Plots/dilep_assigner_sr9_dilep_assigner_ttbar_mass_postFit.pdf}
+    \caption{MultiModalTransformer}
+    \label{fig:sr_9_post_asimov_fit:mmt}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=1.\textwidth]{plots/asimov_fit/asimov_nu_flows/my_fit/Plots/nu_flows_sr9_nu_flows_ttbar_mass_postFit.pdf}
+    \caption{$\nu^2$-Flows}
+    \label{fig:sr_9_post_asimov_fit:nu_flows}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=1.\textwidth]{plots/asimov_fit/asimov_nu_weighter/my_fit/Plots/nu_weighter_sr9_nu_weighter_ttbar_mass_postFit.pdf}
+    \caption{$\nu$-Weighter}
+    \label{fig:sr_9_post_asimov_fit:nu_weighter}
+  \end{subfigure}
+  \caption{Plots of SR 9 for the different reconstruction methods
+    used. The upper panels show the stacked event yield per bin from
+    different components. The lower panels show the ratio of signal
+    over background in the corresponding bins, where signal refers to
+    the contribution from non-relativistic QCD and the background
+  correspondingly all other contributions.}
+  \label{fig:sr_9_post_asimov_fit}
 \end{figure}
 \subsection{Data-Driven Validation}
 \begin{table}[H]
-    \centering
-    \caption{Fit results for the baseline-methods obtained by fitting the simulated processes for dileptonic decay \ttbar-production with data collected by \atlas in 2018.}
-    \label{tab:fit_result_baseline}
-    \begin{tabular}{ccc}
-        \toprule
-        Method & $\mu(t\bar{t}_{\text{pQCD}})$ & $\mu(Z\text{+jets})$\\
-        \midrule
-        $\nu$-Weighter  &$0.963^{+0.0017}_{-0.0017}$ & $1.01^{+0.02}_{-0.02}$ \\
-        $\nu^2$-Flows &$0.958^{+0.0018}_{-0.0018}$ & $1.073^{+0.02}_{-0.02}$\\
-        \bottomrule
-    \end{tabular}
+  \centering
+  \caption{Fit results for the baseline-methods obtained by fitting
+    the simulated processes for dileptonic decay \ttbar-production with
+  data collected by \atlas in 2018.}
+  \label{tab:fit_result_baseline}
+  \begin{tabular}{ccc}
+    \toprule
+    Method & $\mu(t\bar{t}_{\text{pQCD}})$ & $\mu(Z\text{+jets})$\\
+    \midrule
+    $\nu$-Weighter  &$0.963^{+0.0017}_{-0.0017}$ & $1.01^{+0.02}_{-0.02}$ \\
+    $\nu^2$-Flows &$0.958^{+0.0018}_{-0.0018}$ & $1.073^{+0.02}_{-0.02}$\\
+    \bottomrule
+  \end{tabular}
 \end{table}
 \begin{figure}[H]
-    \centering
-    \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=1.0\textwidth]{plots/data_mc_plots/data_validation_nu_flows/my_fit/Plots/nu_flows_cr_ee_nu_flows_top_mass_postFit.pdf}
-        \caption{CR $ee$}
-        \label{fig:cr_ee:top_mass_nu_flows}
-    \end{subfigure}
-    \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=1.0\textwidth]{plots/data_mc_plots/data_validation_nu_flows/my_fit/Plots/nu_flows_cr_mumu_nu_flows_top_mass_postFit.pdf}
-        \caption{CR $\mu\mu$}
-        \label{fig:cr_mumu:top_mass_nu_flows}
-    \end{subfigure}
-    \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=1.0\textwidth]{plots/data_mc_plots/data_validation_nu_flows/my_fit/Plots/nu_flows_cr_emu_nu_flows_top_mass_postFit.pdf}
-        \caption{CR $e\mu$}
-        \label{fig:cr_emu:top_mass_nu_flows}
-    \end{subfigure}
-    \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=1.0\textwidth]{plots/data_mc_plots/data_validation_nu_flows/my_fit/Plots/nu_flows_crZ_dilepton_mass_postFit.pdf}
-        \caption{CR Z}
-        \label{fig:cr_z_dilep_mass_nu_flows}
-    \end{subfigure}
-    \caption{Plots showing the comparison between data and simulation of top-quark pair production and its leading backgrounds. The different control regions used in the fits are shown as stacked histogrmas of the different distributions, where the normalisations for $t\bar{t}_{\text{pQCD}}$ and $Z$+jets are extracted from the fit as summarised in \Cref{eg:data_validation:results}. Note, that the reconstruction of the \ttbar-system is performed using $\nu^2$-Flows.}
-    \label{fig:cr_data_nu_flows}
+  \centering
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=1.0\textwidth]{plots/data_mc_plots/data_validation_nu_flows/my_fit/Plots/nu_flows_cr_ee_nu_flows_top_mass_postFit.pdf}
+    \caption{CR $ee$}
+    \label{fig:cr_ee:top_mass_nu_flows}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=1.0\textwidth]{plots/data_mc_plots/data_validation_nu_flows/my_fit/Plots/nu_flows_cr_mumu_nu_flows_top_mass_postFit.pdf}
+    \caption{CR $\mu\mu$}
+    \label{fig:cr_mumu:top_mass_nu_flows}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=1.0\textwidth]{plots/data_mc_plots/data_validation_nu_flows/my_fit/Plots/nu_flows_cr_emu_nu_flows_top_mass_postFit.pdf}
+    \caption{CR $e\mu$}
+    \label{fig:cr_emu:top_mass_nu_flows}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=1.0\textwidth]{plots/data_mc_plots/data_validation_nu_flows/my_fit/Plots/nu_flows_crZ_dilepton_mass_postFit.pdf}
+    \caption{CR Z}
+    \label{fig:cr_z_dilep_mass_nu_flows}
+  \end{subfigure}
+  \caption{Plots showing the comparison between data and simulation
+    of top-quark pair production and its leading backgrounds. The
+    different control regions used in the fits are shown as stacked
+    histogrmas of the different distributions, where the normalisations
+    for $t\bar{t}_{\text{pQCD}}$ and $Z$+jets are extracted from the
+    fit as summarised in \Cref{eg:data_validation:results}. Note that
+  the reconstruction of the \ttbar-system is performed using $\nu^2$-Flows.}
+  \label{fig:cr_data_nu_flows}
 \end{figure}
 \begin{figure}[H]
-    \centering
-    \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=1.0\textwidth]{plots/data_mc_plots/data_validation_nu_weighter/my_fit/Plots/nu_weighter_cr_ee_nu_weighter_top_mass_postFit.pdf}
-        \caption{CR $ee$}
-        \label{fig:cr_ee:top_mass_nu_weighter}
-    \end{subfigure}
-    \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=1.0\textwidth]{plots/data_mc_plots/data_validation_nu_weighter/my_fit/Plots/nu_weighter_cr_mumu_nu_weighter_top_mass_postFit.pdf}
-        \caption{CR $\mu\mu$}
-        \label{fig:cr_mumu:top_mass_nu_weighter}
-    \end{subfigure}
-    \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=1.0\textwidth]{plots/data_mc_plots/data_validation_nu_weighter/my_fit/Plots/nu_weighter_cr_emu_nu_weighter_top_mass_postFit.pdf}
-        \caption{CR $e\mu$}
-        \label{fig:cr_emu:top_mass_nu_weighter}
-    \end{subfigure}
-    \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=1.0\textwidth]{plots/data_mc_plots/data_validation_nu_weighter/my_fit/Plots/nu_weighter_crZ_dilepton_mass_postFit.pdf}
-        \caption{CR Z}
-        \label{fig:cr_z_dilep_mass_nu_weighter}
-    \end{subfigure}
-    \caption{Plots showing the comparison between data and simulation of top-quark pair production and its leading backgrounds. The different control regions used in the fits are shown as stacked histogrmas of the different distributions, where the normalisations for $t\bar{t}_{\text{pQCD}}$ and $Z$+jets are extracted from the fit as summarised in \Cref{eg:data_validation:results}. Note, that the reconstruction of the \ttbar-system is performed using $\nu$-Weighter.}
-    \label{fig:cr_data_nu_weighter}
+  \centering
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=1.0\textwidth]{plots/data_mc_plots/data_validation_nu_weighter/my_fit/Plots/nu_weighter_cr_ee_nu_weighter_top_mass_postFit.pdf}
+    \caption{CR $ee$}
+    \label{fig:cr_ee:top_mass_nu_weighter}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=1.0\textwidth]{plots/data_mc_plots/data_validation_nu_weighter/my_fit/Plots/nu_weighter_cr_mumu_nu_weighter_top_mass_postFit.pdf}
+    \caption{CR $\mu\mu$}
+    \label{fig:cr_mumu:top_mass_nu_weighter}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=1.0\textwidth]{plots/data_mc_plots/data_validation_nu_weighter/my_fit/Plots/nu_weighter_cr_emu_nu_weighter_top_mass_postFit.pdf}
+    \caption{CR $e\mu$}
+    \label{fig:cr_emu:top_mass_nu_weighter}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=1.0\textwidth]{plots/data_mc_plots/data_validation_nu_weighter/my_fit/Plots/nu_weighter_crZ_dilepton_mass_postFit.pdf}
+    \caption{CR Z}
+    \label{fig:cr_z_dilep_mass_nu_weighter}
+  \end{subfigure}
+  \caption{Plots showing the comparison between data and simulation
+    of top-quark pair production and its leading backgrounds. The
+    different control regions used in the fits are shown as stacked
+    histogrmas of the different distributions, where the normalisations
+    for $t\bar{t}_{\text{pQCD}}$ and $Z$+jets are extracted from the
+    fit as summarised in \Cref{eg:data_validation:results}. Note that
+  the reconstruction of the \ttbar-system is performed using $\nu$-Weighter.}
+  \label{fig:cr_data_nu_weighter}
 \end{figure}
-

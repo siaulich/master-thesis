@@ -1,284 +1,1073 @@
 \chapter{ML-Based Reconstruction of Dileptonic Top-Quark Pair Events}
 \label{chap:ml-reconstruction}
 
+In addition to the outline reconstruction methods described in
+\Cref{chap:reconstruction-methods}, this chapter focuses on the
+development of a machine learning-based reconstruction strategies for
+the dileptonic \ttbar channel. Machine learning-based reconstruction
+techniques have gained significant traction in recent years. One
+major example for this, is their use in flavour tagging algorithms
+\cite{flavour_tagging_review}. For this, machine learning models are
+trained to address both challenges of jet assignment and neutrino
+regression, by learning from simulated data to predict the correct
+jet-parton assignments and neutrino momenta.
 
-In addition to the outline reconstruction methods described in \Cref{chap:reconstruction-methods}, this chapter focuses on the development of a machine learning-based reconstruction strategies for the dileptonic \ttbar channel. Machine learning-based reconstruction techniques have gained significant traction in recent years. One major example for this, is their use in flavour tagging algorithms \cite{flavour_tagging_review}. For this, machine learning models are trained to address both challenges of jet assignment and neutrino regression, by learning from simulated data to predict the correct jet-parton assignments and neutrino momenta.
+For the high permutation multiplicity of jet assignments in
+all-hadronic channels, SPANet \cite{spanet} has demonstrated
+significant improvements over traditional methods. These
+architectures leverage attention mechanisms to improve the accuracy
+by leveraging the full event information and utilising permutation
+equivariant architectures to handle the combinatorial nature of the problem.
+Based on these successes, this thesis explores the adaptation of
+similar architectures for the dileptonic \ttbar channel, which
+presents unique challenges due to the presence of two neutrinos and
+fewer jets. This topic has been largely understudied in the
+literature, with most efforts focusing on neutrino regression. Thus,
+this work aims to fill this gap by developing a machine learning
+model specifically tailored for the jet assignment problem in the
+dileptonic channel, and investigating how it can be combined with
+neutrino regression methods to offer a full reconstruction pipeline.
 
-For the high permutation multiplicity of jet assignments in all-hadronic channels, SPANet \cite{spanet} has demonstrated significant improvements over traditional methods. These architectures leverage attention mechanisms to improve the accuracy by leveraging the full event information and utilising permutation equivariant architectures to handle the combinatorial nature of the problem.
-Based on these successes, this thesis explores the adaptation of similar architectures for the dileptonic \ttbar channel, which presents unique challenges due to the presence of two neutrinos and fewer jets. This topic has been largely understudied in the literature, with most efforts focusing on neutrino regression. Thus, this work aims to fill this gap by developing a machine learning model specifically tailored for the jet assignment problem in the dileptonic channel, and investigating how it can be combined with neutrino regression methods to offer a full reconstruction pipeline.
+On the other hand, for neutrino regression, $\nu^2$-Flows
+\cite{nu_square_flows} has shown promise in improving the
+reconstruction of neutrino momenta by modelling the underlying
+probability distributions of the neutrino kinematics.
 
-On the other hand, for neutrino regression, $\nu^2$-Flows \cite{nu_square_flows} has shown promise in improving the reconstruction of neutrino momenta by modelling the underlying probability distributions of the neutrino kinematics.
-
-Despite both tasks being highly interconnected, both of them are mostly studied independently and the potential synergies between them remain largely unexplored. This thesis investigates how the jet assignment and neutrino regression tasks can be combined in a unified machine learning framework, allowing for a more holistic approach to event reconstruction in the dileptonic \ttbar channel.
+Despite both tasks being highly interconnected, both of them are
+mostly studied independently and the potential synergies between them
+remain largely unexplored. This thesis investigates how the jet
+assignment and neutrino regression tasks can be combined in a unified
+machine learning framework, allowing for a more holistic approach to
+event reconstruction in the dileptonic \ttbar channel.
 
 \section{Jet-Assignment}
 \label{sec:jet-assignment}
-Due to the wide range of available neutrino regression methods, the jet assignment problem while be studied independently first, before investigating how it can be combined with neutrino regression methods in a unified framework.
-In general, the task the model is trained to solve is to associate jets and lepton originating from the same top-quark decay. Different layouts to encode this task have been explored. After investigation, using a matrix
+Due to the wide range of available neutrino regression methods, the
+jet assignment problem while be studied independently first, before
+investigating how it can be combined with neutrino regression methods
+in a unified framework.
+In general, the task the model is trained to solve is to associate
+jets and lepton originating from the same top-quark decay. Different
+layouts to encode this task have been explored. After investigation,
+using a matrix
 \begin{align}
-    P_{pred}(\ell^{\pm},j_i)\in[0,1],\quad i\in\{1,..., N_{jets}\}
+  P_{pred}(\ell^{\pm},j_i)\in[0,1],\quad i\in\{1,..., N_{jets}\}
 \end{align}
 as the networks output with
 \begin{align}
-    \sum_i P_{pred}(\ell^{\pm},j_i) = 1\,,
-\end{align} was used. This ensures, that each lepton is associated with exactly one jet. Since for the model training and evaluation only fully truth-matched events were used, the labels fulfil
+  \sum_i P_{pred}(\ell^{\pm},j_i) = 1\,,
+\end{align} was used. This ensures, that each lepton is associated
+with exactly one jet. Since for the model training and evaluation
+only fully truth-matched events were used, the labels fulfil
 \begin{align}
-    P_{true}(\ell^{\pm},j_i)\in \{0,1\},\quad i\in\{1,..., N_{jets}\}
+  P_{true}(\ell^{\pm},j_i)\in \{0,1\},\quad i\in\{1,..., N_{jets}\}
 \end{align}
 with
 \begin{align}
-    \label{eq:label_normalisation}
-    \exists ! j: P_{true}(\ell^{\pm},j) = 1\,.
+  \label{eq:label_normalisation}
+  \exists ! j: P_{true}(\ell^{\pm},j) = 1\,.
 \end{align}
-Thus, the problem becomes a multi-class classification for each of the two leptons. The labels are the one-hot encoded indices of the true matched jets for each lepton. For practical reasons, the labels are padded to all have the same length $N_{max}$. Events where the truth-match jet index is higher than the chosen padding-length were discarded for training and evaluation. This ensures, \Cref{eq:label_normalisation} is fulfilled for all events.
+Thus, the problem becomes a multi-class classification for each of
+the two leptons. The labels are the one-hot encoded indices of the
+true matched jets for each lepton. For practical reasons, the labels
+are padded to all have the same length $N_{max}$. Events where the
+truth-match jet index is higher than the chosen padding-length were
+discarded for training and evaluation. This ensures,
+\Cref{eq:label_normalisation} is fulfilled for all events.
 
-During the process of devising the model's architecture, different neural network architectures were explored. To deal with the sequential nature of the jets, mostly recurrent and transformer networks were tested. Generally jet-permutation equivariant transformer networks proved to be most performant.
+During the process of devising the model's architecture, different
+neural network architectures were explored. To deal with the
+sequential nature of the jets, mostly recurrent and transformer
+networks were tested. Generally jet-permutation equivariant
+transformer networks proved to be most performant.
 
 \subsection{Neural Network Architectures}
 \label{sec:nn-architectures}
-In Reference \cite{spanet} it was investigated how permutation equivariance of transformer networks can greatly improve the performance and efficiency of the jet assignment in top-quark pair events. The SPANet-architecture was devised with the prospect of handling the high number of equivalent permutation of the jet assignment, which all lead to the same reconstructed tops. While the number of equivalent permutations was at least 20 in the all-hadronic decay channel, it is only 2 for the dileptonic decay channel in the lowest jet-multiplicity. Even though, it raises quadratically with the number of jets, this is reduced by using the b-tagging information available.
-Since this work investigates pairing up the jets and leptons, the only permutation equivariances are the jet-ordering and potentially the ordering of the leptons. The latter arises from the fact, that to a good approximation there is no difference between the decay properties of the top and anti-top respectively.
+In Reference \cite{spanet} it was investigated how permutation
+equivariance of transformer networks can greatly improve the
+performance and efficiency of the jet assignment in top-quark pair
+events. The SPANet-architecture was devised with the prospect of
+handling the high number of equivalent permutation of the jet
+assignment, which all lead to the same reconstructed tops. While the
+number of equivalent permutations was at least 20 in the all-hadronic
+decay channel, it is only 2 for the dileptonic decay channel in the
+lowest jet-multiplicity. Even though, it raises quadratically with
+the number of jets, this is reduced by using the b-tagging
+information available.
+Since this work investigates pairing up the jets and leptons, the
+only permutation equivariances are the jet-ordering and potentially
+the ordering of the leptons. The latter arises from the fact, that to
+a good approximation there is no difference between the decay
+properties of the top and anti-top respectively.
 
-To investigate this, three different architectures for the transformer network were considered and evaluated.
+To investigate this, three different architectures for the
+transformer network were considered and evaluated.
 
 \subsubsection{FeatureConcatTransformer (FCT)}
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=1.0\textwidth]{figures/machine-learning/feature_concat_transformer.pdf}
-    \caption{This schematic visualises the general structure of the FeatureConcatTransformer architecture. A detailed description of the individual units making up this architecture is provided in this section. Note, that $\oplus$ represents a concatenation of the corresponding features.}
-    \label{fig:arch:fct}
+  \centering
+  \includegraphics[width=1.0\textwidth]{figures/machine-learning/feature_concat_transformer.pdf}
+  \caption{This schematic visualises the general structure of the
+    FeatureConcatTransformer architecture. A detailed description of
+    the individual units making up this architecture is provided in
+    this section. Note that $\oplus$ represents a concatenation of the
+  corresponding features.}
+  \label{fig:arch:fct}
 \end{figure}
-The FeatureConcatTransformer (FCT) architecture is outlined in \Cref{fig:arch:fct}. Its name-bearing component is the concatenation of the two leptons and the met features to each jet. This gives rise to a sequence of objects resembling the jets present in the event. By passing it through a shared DNN, this sequence is embedded to a fixed \textit{Embedding Dimension} (ED), which is considered a hyperparameter of the model. The embedded sequence is passed through a number of transformer layers using self-attention \cite{attention_is_all_you_need}; the number of layers being another hyperparameter. The output elements of the central-transformer are lastly processed by another shared DNN, which provide two assignment scores for each jet. By computing a softmax function for each of the scores over all jets. Due to the properties of the softmax function, this provides a normalised score for each jet to be identified with the positive and negative lepton and bottom or anti-bottom respectively. The leptons are feed into the model with a fixed-ordering based on their charged. The model inherits its permutation equivariance with respect to the jet-ordering from the self-attention mechanism. Regarding the lepton ordering, the model is not permutation equivariant. Since the underlying physics presumably is, it can be expected that the network picks this structure up from the training data.
+The FeatureConcatTransformer (FCT) architecture is outlined in
+\Cref{fig:arch:fct}. Its name-bearing component is the concatenation
+of the two leptons and the met features to each jet. This gives rise
+to a sequence of objects resembling the jets present in the event. By
+passing it through a shared DNN, this sequence is embedded to a fixed
+\textit{Embedding Dimension} (ED), which is considered a
+hyperparameter of the model. The embedded sequence is passed through
+a number of transformer layers using self-attention
+\cite{attention_is_all_you_need}; the number of layers being another
+hyperparameter. The output elements of the central-transformer are
+lastly processed by another shared DNN, which provide two assignment
+scores for each jet. By computing a softmax function for each of the
+scores over all jets. Due to the properties of the softmax function,
+this provides a normalised score for each jet to be identified with
+the positive and negative lepton and bottom or anti-bottom
+respectively. The leptons are feed into the model with a
+fixed-ordering based on their charged. The model inherits its
+permutation equivariance with respect to the jet-ordering from the
+self-attention mechanism. Regarding the lepton ordering, the model is
+not permutation equivariant. Since the underlying physics presumably
+is, it can be expected that the network picks this structure up from
+the training data.
 
 \subsubsection{CrossAttentionTransformer (CAT)}
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=1.0\textwidth]{figures/machine-learning/cross_attention_transformer.pdf}
-    \caption{This schematic visualises the general structure of the CrossAttentionTransformer architecture. A detailed description of the individual units making up this architecture is provided in this section. Note, that $\oplus$ represents a concatenation of the corresponding features.}
-    \label{fig:arch:cross_attention_transformer}
+  \centering
+  \includegraphics[width=1.0\textwidth]{figures/machine-learning/cross_attention_transformer.pdf}
+  \caption{This schematic visualises the general structure of the
+    CrossAttentionTransformer architecture. A detailed description of
+    the individual units making up this architecture is provided in
+    this section. Note that $\oplus$ represents a concatenation of the
+  corresponding features.}
+  \label{fig:arch:cross_attention_transformer}
 \end{figure}
-The CrossAttentionTransformer (CAT) architecture is outlined in \Cref{fig:arch:cross_attention_transformer}. It is based on the idea of using cross-attention to directly model the interactions between the jets and leptons. Instead of concatenating the features, the leptons are treated as a sequence too. The met features are then concatenated to both the jets and the leptons. This architecture then encodes the jets and leptons separately, using shared DNNs to embed them into a fixed \textit{Embedding Dimension} (ED). The jets and leptons are then passed through separate transformer layers using self-attention, allowing the model to capture the internal relationships within each set of objects. The outputs of the jet and lepton transformers are then combined in a decoder using cross-attention layers, which allow the model to learn the interactions between the jets and leptons. Finally, the last layer outputs the cross-attention scores for each jet-lepton pair using dot-product attention followed by a softmax function to provide the final probabilities for the jet-lepton assignments. For simplicity, the number of encoder and decoder layers are chosen to be the same.
-In addition to the FCT's permutation equivariance with respect to the jet-ordering, the CAT architecture is also permutation equivariant with respect to the lepton-ordering, due to the separate encoding and self-attention layers for the leptons. This allows the model to fully capture the underlying symmetries of the problem, which can potentially lead to improved performance.
+The CrossAttentionTransformer (CAT) architecture is outlined in
+\Cref{fig:arch:cross_attention_transformer}. It is based on the idea
+of using cross-attention to directly model the interactions between
+the jets and leptons. Instead of concatenating the features, the
+leptons are treated as a sequence too. The met features are then
+concatenated to both the jets and the leptons. This architecture then
+encodes the jets and leptons separately, using shared DNNs to embed
+them into a fixed \textit{Embedding Dimension} (ED). The jets and
+leptons are then passed through separate transformer layers using
+self-attention, allowing the model to capture the internal
+relationships within each set of objects. The outputs of the jet and
+lepton transformers are then combined in a decoder using
+cross-attention layers, which allow the model to learn the
+interactions between the jets and leptons. Finally, the last layer
+outputs the cross-attention scores for each jet-lepton pair using
+dot-product attention followed by a softmax function to provide the
+final probabilities for the jet-lepton assignments. For simplicity,
+the number of encoder and decoder layers are chosen to be the same.
+In addition to the FCT's permutation equivariance with respect to the
+jet-ordering, the CAT architecture is also permutation equivariant
+with respect to the lepton-ordering, due to the separate encoding and
+self-attention layers for the leptons. This allows the model to fully
+capture the underlying symmetries of the problem, which can
+potentially lead to improved performance.
 
 \subsubsection{CompactTransformer (CPT)}
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=1.0\textwidth]{figures/machine-learning/compact_transformer.pdf}
-    \caption{This schematic visualises the general structure of the CompactTransformer architecture. A detailed description of the individual units making up this architecture is provided in this section.}
-    \label{fig:arch:compact_transformer}
+  \centering
+  \includegraphics[width=1.0\textwidth]{figures/machine-learning/compact_transformer.pdf}
+  \caption{This schematic visualises the general structure of the
+    CompactTransformer architecture. A detailed description of the
+  individual units making up this architecture is provided in this section.}
+  \label{fig:arch:compact_transformer}
 \end{figure}
-The CompactTransformer (CPT) architecture is outlined in \Cref{fig:arch:compact_transformer}. It is designed to be a sleeker version of the CrossAttentionTransformer (CAT) architecture, while still maintaining the permutation equivariance with respect to both the jet and lepton ordering. The CPT embeds jets, leptons, and MET features separately using shared DNNs, similar to the CAT architecture. However, instead of using separate transformer layers for the jets and leptons, the CPT combines them into a single sequence and passes it through a shared transformer layer using self-attention. This allows the model to capture both the internal relationships within each set of objects and the interactions between them in a more compact architecture. The final output layer provides the jet-lepton assignment scores using dot-product attention followed by a softmax function, similar to the CAT architecture. While the self-attention itself is permutation equivariant to the full sequence, the separate embeddings for the objects break this into permutation equivariance for the objects sharing the same embeddings---i.e., jets and leptons respectively.
+The CompactTransformer (CPT) architecture is outlined in
+\Cref{fig:arch:compact_transformer}. It is designed to be a sleeker
+version of the CrossAttentionTransformer (CAT) architecture, while
+still maintaining the permutation equivariance with respect to both
+the jet and lepton ordering. The CPT embeds jets, leptons, and MET
+features separately using shared DNNs, similar to the CAT
+architecture. However, instead of using separate transformer layers
+for the jets and leptons, the CPT combines them into a single
+sequence and passes it through a shared transformer layer using
+self-attention. This allows the model to capture both the internal
+relationships within each set of objects and the interactions between
+them in a more compact architecture. The final output layer provides
+the jet-lepton assignment scores using dot-product attention followed
+by a softmax function, similar to the CAT architecture. While the
+self-attention itself is permutation equivariant to the full
+sequence, the separate embeddings for the objects break this into
+permutation equivariance for the objects sharing the same
+embeddings---i.e., jets and leptons respectively.
 \subsubsection{Common Properties}
-For all models, the input features for the jets and leptons include their kinematic properties such as transverse momentum ($p_T$), pseudorapidity ($\eta$), azimuthal angle ($\phi$), and energy ($E$). Additionally, the b-tagging for the jets is included as the continuous quantile of the corresponding b-tagging working point, and for the leptons, the charge is provided. The missing transverse energy (MET) features, including its magnitude and azimuthal angle, are also included as input to the model. Further, global event features such as the number of jets, the number of b-tagged jets, and the angular separation between the two leptons are included to provide additional context for the model.
+For all models, the input features for the jets and leptons include
+their kinematic properties such as transverse momentum ($p_T$),
+pseudorapidity ($\eta$), azimuthal angle ($\phi$), and energy ($E$).
+Additionally, the b-tagging for the jets is included as the
+continuous quantile of the corresponding b-tagging working point, and
+for the leptons, the charge is provided. The missing transverse
+energy (MET) features, including its magnitude and azimuthal angle,
+are also included as input to the model. Further, global event
+features such as the number of jets, the number of b-tagged jets, and
+the angular separation between the two leptons are included to
+provide additional context for the model.
 
-Each model includes a layer dedicated to normalising the input features, which helps to improve the training stability and convergence. These are set once on the training data and are not updated during the training process. The normalisation is performed by computing the mean and standard deviation of each feature across the training dataset, and then using these statistics to standardise the features by subtracting the mean and dividing by the standard deviation. Further, quantities such as the $p_T$ and energy of the jets and leptons are transformed using a logarithmic scale to better handle the wide range of values. Unless stated otherwise: all DNNs used here follow the same layout: it consists of a first layer, that projects the input to twice the desired output dimension, applies a ReLU-function and once again applies a linear layer to the output-dimension.
+Each model includes a layer dedicated to normalising the input
+features, which helps to improve the training stability and
+convergence. These are set once on the training data and are not
+updated during the training process. The normalisation is performed
+by computing the mean and standard deviation of each feature across
+the training dataset, and then using these statistics to standardise
+the features by subtracting the mean and dividing by the standard
+deviation. Further, quantities such as the $p_T$ and energy of the
+jets and leptons are transformed using a logarithmic scale to better
+handle the wide range of values. Unless stated otherwise: all DNNs
+used here follow the same layout: it consists of a first layer, that
+projects the input to twice the desired output dimension, applies a
+ReLU-function and once again applies a linear layer to the output-dimension.
 
+Using the model's forward pass, the jet-lepton assignment scores are
+computed for each jet and lepton pair. Next, each possible pairing of
+jets and leptons is scored by multiplying the probabilities for the
+positive and negative lepton. The pairing with the highest score is
+then selected as the model's prediction for the jet-lepton
+assignment. Solutions where the same jet is assigned to both leptons
+are discarded, as they are not physically meaningful.
 
-Using the model's forward pass, the jet-lepton assignment scores are computed for each jet and lepton pair. Next, each possible pairing of jets and leptons is scored by multiplying the probabilities for the positive and negative lepton. The pairing with the highest score is then selected as the model's prediction for the jet-lepton assignment. Solutions where the same jet is assigned to both leptons are discarded, as they are not physically meaningful.
-
-The maximum number of jets considered by the model is set to $N_{max}=6$. This means that the model can handle events with up to 6 jets, which covers around $99.3\%$ of dileptonic \ttbar events. This cut-off was chosen to reduce the computational cost, which increases squared with the number of jets. Note, however, that for deployment of a model for production, this can be easily adjusted and retrained with minor impact on the model performance. However, since this thesis employs some investigations requiring multiple retraining, this was found to be reasonable trade-off.
-
-
+The maximum number of jets considered by the model is set to
+$N_{max}=6$. This means that the model can handle events with up to 6
+jets, which covers around $99.3\%$ of dileptonic \ttbar events. This
+cut-off was chosen to reduce the computational cost, which increases
+squared with the number of jets. Note however, that for deployment
+of a model for production, this can be easily adjusted and retrained
+with minor impact on the model performance. However, since this
+thesis employs some investigations requiring multiple retraining,
+this was found to be reasonable trade-off.
 
 \subsection{Training Procedure}
 \label{sec:assignment:training-procedure}
-The training procedure for all three architectures is identical, as no major difference in the training behaviour was observed. The models are trained using a cross-entropy loss function for each lepton, which measures the discrepancy between the predicted probabilities and the true labels. The total loss is computed as the sum of the losses for both leptons and the loss per-event is scaled using sample weights. The sample weights are computed from combining the event weights with the inverse of the number of events per jet-multiplicity, which helps to mitigate potential biases in the training data and ensures that the model learns effectively from all events, regardless of their jet multiplicity.
-Updating of the model parameters is performed using the AdamW optimizer \cite{adamW}, which is a variant of the Adam optimizer that incorporates weight decay for regularisation. Further, a dropout with a rate of $r=0.2$ is applied to all internal forward passes. The training is conducted over 100 epochs, with early stopping based on the validation loss to prevent overfitting. Additionally, learning rate scheduling is employed to adjust the learning rate during training, which can help improve convergence and overall performance. For the initial learning rate, a value of $10^{-4}$ is chosen, and the learning rate is reduced by a factor of 0.5 if the validation loss does not improve for 5 epochs. If the validation loss does not improve after 10 epochs, so 2 reduction of the learning rate, the training is terminated. The batch size is set to 4028, and the models are trained on a GPU to accelerate the training process.\\
-During the training process, the model's performance is monitored on a separate validation set, which is composed of $20\%$ of the initial training data, to ensure that it is not overfitting to the training data. The best-performing model is selected based on the lowest validation loss, and its performance is further evaluated on a separate test set to assess its generalization capabilities. Apart from the loss, other metrics such as the accuracy of the jet-lepton assignment are reported during the training process to provide additional insights into the model's performance. If not reported otherwise, each model is trained on around $5\cdot 10^{6}$ fully parton-matched dileptonic top-quark pair events taken from the nominal \ttbar sample described in \Cref{sec:nominal_ttbar}.
-
+The training procedure for all three architectures is identical, as
+no major difference in the training behaviour was observed. The
+models are trained using a cross-entropy loss function for each
+lepton, which measures the discrepancy between the predicted
+probabilities and the true labels. The total loss is computed as the
+sum of the losses for both leptons and the loss per-event is scaled
+using sample weights. The sample weights are computed from combining
+the event weights with the inverse of the number of events per
+jet-multiplicity, which helps to mitigate potential biases in the
+training data and ensures that the model learns effectively from all
+events, regardless of their jet multiplicity.
+Updating of the model parameters is performed using the AdamW
+optimizer \cite{adamW}, which is a variant of the Adam optimizer that
+incorporates weight decay for regularisation. Further, a dropout with
+a rate of $r=0.2$ is applied to all internal forward passes. The
+training is conducted over 100 epochs, with early stopping based on
+the validation loss to prevent overfitting. Additionally, learning
+rate scheduling is employed to adjust the learning rate during
+training, which can help improve convergence and overall performance.
+For the initial learning rate, a value of $10^{-4}$ is chosen, and
+the learning rate is reduced by a factor of 0.5 if the validation
+loss does not improve for 5 epochs. If the validation loss does not
+improve after 10 epochs, so 2 reduction of the learning rate, the
+training is terminated. The batch size is set to 4028, and the models
+are trained on a GPU to accelerate the training process.\\
+During the training process, the model's performance is monitored on
+a separate validation set, which is composed of $20\%$ of the initial
+training data, to ensure that it is not overfitting to the training
+data. The best-performing model is selected based on the lowest
+validation loss, and its performance is further evaluated on a
+separate test set to assess its generalisation capabilities. Apart
+from the loss, other metrics such as the accuracy of the jet-lepton
+assignment are reported during the training process to provide
+additional insights into the model's performance. If not reported
+otherwise, each model is trained on around $5\cdot 10^{6}$ fully
+parton-matched dileptonic top-quark pair events taken from the
+nominal \ttbar sample described in \Cref{sec:nominal_ttbar}.
 
 \subsection{Hyperparameter Optimisation}
 \label{sec:hyperparameter-optimisation}
-To evaluate the performance of the different architectures, a hyperparameter optimisation is performed for each of them. The hyperparameters considered are the embedding dimension (ED) and the number of transformer layers.
-Other relevant hyperparameters, such as the learning rate, dropout rate, and batch size, were kept fixed across all models to ensure a fair comparison. The hyperparameter optimisation is conducted using a grid search approach, where a predefined set of values for each hyperparameter is evaluated.
-For all architectures, the embedding dimension is varied in the range of $\{16,32,64,128\}$ and the number of transformer layers is varied in the range of $\{4,6,8,10\}$. For the CAT architecture, the number of encoder and decoder layers are chosen to be equal. Each model and hyperparameter combination, the model is trained and evaluated 5 times with different random seeds and k-folded training/validation data to ensure the robustness of the results. The performance of the models is then compared based on the average validation loss and the accuracy of the jet-lepton assignment on a separate test set. From the variance of the results across different random seeds and data splits, the statistical significance of the differences in performance between the architectures can be assessed. This study allows for the identification of the most effective architecture and hyperparameter configuration, as well as insights into their scaling behaviour and robustness to different training conditions.\\
-The individual results of the grid-search for each architecture are shown in \Cref{fig:hyperparams_fct,fig:hyperparams_cat,fig:hyperparams_compact} in the Appendix \Cref{chap:add-plots}. From these results, it can be observed that the performance of all architectures generally improves with increasing embedding dimension. For the number of layers, the performance appears to be more stable across different values, with a slight improvement observed for higher numbers of layers. However, for some instances the performance can degrade for very high numbers of layers, which may be due to overfitting or difficulties in training deeper models. Overall, the results suggest that while both hyperparameters have an impact on the model's performance, the embedding dimension appears to have a more significant effect compared to the number of layers.\\
+To evaluate the performance of the different architectures, a
+hyperparameter optimisation is performed for each of them. The
+hyperparameters considered are the embedding dimension (ED) and the
+number of transformer layers.
+Other relevant hyperparameters, such as the learning rate, dropout
+rate, and batch size, were kept fixed across all models to ensure a
+fair comparison. The hyperparameter optimisation is conducted using a
+grid search approach, where a predefined set of values for each
+hyperparameter is evaluated.
+For all architectures, the embedding dimension is varied in the range
+of $\{16,32,64,128\}$ and the number of transformer layers is varied
+in the range of $\{4,6,8,10\}$. For the CAT architecture, the number
+of encoder and decoder layers are chosen to be equal. Each model and
+hyperparameter combination, the model is trained and evaluated 5
+times with different random seeds and k-folded training/validation
+data to ensure the robustness of the results. The performance of the
+models is then compared based on the average validation loss and the
+accuracy of the jet-lepton assignment on a separate test set. From
+the variance of the results across different random seeds and data
+splits, the statistical significance of the differences in
+performance between the architectures can be assessed. This study
+allows for the identification of the most effective architecture and
+hyperparameter configuration, as well as insights into their scaling
+behaviour and robustness to different training conditions.\\
+The individual results of the grid-search for each architecture are
+shown in
+\Cref{fig:hyperparams_fct,fig:hyperparams_cat,fig:hyperparams_compact}
+in the Appendix \Cref{chap:add-plots}. From these results, it can be
+observed that the performance of all architectures generally improves
+with increasing embedding dimension. For the number of layers, the
+performance appears to be more stable across different values, with a
+slight improvement observed for higher numbers of layers. However,
+for some instances the performance can degrade for very high numbers
+of layers, which may be due to overfitting or difficulties in
+training deeper models. Overall, the results suggest that while both
+hyperparameters have an impact on the model's performance, the
+embedding dimension appears to have a more significant effect
+compared to the number of layers.\\
 \begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.7\textwidth]{plots/hyperparams_assignment/assignment_accuracy_vs_num_parameters.pdf}
-    \caption{
-        Assignment Accuracy of all architectures as a function of the number of trainable parameters. Each point represents the average accuracy over 5 runs with different random seeds and k-folded training/validation data. The error bars indicate the standard deviation across the runs. Note, that the scaling of the x-axis is logarithmic, which allows for a better visualisation of the differences in performance across different model sizes.
-    }
-    \label{fig:hyperparams_comparison}
+  \centering
+  \includegraphics[width=0.7\textwidth]{plots/hyperparams_assignment/assignment_accuracy_vs_num_parameters.pdf}
+  \caption{
+    Assignment Accuracy of all architectures as a function of the
+    number of trainable parameters. Each point represents the average
+    accuracy over 5 runs with different random seeds and k-folded
+    training/validation data. The error bars indicate the standard
+    deviation across the runs. Note that the scaling of the x-axis
+    is logarithmic, which allows for a better visualisation of the
+    differences in performance across different model sizes.
+  }
+  \label{fig:hyperparams_comparison}
 \end{figure}%
-\Cref{fig:hyperparams_comparison} compares the different architectures in terms of their (averaged) assignment accuracy as a function of the number of trainable parameters. Different aspects can be observed from these results. Regarding the individual architectures, it can be observed that the CPT architecture appears to be unstable for low embedding dimensions. While the other models always show very consistent results across different random seeds and data splits, the CPT architecture shows a large variance in performance for low embedding dimensions, which is reduced for higher embedding dimensions. This suggests that the CPT architecture may require a certain level of model complexity to perform well, and that it may be more sensitive to the choice of hyperparameters compared to the other architectures.
-For the FCT and CPT architectures, the performance appears to be more stable across different hyperparameter configurations, with a clear trend of improving performance with increasing number of model parameters and very small variation across training runs. This suggests that these architectures are more robust to the choice of hyperparameters and can achieve good performance even with smaller model sizes. Overall, it shows that the performance of the CPT architecture is more sensitive to the choice of hyperparameters, particularly the embedding dimension, compared to the FCT and CPT architectures. Partly, this can be explained by the fact, that the CPT architecture treat the jets, lepton and met features as one sequence, which may require a certain level of model complexity to effectively capture the interactions between these different types of features. In contrast, the FCT and CPT architectures treat the jets and leptons separately, which may allow them to learn more effectively from the data even with smaller model sizes.\\
-This plot also reveals, why the performance varies more between different embedding dimensions than between different numbers of layers: the embedding dimension has a much larger impact on the number of trainable parameters compared to the number of layers, which can explain why it has a more significant effect on the model's performance. Note, that the number of parameters scales linearly with the number of layers, while it scales quadratically with the embedding dimension, which can explain the observed differences in performance across different hyperparameter configurations.\\
-Apart from the instability of the CPT architecture for low embedding dimensions, the performance of the different architectures appears to be quite similar across different hyperparameter configurations. Generally, it emerges that the performance seems to depend much more on the number of trainable parameters than on the specific architecture, with all architectures showing a similar performance for a given number of parameters. This suggests that the choice of architecture may be less important than ensuring that the model has sufficient capacity to learn the underlying patterns in the data, and that the performance can be improved by increasing the model size rather than by changing the architecture. Also, the layout of the different models (e.g. number of layers) appears to be less important than the overall model capacity.\\
+\Cref{fig:hyperparams_comparison} compares the different
+architectures in terms of their (averaged) assignment accuracy as a
+function of the number of trainable parameters. Different aspects can
+be observed from these results. Regarding the individual
+architectures, it can be observed that the CPT architecture appears
+to be unstable for low embedding dimensions. While the other models
+always show very consistent results across different random seeds and
+data splits, the CPT architecture shows a large variance in
+performance for low embedding dimensions, which is reduced for higher
+embedding dimensions. This suggests that the CPT architecture may
+require a certain level of model complexity to perform well, and that
+it may be more sensitive to the choice of hyperparameters compared to
+the other architectures.
+For the FCT and CPT architectures, the performance appears to be more
+stable across different hyperparameter configurations, with a clear
+trend of improving performance with increasing number of model
+parameters and very small variation across training runs. This
+suggests that these architectures are more robust to the choice of
+hyperparameters and can achieve good performance even with smaller
+model sizes. Overall, it shows that the performance of the CPT
+architecture is more sensitive to the choice of hyperparameters,
+particularly the embedding dimension, compared to the FCT and CPT
+architectures. Partly, this can be explained by the fact, that the
+CPT architecture treat the jets, lepton and met features as one
+sequence, which may require a certain level of model complexity to
+effectively capture the interactions between these different types of
+features. In contrast, the FCT and CPT architectures treat the jets
+and leptons separately, which may allow them to learn more
+effectively from the data even with smaller model sizes.\\
+This plot also reveals, why the performance varies more between
+different embedding dimensions than between different numbers of
+layers: the embedding dimension has a much larger impact on the
+number of trainable parameters compared to the number of layers,
+which can explain why it has a more significant effect on the model's
+performance. Note that the number of parameters scales linearly with
+the number of layers, while it scales quadratically with the
+embedding dimension, which can explain the observed differences in
+performance across different hyperparameter configurations.\\
+Apart from the instability of the CPT architecture for low embedding
+dimensions, the performance of the different architectures appears to
+be quite similar across different hyperparameter configurations.
+Generally, it emerges that the performance seems to depend much more
+on the number of trainable parameters than on the specific
+architecture, with all architectures showing a similar performance
+for a given number of parameters. This suggests that the choice of
+architecture may be less important than ensuring that the model has
+sufficient capacity to learn the underlying patterns in the data, and
+that the performance can be improved by increasing the model size
+rather than by changing the architecture. Also, the layout of the
+different models (e.g. number of layers) appears to be less important
+than the overall model capacity.\\
 \begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.7\textwidth]{plots/hyperparams_assignment/inference_time_vs_num_parameters.pdf}
-    \caption{
-        Inference Time of all architectures as a function of the number of trainable parameters. Each point represents the average inference time over 5 runs with different random seeds and k-folded training/validation data. The error bars indicate the standard deviation across the runs. Note, that the scaling of the x-axis is logarithmic, which allows for a better visualisation of the differences in performance across different model sizes.
-    }
-    \label{fig:hyperparams_inference_time}
+  \centering
+  \includegraphics[width=0.7\textwidth]{plots/hyperparams_assignment/inference_time_vs_num_parameters.pdf}
+  \caption{
+    Inference Time of all architectures as a function of the number
+    of trainable parameters. Each point represents the average
+    inference time over 5 runs with different random seeds and
+    k-folded training/validation data. The error bars indicate the
+    standard deviation across the runs. Note that the scaling of the
+    x-axis is logarithmic, which allows for a better visualisation of
+    the differences in performance across different model sizes.
+  }
+  \label{fig:hyperparams_inference_time}
 \end{figure}%
-\Cref{fig:hyperparams_inference_time} compares the different architectures in terms of their inference time as a function of the number of trainable parameters. The inference time is measured as the average time taken to process a single event during the evaluation phase, and it is an important metric for assessing the practical applicability of the models in real-time data processing scenarios. From the results, it can be observed that the inference time generally increases with the number of trainable parameters for all architectures, which is expected as larger models typically require more computational resources to make predictions.
-However, here, the number of layers shows to have a much more significant impact on the inference time compared to the embedding dimension, which can be explained by the fact that the number of layers directly affects the depth of the model and thus the number of computations required for each forward pass. In contrast, an increased embedding dimension has a less direct impact, as these computations can be parallelised more effectively, which can mitigate the increase in inference time. This is, however, only true for processing on highly parallelised hardware such as GPUs, and may not hold for processing on CPUs, where the increase in embedding dimension can lead to a more significant increase in inference time due to the limited parallelisation capabilities. Thus, these observed differences in inference time are to taken with a grain of salt, as they can be highly dependent on the specific hardware used for evaluation and may not generalise to other processing environments.
-Overall, it can be seen that the inference time raises most steeply for the CPT architecture. This can be explained by the fact that the CPT architecture combines the jets, leptons, and MET features into a single sequence and passes it through a shared transformer layer using self-attention. The self-attention mechanism has a computational complexity that scales quadratically with the sequence length, which can lead to a significant increase in inference time as the number of features and model size increases. Thus, the slightly longer sequence length of the CPT architecture compared to the FCT and CAT architectures can contribute to its higher inference time, especially for larger model sizes. In contrast, the FCT and CAT architectures treat the jets and leptons separately, which can allow them to process the features more efficiently and reduce the overall inference time, even as the model size increases.\\
-Combining the results from \Cref{fig:hyperparams_comparison} and \Cref{fig:hyperparams_inference_time}, it can be concluded that increasing the number of trainable parameters generally leads to improved performance in terms of assignment accuracy, but it also results in increased inference time. While the number of layers has a very limited effect on the assignment accuracy, it has a significant impact on the inference time. Thus, when selecting a model for practical applications, it is most often beneficial to choose a model with a higher embedding dimension and a lower number of layers, as this can provide a good balance between performance and computational efficiency. Additionally, the choice of architecture may also play a role in determining the optimal configuration, as some architectures may be more efficient than others in terms of inference time for a given number of parameters.
-To strike this balance, the CPT architecture with an embedding dimension of 128 and 6 layers is chosen as the best-performing model, as it achieves a high assignment accuracy while maintaining a reasonable inference time compared to the other configurations.
+\Cref{fig:hyperparams_inference_time} compares the different
+architectures in terms of their inference time as a function of the
+number of trainable parameters. The inference time is measured as the
+average time taken to process a single event during the evaluation
+phase, and it is an important metric for assessing the practical
+applicability of the models in real-time data processing scenarios.
+From the results, it can be observed that the inference time
+generally increases with the number of trainable parameters for all
+architectures, which is expected as larger models typically require
+more computational resources to make predictions.
+However, here, the number of layers shows to have a much more
+significant impact on the inference time compared to the embedding
+dimension, which can be explained by the fact that the number of
+layers directly affects the depth of the model and thus the number of
+computations required for each forward pass. In contrast, an
+increased embedding dimension has a less direct impact, as these
+computations can be parallelised more effectively, which can mitigate
+the increase in inference time. This is, however, only true for
+processing on highly parallelised hardware such as GPUs, and may not
+hold for processing on CPUs, where the increase in embedding
+dimension can lead to a more significant increase in inference time
+due to the limited parallelisation capabilities. Thus, these observed
+differences in inference time are to taken with a grain of salt, as
+they can be highly dependent on the specific hardware used for
+evaluation and may not generalise to other processing environments.
+Overall, it can be seen that the inference time raises most steeply
+for the CPT architecture. This can be explained by the fact that the
+CPT architecture combines the jets, leptons, and MET features into a
+single sequence and passes it through a shared transformer layer
+using self-attention. The self-attention mechanism has a
+computational complexity that scales quadratically with the sequence
+length, which can lead to a significant increase in inference time as
+the number of features and model size increases. Thus, the slightly
+longer sequence length of the CPT architecture compared to the FCT
+and CAT architectures can contribute to its higher inference time,
+especially for larger model sizes. In contrast, the FCT and CAT
+architectures treat the jets and leptons separately, which can allow
+them to process the features more efficiently and reduce the overall
+inference time, even as the model size increases.\\
+Combining the results from \Cref{fig:hyperparams_comparison} and
+\Cref{fig:hyperparams_inference_time}, it can be concluded that
+increasing the number of trainable parameters generally leads to
+improved performance in terms of assignment accuracy, but it also
+results in increased inference time. While the number of layers has a
+very limited effect on the assignment accuracy, it has a significant
+impact on the inference time. Thus, when selecting a model for
+practical applications, it is most often beneficial to choose a model
+with a higher embedding dimension and a lower number of layers, as
+this can provide a good balance between performance and computational
+efficiency. Additionally, the choice of architecture may also play a
+role in determining the optimal configuration, as some architectures
+may be more efficient than others in terms of inference time for a
+given number of parameters.
+To strike this balance, the CPT architecture with an embedding
+dimension of 128 and 6 layers is chosen as the best-performing model,
+as it achieves a high assignment accuracy while maintaining a
+reasonable inference time compared to the other configurations.
 
 \subsection{Feature Importance}
 \label{sec:assignment:feature_importance}
-Machine learning models are notoriously black-boxes, allowing very little insight into the underlying computation and decision-making. This is mostly due to the abstract nature of the latent-spaces. However, over the years some techniques to gain insights into the model's computational structure have been developed. One prominent example of such techniques is measuring the \textit{Feature Importance}. It aims to quantify how much each of the input features provided to the model impacts its computation and thus performance. The most robust framework for this, uses a game-theory approach using so-called SHAP-values \cite{shap_values_1,shap_values_2}. Due to the computational complexity of this method, for this thesis it was decided to make use of a simpler technique, called permutation importance \cite{permutation-importance}. This method quantifies this impact a feature has on the model's performance by measuring the difference in its performance upon effectively eliminating this feature from the inputs.
-The idea is to eliminate the feature by randomly shuffling its value among the events. Therefore, the feature's values become uncorrelated to the other features of the event and the model cannot make use of this feature. This was found to provide a robust way of accessing the impact of a feature. As the transformer model processes some features embedded as sequences, it was decided to permute the features among all the events and sequence elements. Since the model is permutation invariant to jet-ordering, this aims to allow any correlations to be inherited by the jet-ordering. 
-For this analysis, each of the input features was permuted and the difference in assignment and selection accuracy of the model compared to the baseline performance computed. This process is repeated with five permutations to reduce stochastic variations from the individual permutations, and the difference is averaged over the trials.
+Machine learning models are notoriously black-boxes, allowing very
+little insight into the underlying computation and decision-making.
+This is mostly due to the abstract nature of the latent-spaces.
+However, over the years some techniques to gain insights into the
+model's computational structure have been developed. One prominent
+example of such techniques is measuring the \textit{Feature
+Importance}. It aims to quantify how much each of the input features
+provided to the model impacts its computation and thus performance.
+The most robust framework for this, uses a game-theory approach using
+so-called SHAP-values \cite{shap_values_1,shap_values_2}. Due to the
+computational complexity of this method, for this thesis it was
+decided to make use of a simpler technique, called permutation
+importance \cite{permutation-importance}. This method quantifies this
+impact a feature has on the model's performance by measuring the
+difference in its performance upon effectively eliminating this
+feature from the inputs.
+The idea is to eliminate the feature by randomly shuffling its value
+among the events. Therefore, the feature's values become uncorrelated
+to the other features of the event and the model cannot make use of
+this feature. This was found to provide a robust way of accessing the
+impact of a feature. As the transformer model processes some features
+embedded as sequences, it was decided to permute the features among
+all the events and sequence elements. Since the model is permutation
+invariant to jet-ordering, this aims to allow any correlations to be
+inherited by the jet-ordering.
+For this analysis, each of the input features was permuted and the
+difference in assignment and selection accuracy of the model compared
+to the baseline performance computed. This process is repeated with
+five permutations to reduce stochastic variations from the individual
+permutations, and the difference is averaged over the trials.
 \begin{figure}
-    \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=1.0\textwidth]{plots/compact_assigner/ml_metrics/CompactTransformer_+_nu2-Flows_Assignment_Accuracy_importance.pdf}
-        \caption{Assignment Accuracy}
-        \label{fig:perm_imp:assignment}
-    \end{subfigure}
-    \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=1.0\textwidth]{plots/compact_assigner/ml_metrics/CompactTransformer_+_nu2-Flows_Selection_Accuracy_importance.pdf}
-        \caption{Selection Accuracy}
-        \label{fig:perm_imp:selction}
-    \end{subfigure}
-    \caption{The Plots \subrefb{fig:perm_imp:assignment} and \subrefb{fig:perm_imp:selction} show the difference in assignment and selection accuracy, respectively, of the CPT-model when permuting the input features. For each feature, five different permutation are performed. The features are ranked in decreasing order of the observed reduction. The shown error bars represents the standard error of the performance difference over 5 permutations.}
-    \label{fig:perm_imp}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=1.0\textwidth]{plots/compact_assigner/ml_metrics/CompactTransformer_+_nu2-Flows_Assignment_Accuracy_importance.pdf}
+    \caption{Assignment Accuracy}
+    \label{fig:perm_imp:assignment}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=1.0\textwidth]{plots/compact_assigner/ml_metrics/CompactTransformer_+_nu2-Flows_Selection_Accuracy_importance.pdf}
+    \caption{Selection Accuracy}
+    \label{fig:perm_imp:selction}
+  \end{subfigure}
+  \caption{The Plots \subrefb{fig:perm_imp:assignment} and
+    \subrefb{fig:perm_imp:selction} show the difference in assignment
+    and selection accuracy, respectively, of the CPT-model when
+    permuting the input features. For each feature, five different
+    permutation are performed. The features are ranked in decreasing
+    order of the observed reduction. The shown error bars represents
+  the standard error of the performance difference over 5 permutations.}
+  \label{fig:perm_imp}
 \end{figure}%
-The results are presented in \Cref{fig:perm_imp}, which shows the ranking and scores of the different features supplied to the model. Note, that this analysis only evaluates the impact of these variables in these trained models. In principle, it would be possible for a model trained without this variable to attain the same performance, by leveraging correlations of other variables. This is, why the aforementioned SHAP values compare combinations of variables and left out and often analyse, retraining a model without a certain feature. However, due to the large computational cost associated with this, such an investigation would exceed the scope of this thesis. 
-For both metrics, the b-tag of the jets is the most important feature, followed by the jets' and leptons' pseudorapidity $\eta$ respectively. While the order of the three leading features is the same for the two metrics, their individual impact is vastly different. For the assignment accuracy, all three features impose a similar drop in performance upon elimination. For the selection accuracy, however, the difference in performance caused by disabling the b-tag is more than three times as large as the pseudorapidities. This highlights, that the selection accuracy is mainly carried by the b-tag, while for the assignment of the jets, their kinematics relations to the leptons become more important.
-For the assignment accuracy, the four leading kinematic variables all relate to the angular features of jets and leptons and show quite some difference to the next important variable, which is the jets' energy. For the selection accuracy, it can be seen that energy and transverse momenta rank higher than the azimuthal angles. This can be explained by considering, that the jets from the signal process tend to be more energetic. For both metrics, global events features, such as variable related to missing transverse energy, the number of jets and angular separation of the leptons appear among the least impactful variables, with the azimuthal angle of the MET leading for the assignment accuracy and the number of jets for the selection accuracy. Lastly, it can be observed that for both metrics, the charge of the leptons seems to be entirely irrelevant. This underlines the previous hypothesis, that the assignment of jets to leptons is largely independent of the lepton charge. This makes permutation invariant models such as the CompactTransformer favourable.
-Generally, the insights into the model's reliance on input features, confirmed previous expectation. The model seems to utilise the variables in a way, that is consistent with the baseline-methods. Notably, however, the model generally depends only weakly on the MET variables, showing, that information related to the neutrinos seems to have little impact.
-
-
+The results are presented in \Cref{fig:perm_imp}, which shows the
+ranking and scores of the different features supplied to the model.
+Note that this analysis only evaluates the impact of these variables
+in these trained models. In principle, it would be possible for a
+model trained without this variable to attain the same performance,
+by leveraging correlations of other variables. This is, why the
+aforementioned SHAP values compare combinations of variables and left
+out and often analyse, retraining a model without a certain feature.
+However, due to the large computational cost associated with this,
+such an investigation would exceed the scope of this thesis.
+For both metrics, the b-tag of the jets is the most important
+feature, followed by the jets' and leptons' pseudorapidity $\eta$
+respectively. While the order of the three leading features is the
+same for the two metrics, their individual impact is vastly
+different. For the assignment accuracy, all three features impose a
+similar drop in performance upon elimination. For the selection
+accuracy, however, the difference in performance caused by disabling
+the b-tag is more than three times as large as the pseudorapidities.
+This highlights, that the selection accuracy is mainly carried by the
+b-tag, while for the assignment of the jets, their kinematics
+relations to the leptons become more important.
+For the assignment accuracy, the four leading kinematic variables all
+relate to the angular features of jets and leptons and show quite
+some difference to the next important variable, which is the jets'
+energy. For the selection accuracy, it can be seen that energy and
+transverse momenta rank higher than the azimuthal angles. This can be
+explained by considering, that the jets from the signal process tend
+to be more energetic. For both metrics, global events features, such
+as variable related to missing transverse energy, the number of jets
+and angular separation of the leptons appear among the least
+impactful variables, with the azimuthal angle of the MET leading for
+the assignment accuracy and the number of jets for the selection
+accuracy. Lastly, it can be observed that for both metrics, the
+charge of the leptons seems to be entirely irrelevant. This
+underlines the previous hypothesis, that the assignment of jets to
+leptons is largely independent of the lepton charge. This makes
+permutation invariant models such as the CompactTransformer favourable.
+Generally, the insights into the model's reliance on input features,
+confirmed previous expectation. The model seems to utilise the
+variables in a way, that is consistent with the baseline-methods.
+Notably, however, the model generally depends only weakly on the MET
+variables, showing, that information related to the neutrinos seems
+to have little impact.
 
 \section{Combination with Neutrino Regression}
 \label{sec:combination-with-neutrino-regression}
-To achieve a full reconstruction of the dileptonic \ttbar events, the jet assignment model can be combined with a neutrino regression model to predict the momenta of the two neutrinos in the event. This combination allows for a more comprehensive understanding of the event kinematics and can improve the overall reconstruction performance. This allows not only to reconstruct the full kinematics of the event, but also to potentially leverage the interdependencies between the jet assignment and neutrino regression tasks to improve the performance of both. For example, the jet assignment model can provide additional context for the neutrino regression model, which can help it make more accurate predictions by considering the relationships between the jets and leptons in the event. Conversely, the neutrino regression model can provide additional information about the event kinematics that can help the jet assignment model make more informed decisions about which jets are associated with which leptons. By combining these two models in a unified framework, it is possible to achieve a more holistic approach to event reconstruction in the dileptonic \ttbar channel, which can lead to improved performance and a better understanding of the underlying physics processes.
+To achieve a full reconstruction of the dileptonic \ttbar events, the
+jet assignment model can be combined with a neutrino regression model
+to predict the momenta of the two neutrinos in the event. This
+combination allows for a more comprehensive understanding of the
+event kinematics and can improve the overall reconstruction
+performance. This allows not only to reconstruct the full kinematics
+of the event, but also to potentially leverage the interdependencies
+between the jet assignment and neutrino regression tasks to improve
+the performance of both. For example, the jet assignment model can
+provide additional context for the neutrino regression model, which
+can help it make more accurate predictions by considering the
+relationships between the jets and leptons in the event. Conversely,
+the neutrino regression model can provide additional information
+about the event kinematics that can help the jet assignment model
+make more informed decisions about which jets are associated with
+which leptons. By combining these two models in a unified framework,
+it is possible to achieve a more holistic approach to event
+reconstruction in the dileptonic \ttbar channel, which can lead to
+improved performance and a better understanding of the underlying
+physics processes.
 
 \subsection{Unified Model Architecture}
 \label{sec:unified-model-architecture}
 \begin{figure}[ht]
-    \centering
-    \includegraphics[width=1.0\textwidth]{figures/machine-learning/compact_transformer_regression.pdf}
-    \caption{This schematic visualises the general structure of the CompactTransformer architecture equipped with an additional head for neutrino regression. Note, that $\oplus$ represents a concatenation of the corresponding features. This architecture is called MultiModalTransformer (MMT).}
+  \centering
+  \includegraphics[width=1.0\textwidth]{figures/machine-learning/compact_transformer_regression.pdf}
+  \caption{This schematic visualises the general structure of the
+    CompactTransformer architecture equipped with an additional head
+    for neutrino regression. Note that $\oplus$ represents a
+    concatenation of the corresponding features. This architecture is
+  called MultiModalTransformer (MMT).}
 \end{figure}
-To combine the jet assignment and neutrino regression tasks in a unified model architecture, the CompactTransformer (CPT) architecture can be extended by adding a head for neutrino regression. This new architecture, which we refer to as the MultiModalTransformer (MMT), retains the core structure of the CPT while incorporating additional components to handle the neutrino regression task.
-The structure for embedding, transformer layers, and assignment head remains the same as in the CPT architecture. This allows for a direct comparison of the performance of the jet assignment task before and after incorporating the neutrino regression, and it also ensures that any improvements in performance can be attributed to the addition of the neutrino regression head rather than changes in the underlying architecture.
-For the regression head, the latent vectors of the met features after the shared transformer layers are concatenated with the latent vectors of the leptons. Additionally, the jet-features after the shared transformed are weighted with the computed assignment scores for each lepton and jet pairing, this projected jet-feature vector gets concatenated with the leptons features. The regression head consists of a shared DNN that processes the concatenated features and outputs the predicted neutrino momenta in Cartesian coordinates for each neutrino. The DNN used for the regression here, deviated from the layout used for the other: it features three linear layers of logarithmically decreasing dimension with ReLU-activation to match the target output dimensions.
-While the projection of the jet-features was found to provide valuable context of the jets to the regression head, it introduced a side effect of propagating weight-changes from the regression to the assignment. To disable this effect, one possible modification was to stop gradient-propagation from the regression head to the assignment. The impact of this was investigated during the hyperparameter-optimisation.
-
-
-
-
-
+To combine the jet assignment and neutrino regression tasks in a
+unified model architecture, the CompactTransformer (CPT) architecture
+can be extended by adding a head for neutrino regression. This new
+architecture, which we refer to as the MultiModalTransformer (MMT),
+retains the core structure of the CPT while incorporating additional
+components to handle the neutrino regression task.
+The structure for embedding, transformer layers, and assignment head
+remains the same as in the CPT architecture. This allows for a direct
+comparison of the performance of the jet assignment task before and
+after incorporating the neutrino regression, and it also ensures that
+any improvements in performance can be attributed to the addition of
+the neutrino regression head rather than changes in the underlying architecture.
+For the regression head, the latent vectors of the met features after
+the shared transformer layers are concatenated with the latent
+vectors of the leptons. Additionally, the jet-features after the
+shared transformed are weighted with the computed assignment scores
+for each lepton and jet pairing, this projected jet-feature vector
+gets concatenated with the leptons features. The regression head
+consists of a shared DNN that processes the concatenated features and
+outputs the predicted neutrino momenta in Cartesian coordinates for
+each neutrino. The DNN used for the regression here, deviated from
+the layout used for the other: it features three linear layers of
+logarithmically decreasing dimension with ReLU-activation to match
+the target output dimensions.
+While the projection of the jet-features was found to provide
+valuable context of the jets to the regression head, it introduced a
+side effect of propagating weight-changes from the regression to the
+assignment. To disable this effect, one possible modification was to
+stop gradient-propagation from the regression head to the assignment.
+The impact of this was investigated during the hyperparameter-optimisation.
 
 \subsection{Training Procedure}
 \label{sec:regression:training-procedure}
-The training setup follows closely the one outlined in \Cref{sec:assignment:training-procedure}. The main difference is that the loss function now includes an additional term for the neutrino regression task. The total loss is computed as a weighted sum of the cross-entropy loss for the jet assignment and the loss function for the neutrino regression. For the neutrino regression, different loss functions are investigated. All of them are based on some distance measure between the predicted and true neutrino momenta. An overview of the different loss-functions can be found in \Cref{tab:loss-function}. The idea behind the different loss-functions is to reflect that the neutrino regression should be not only guided by the deviation with respect to the components but rather the physical objects these components represent. Different loss-function can thus emphasise different aspects of the neutrino properties, that the transformer should aim to capture correctly. Note, that for all loss-functions the output of the model remain the Cartesian coordinates of the two neutrinos. Only the method to compute the difference between truth and prediction is changed. Designing the most useful loss-function may very well depend on the target of one's analysis. Fulling studying how to tune the difference measure exceeds this study. Thus, only three different instances are evaluated here to showcases the impact of these. The Cartesian-Loss computes just a regular MSE of the Cartesian coordinates of the neutrino momenta. In contrast, the PtEtaPhi-loss measures the difference between the true and predicted neutrino momenta in terms of their $p_T,\eta,\phi$ coordinates. Lastly, the MagDir-loss quantises the deviation from the truth of the vector's magnitude and cosine similarity. To measure the difference of $p_T$ and $|\vec p|$, it was found to be beneficial to use the logarithmic difference with respect to the true value. This is because these variables span over many magnitudes in size and would thus destabilise the training. Different options, like a relative difference were also investigated but found to be less performant here. 
+The training setup follows closely the one outlined in
+\Cref{sec:assignment:training-procedure}. The main difference is that
+the loss function now includes an additional term for the neutrino
+regression task. The total loss is computed as a weighted sum of the
+cross-entropy loss for the jet assignment and the loss function for
+the neutrino regression. For the neutrino regression, different loss
+functions are investigated. All of them are based on some distance
+measure between the predicted and true neutrino momenta. An overview
+of the different loss-functions can be found in
+\Cref{tab:loss-function}. The idea behind the different
+loss-functions is to reflect that the neutrino regression should be
+not only guided by the deviation with respect to the components but
+rather the physical objects these components represent. Different
+loss-function can thus emphasise different aspects of the neutrino
+properties, that the transformer should aim to capture correctly.
+Note that for all loss-functions the output of the model remain the
+Cartesian coordinates of the two neutrinos. Only the method to
+compute the difference between truth and prediction is changed.
+Designing the most useful loss-function may very well depend on the
+target of one's analysis. Fulling studying how to tune the difference
+measure exceeds this study. Thus, only three different instances are
+evaluated here to showcases the impact of these. The Cartesian-Loss
+computes just a regular MSE of the Cartesian coordinates of the
+neutrino momenta. In contrast, the PtEtaPhi-loss measures the
+difference between the true and predicted neutrino momenta in terms
+of their $p_T,\eta,\phi$ coordinates. Lastly, the MagDir-loss
+quantises the deviation from the truth of the vector's magnitude and
+cosine similarity. To measure the difference of $p_T$ and $|\vec p|$,
+it was found to be beneficial to use the logarithmic difference with
+respect to the true value. This is because these variables span over
+many magnitudes in size and would thus destabilise the training.
+Different options, like a relative difference were also investigated
+but found to be less performant here.
 \begin{table}[ht]
-    \centering
-    \caption{Overview of different loss-function that were investigated.}
-    \begin{tabular}{ll}
-        \toprule
-        Loss & Computation\\
-        \midrule
-        Cartesian-Loss & $L=(\Delta p_x)^2+ (\Delta p_y)^2+(\Delta p_z)^2$\\
-        PtEtaPhi-Loss & $L=\left(\log\left(\frac{p_{T,\text{true}}}{p_{T,\text{pred}}}\right)\right)^2+(\Delta \eta)^2+(\Delta\phi)^2$\\
-        MagDir-loss & $L=\left(\log\left(\frac{|\vec p_{\text{true}}|}{|\vec p_{\text{pred}}|}\right)\right)^2-\frac{\vec p_{pred}\cdot\vec p_{true}}{|\vec p_{pred}||\vec p_{true}|}$\\
-        \bottomrule
-    \end{tabular}
-    \label{tab:loss-function}
+  \centering
+  \caption{Overview of different loss-function that were investigated.}
+  \begin{tabular}{ll}
+    \toprule
+    Loss & Computation\\
+    \midrule
+    Cartesian-Loss & $L=(\Delta p_x)^2+ (\Delta p_y)^2+(\Delta p_z)^2$\\
+    PtEtaPhi-Loss &
+    $L=\left(\log\left(\frac{p_{T,\text{true}}}{p_{T,\text{pred}}}\right)\right)^2+(\Delta
+    \eta)^2+(\Delta\phi)^2$\\
+    MagDir-loss & $L=\left(\log\left(\frac{|\vec
+        p_{\text{true}}|}{|\vec
+    p_{\text{pred}}|}\right)\right)^2-\frac{\vec p_{pred}\cdot\vec
+    p_{true}}{|\vec p_{pred}||\vec p_{true}|}$\\
+    \bottomrule
+  \end{tabular}
+  \label{tab:loss-function}
 \end{table}%
 
-Another, related but conceptionally different approach that was investigated is the so-called \textit{Gaussian-Loss}. The rationale behind the use of this loss comes from the consideration, that the problem of the neutrino regression is inherently underconstraint. Therefore, the neutrino momenta can be more appropriately modelled using a conditional (posterior) probability distribution $P(\vec p(\nu),\vec p(\bar{\nu})|\text{Event})$. Instead of a single possible neutrino solution for each event, the neutrino momenta follow a conditional probability distribution, which more accurately represents the limited knowledge of the momenta. This provides a more coherent picture of the neutrinos' kinematic structure. In \Cref{sec:regression_vs_conditional_density}, the methodological difference between the two approaches was elaborated. This approach was investigated for $\nu^2$-Flows \cite{nu_square_flows}. Since $\nu^2$-Flows follows are very different pattern in its layout and training, it was decided to use a strongly simplified strategy here to model the posterior of the neutrino. For this, the neutrino momenta were modelled using a multivariate Gaussian distribution of uncorrelated variables. While this has obvious short-comings and does not accurately capture multimodality in the distributions, it is computationally closely related to the structure of regression. The model architecture can be easily extended to provide $\mu_i(X), \sigma_i(X)$, which are mean and standard deviation of each of the six neutrino momenta components respectively. Note, that $X$ refers to the inputs of the model. This only require to raise the dimensionality by a factor of $2$. The corresponding loss-function $L_{\text{GL}}$ is then for an event with input variables $X$ and parton-level momenta components $P_{i,\text{true}}$ given as
+Another, related but conceptionally different approach that was
+investigated is the so-called \textit{Gaussian-Loss}. The rationale
+behind the use of this loss comes from the consideration, that the
+problem of the neutrino regression is inherently underconstraint.
+Therefore, the neutrino momenta can be more appropriately modelled
+using a conditional (posterior) probability distribution $P(\vec
+p(\nu),\vec p(\bar{\nu})|\text{Event})$. Instead of a single possible
+neutrino solution for each event, the neutrino momenta follow a
+conditional probability distribution, which more accurately
+represents the limited knowledge of the momenta. This provides a more
+coherent picture of the neutrinos' kinematic structure. In
+\Cref{sec:regression_vs_conditional_density}, the methodological
+difference between the two approaches was elaborated. This approach
+was investigated for $\nu^2$-Flows \cite{nu_square_flows}. Since
+$\nu^2$-Flows follows are very different pattern in its layout and
+training, it was decided to use a strongly simplified strategy here
+to model the posterior of the neutrino. For this, the neutrino
+momenta were modelled using a multivariate Gaussian distribution of
+uncorrelated variables. While this has obvious short-comings and does
+not accurately capture multimodality in the distributions, it is
+computationally closely related to the structure of regression. The
+model architecture can be easily extended to provide $\mu_i(X),
+\sigma_i(X)$, which are mean and standard deviation of each of the
+six neutrino momenta components respectively. Note that $X$ refers
+to the inputs of the model. This only require to raise the
+dimensionality by a factor of $2$. The corresponding loss-function
+$L_{\text{GL}}$ is then for an event with input variables $X$ and
+parton-level momenta components $P_{i,\text{true}}$ given as
 \begin{equation}
-    L_{\text{GL}}=\sum_{i=1}^6\left(\log(\sigma^2_i)+\frac{(\mu_i-P_{i,\text{true}})^2}{\sigma^2_i}\right)\,.
+  L_{\text{GL}}=\sum_{i=1}^6\left(\log(\sigma^2_i)+\frac{(\mu_i-P_{i,\text{true}})^2}{\sigma^2_i}\right)\,.
 \end{equation}
-\Cref{app:mse_mean} provides a link between this loss function and the maximum logarithmic likelihood, which in turn is equivalent to the minimising the Kullback-Leibler divergence.
-From the loss, it can be seen, that this type of conditional density learning is closely related and computationally similar to regression via an MSE. Thus, this approach allows for a very simple extension of the model to capture the inherent uncertainty of the neutrino momenta. One final aspect, that has to be discussed is the behaviour for inference of the neutrino momenta. Typically, only one value for the neutrino momentum is considered per event in the reconstruction and fitting. Methods like $\nu^2$-Flows decided to randomly sample $1000$ solution of the neutrino momenta and select the one with the highest probability. For the Gaussian-loss here, two modes are considered: either using the mean of the distribution, which is expected to behave similarly as the regression using MSE (see \Cref{app:mse_mean}), or sampling one solution for the neutrinos' momenta from the predicted Gaussian distribution.
-It should be noted, that other possible extension to the structure of the regression were investigated, but not found to be beneficial. One of these approaches was to bin the neutrino momenta and regress the probability for the occupation of a certain bin using a cross-entropy loss. A second idea was to use a tokenisation of the neutrinos' momenta. Both approaches were found to perform poorly, and thus discarded at an early stage. A major contributing factor is the high dimensionality of the output-space, which makes binning quickly unfeasible.
+\Cref{app:mse_mean} provides a link between this loss function and
+the maximum logarithmic likelihood, which in turn is equivalent to
+the minimising the Kullback-Leibler divergence.
+From the loss, it can be seen, that this type of conditional density
+learning is closely related and computationally similar to regression
+via an MSE. Thus, this approach allows for a very simple extension of
+the model to capture the inherent uncertainty of the neutrino
+momenta. One final aspect, that has to be discussed is the behaviour
+for inference of the neutrino momenta. Typically, only one value for
+the neutrino momentum is considered per event in the reconstruction
+and fitting. Methods like $\nu^2$-Flows decided to randomly sample
+$1000$ solution of the neutrino momenta and select the one with the
+highest probability. For the Gaussian-loss here, two modes are
+considered: either using the mean of the distribution, which is
+expected to behave similarly as the regression using MSE (see
+\Cref{app:mse_mean}), or sampling one solution for the neutrinos'
+momenta from the predicted Gaussian distribution.
+It should be noted, that other possible extension to the structure of
+the regression were investigated, but not found to be beneficial. One
+of these approaches was to bin the neutrino momenta and regress the
+probability for the occupation of a certain bin using a cross-entropy
+loss. A second idea was to use a tokenisation of the neutrinos'
+momenta. Both approaches were found to perform poorly, and thus
+discarded at an early stage. A major contributing factor is the high
+dimensionality of the output-space, which makes binning quickly unfeasible.
 
-The later Chapters further elaborate, how the most optimal loss depends on the variables of interest of an analysis. So, depending on the future use-cases of the tools presented here, it might be necessary to investigate and tailor this as needed.
+The later Chapters further elaborate, how the most optimal loss
+depends on the variables of interest of an analysis. So, depending on
+the future use-cases of the tools presented here, it might be
+necessary to investigate and tailor this as needed.
 
-For this chapter, however, the loss is taken as the mean-squared error (MSE) for each neutrino component. That is, because for investigating the architecture and its scaling, the explicit loss-function was not found to have a significant impact. Apart from the loss function, the weighting of the two tasks and the scaling of the regression targets also have to be tuned. Here, it was found to be beneficial to scale the regression targets to units of $100\,\unit{GeV}$. This helps to improve the training stability and convergence. The weighting of the two tasks was, after some experimentation, set to $w_{assignment}=1$ and $w_{regression}=0.2$, which provided a good balance and stable training behaviour. All other parameters of the training procedure, such as the optimizer, learning rate scheduling, and early stopping criteria, are kept the same as in the jet assignment training procedure to ensure consistency and allow for a fair comparison between the models. During the training process, the performance of both the jet assignment and neutrino regression tasks is monitored on the validation set to ensure that the model is learning effectively and not overfitting to the training data. To evaluate the performance of the combined model, separate metrics for both tasks are reported during the training process. For the jet assignment, the accuracy of the assignments is monitored, while for the neutrino regression, metrics such as relative error of the predicted neutrino momenta compared to the true values are tracked. The relative error is computed as the $L^2$-Norm of the difference between the predicted and true neutrino momenta, divided by the $L^2$-Norm of the true neutrino momenta, which provides a measure of the accuracy of the predictions relative to the scale of the true values.
+For this chapter, however, the loss is taken as the mean-squared
+error (MSE) for each neutrino component. That is, because for
+investigating the architecture and its scaling, the explicit
+loss-function was not found to have a significant impact. Apart from
+the loss function, the weighting of the two tasks and the scaling of
+the regression targets also have to be tuned. Here, it was found to
+be beneficial to scale the regression targets to units of
+$100\,\unit{GeV}$. This helps to improve the training stability and
+convergence. The weighting of the two tasks was, after some
+experimentation, set to $w_{assignment}=1$ and $w_{regression}=0.2$,
+which provided a good balance and stable training behaviour. All
+other parameters of the training procedure, such as the optimizer,
+learning rate scheduling, and early stopping criteria, are kept the
+same as in the jet assignment training procedure to ensure
+consistency and allow for a fair comparison between the models.
+During the training process, the performance of both the jet
+assignment and neutrino regression tasks is monitored on the
+validation set to ensure that the model is learning effectively and
+not overfitting to the training data. To evaluate the performance of
+the combined model, separate metrics for both tasks are reported
+during the training process. For the jet assignment, the accuracy of
+the assignments is monitored, while for the neutrino regression,
+metrics such as relative error of the predicted neutrino momenta
+compared to the true values are tracked. The relative error is
+computed as the $L^2$-Norm of the difference between the predicted
+and true neutrino momenta, divided by the $L^2$-Norm of the true
+neutrino momenta, which provides a measure of the accuracy of the
+predictions relative to the scale of the true values.
 
 \subsection{Performance Evaluation}
 \label{sec:performance-evaluation}
-As the evaluation for the assignment models showed very minor difference in performance from different numbers of layers, for the combined model, the number of layers is kept fixed to 6, while the embedding dimension is varied in the range of $\{16,32,64,128,256\}$ to evaluate its impact on the performance of both tasks. Due to the increased complexity of the combined model, it is expected that a higher embedding dimension may be required to achieve good performance on both tasks simultaneously. To keep the computational resources feasible, it was decided to not perform a full grid search for the combined model, but rather to focus on evaluating the impact of the embedding dimension while keeping the number of layers fixed.
+As the evaluation for the assignment models showed very minor
+difference in performance from different numbers of layers, for the
+combined model, the number of layers is kept fixed to 6, while the
+embedding dimension is varied in the range of $\{16,32,64,128,256\}$
+to evaluate its impact on the performance of both tasks. Due to the
+increased complexity of the combined model, it is expected that a
+higher embedding dimension may be required to achieve good
+performance on both tasks simultaneously. To keep the computational
+resources feasible, it was decided to not perform a full grid search
+for the combined model, but rather to focus on evaluating the impact
+of the embedding dimension while keeping the number of layers fixed.
 \begin{figure}
-    \centering
-    \includegraphics[width=0.7\textwidth]{plots/hyperparams_full_reco_baseline/regression_mse_vs_num_parameters.pdf}
-    \caption{
-        Relative $L^2$ deviation of the predicted neutrino momenta compared to the true values as a function of the number of trainable parameters for the MultiModalTransformer (MMT) architecture.
-    }
-    \label{fig:regression_hyperparams}
+  \centering
+  \includegraphics[width=0.7\textwidth]{plots/hyperparams_full_reco_baseline/regression_mse_vs_num_parameters.pdf}
+  \caption{
+    Relative $L^2$ deviation of the predicted neutrino momenta
+    compared to the true values as a function of the number of
+    trainable parameters for the MultiModalTransformer (MMT) architecture.
+  }
+  \label{fig:regression_hyperparams}
 \end{figure}
-The \Cref{fig:regression_hyperparams} shows the performance of the MMT architecture in terms of the relative $L^2$-Norm deviation of the predicted neutrino momenta compared to the true values as a function of the number of trainable parameters. For comparison, the performance of the neutrino regression provided by $\nu^2$-Flows is plotted as a horizontal line, which serves as a baseline for evaluating the performance of the MMT architecture. From the results, two main observations can be made. First, the performance of the MMT architecture generally seems to outperform the $\nu^2$-Flows baseline across different embedding dimensions, which suggests that the model architecture can effectively leverage the interdependencies between the jet assignment and neutrino regression tasks to improve the performance of both. Second, there is a trend of improving performance with increasing number of trainable parameters, which indicates that the model benefits from having sufficient capacity to learn the underlying patterns in the data. However, it is also observed that the performance improvement tends to plateau for higher embedding dimensions, which may suggest that there is a point of diminishing returns where increasing the model size further does not lead to significant performance gains. Since no decrease in performance for higher number of parameters was found, despite being trained with the number of events, the model does not seem to show effects of overfitting for these model sizes. This is most likely to be attributed to the aggressive dropout and regularisation applied during the training.
+The \Cref{fig:regression_hyperparams} shows the performance of the
+MMT architecture in terms of the relative $L^2$-Norm deviation of the
+predicted neutrino momenta compared to the true values as a function
+of the number of trainable parameters. For comparison, the
+performance of the neutrino regression provided by $\nu^2$-Flows is
+plotted as a horizontal line, which serves as a baseline for
+evaluating the performance of the MMT architecture. From the results,
+two main observations can be made. First, the performance of the MMT
+architecture generally seems to outperform the $\nu^2$-Flows baseline
+across different embedding dimensions, which suggests that the model
+architecture can effectively leverage the interdependencies between
+the jet assignment and neutrino regression tasks to improve the
+performance of both. Second, there is a trend of improving
+performance with increasing number of trainable parameters, which
+indicates that the model benefits from having sufficient capacity to
+learn the underlying patterns in the data. However, it is also
+observed that the performance improvement tends to plateau for higher
+embedding dimensions, which may suggest that there is a point of
+diminishing returns where increasing the model size further does not
+lead to significant performance gains. Since no decrease in
+performance for higher number of parameters was found, despite being
+trained with the number of events, the model does not seem to show
+effects of overfitting for these model sizes. This is most likely to
+be attributed to the aggressive dropout and regularisation applied
+during the training.
 
 \subsection{Feature Importance}
 \label{sec:regression:feature_importance}
 \begin{figure}[ht]
-    \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=1.0\textwidth]{plots/compact_reconstructor/ml_metrics/MultiModalTransformer_Assignment_Accuracy_importance.pdf}
-        \caption{Assignment Accuracy}
-        \label{fig:regression:perm_imp:assignment}
-    \end{subfigure}
-    \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=1.0\textwidth]{plots/compact_reconstructor/ml_metrics/MultiModalTransformer_Regression_MSE_importance.pdf}
-        \caption{Regression MSE}
-        \label{fig:regression:perm_imp:regression}
-    \end{subfigure}
-    \caption{The Plots \subrefb{fig:regression:perm_imp:assignment} and \subrefb{fig:regression:perm_imp:regression} show the difference in assignment accuracy and regression MSE, respectively, of the MMT-model when permuting the input features. For each feature, five different permutation are performed. The features are ranked in decreasing order of the observed reduction. Note, that the mean-square error is again computed as the relative deviation of the $L^2$-norm as before.}
-    \label{fig:regression:perm_imp}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=1.0\textwidth]{plots/compact_reconstructor/ml_metrics/MultiModalTransformer_Assignment_Accuracy_importance.pdf}
+    \caption{Assignment Accuracy}
+    \label{fig:regression:perm_imp:assignment}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=1.0\textwidth]{plots/compact_reconstructor/ml_metrics/MultiModalTransformer_Regression_MSE_importance.pdf}
+    \caption{Regression MSE}
+    \label{fig:regression:perm_imp:regression}
+  \end{subfigure}
+  \caption{The Plots \subrefb{fig:regression:perm_imp:assignment} and
+    \subrefb{fig:regression:perm_imp:regression} show the difference in
+    assignment accuracy and regression MSE, respectively, of the
+    MMT-model when permuting the input features. For each feature, five
+    different permutation are performed. The features are ranked in
+    decreasing order of the observed reduction. Note that the
+    mean-square error is again computed as the relative deviation of
+  the $L^2$-norm as before.}
+  \label{fig:regression:perm_imp}
 \end{figure}%
-Analogous to the models used for assignment, the model's reliance on the input features is investigated using permutation importance. The results are shown in \Cref{fig:regression:perm_imp}. Despite, the model being trained with the additional training target, the feature importance scores for the assignment accuracy have not changed at all and match close to perfect with those in \Cref{fig:perm_imp}. The feature importance for the regression performance, however, shows a very different dependence on the input features. On one hand, the jets' b-tag, which was is the leading feature for the assignment, only has a very little impact and scores lower than all kinematic features except the energy of the leptons.
-Generally, it can be observed, that while the pseudorapidity scores higher for the assignment than the azimuthal angles, this is completely reversed for the regression, where both the leptons' and jets' $\phi$ scores higher than their $\eta$. Also, features related to the leptons' energy, such as their transverse momenta, become much more important.
-In stark contrast to the assignment's feature importance, for the regression, the azimuthal angle $\phi$ of the MET manifests as the most important variable, closely followed by the lepton's azimuthal angle. Given that the direction of the MET is very strongly related to the neutrinos' momenta, this is unsurprising. Interestingly, the absolute value of the MET scores rather low and seems to have much less impact. It should be noted at this point that the scoring of the feature is expected to strongly depend on the metric, employed to measure model's performance in the given task.
-To provide further insights, \Cref{fig:regression:perm_imp:comps} shows the feature importance for the mean-absolute error of the neutrinos' $p_x$ and $p_z$ components. This allows to disentangle the effect of the different kinematic variables on the components. Due to the rotational symmetric of both the detector and the physics around the beam-axis, the $p_x$ represents the reconstruction within the transverse plane. One observation that can be made is, that while the MET features score very high for the reconstruction of the transverse components, they score very low for the longitudinal component. This reflects that the MET only constraints the neutrino momenta in the transverse plane. That this is accurately represented in the models provides a sanity check for the model's internal computation. Another difference, that can be observed between the feature importance for the two directions is, that the $p_z$ seems to depend much more on the leptons compared to the transverse components. For the first, all four leptons kinematic variables are among the five leading variables. For the transverse components, however, only the azimuthal angle scores very high.\\
+Analogous to the models used for assignment, the model's reliance on
+the input features is investigated using permutation importance. The
+results are shown in \Cref{fig:regression:perm_imp}. Despite, the
+model being trained with the additional training target, the feature
+importance scores for the assignment accuracy have not changed at all
+and match close to perfect with those in \Cref{fig:perm_imp}. The
+feature importance for the regression performance, however, shows a
+very different dependence on the input features. On one hand, the
+jets' b-tag, which was is the leading feature for the assignment,
+only has a very little impact and scores lower than all kinematic
+features except the energy of the leptons.
+Generally, it can be observed, that while the pseudorapidity scores
+higher for the assignment than the azimuthal angles, this is
+completely reversed for the regression, where both the leptons' and
+jets' $\phi$ scores higher than their $\eta$. Also, features related
+to the leptons' energy, such as their transverse momenta, become much
+more important.
+In stark contrast to the assignment's feature importance, for the
+regression, the azimuthal angle $\phi$ of the MET manifests as the
+most important variable, closely followed by the lepton's azimuthal
+angle. Given that the direction of the MET is very strongly related
+to the neutrinos' momenta, this is unsurprising. Interestingly, the
+absolute value of the MET scores rather low and seems to have much
+less impact. It should be noted at this point that the scoring of the
+feature is expected to strongly depend on the metric, employed to
+measure model's performance in the given task.
+To provide further insights, \Cref{fig:regression:perm_imp:comps}
+shows the feature importance for the mean-absolute error of the
+neutrinos' $p_x$ and $p_z$ components. This allows to disentangle the
+effect of the different kinematic variables on the components. Due to
+the rotational symmetric of both the detector and the physics around
+the beam-axis, the $p_x$ represents the reconstruction within the
+transverse plane. One observation that can be made is, that while the
+MET features score very high for the reconstruction of the transverse
+components, they score very low for the longitudinal component. This
+reflects that the MET only constraints the neutrino momenta in the
+transverse plane. That this is accurately represented in the models
+provides a sanity check for the model's internal computation. Another
+difference, that can be observed between the feature importance for
+the two directions is, that the $p_z$ seems to depend much more on
+the leptons compared to the transverse components. For the first, all
+four leptons kinematic variables are among the five leading
+variables. For the transverse components, however, only the azimuthal
+angle scores very high.\\
 \begin{figure}[H]
-    \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=1.0\textwidth]{plots/compact_reconstructor/ml_metrics/MultiModalTransformer_mae_px_importance.pdf}
-        \caption{MAE $p_x$}
-        \label{fig:regression:perm_imp:mae_px}
-    \end{subfigure}
-    \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=1.0\textwidth]{plots/compact_reconstructor/ml_metrics/MultiModalTransformer_mae_pz_importance.pdf}
-        \caption{MAE $p_z$}
-        \label{fig:regression:perm_imp:mae_pz}
-    \end{subfigure}
-    \caption{The plots \subrefb{fig:regression:perm_imp:mae_px} and \subrefb{fig:regression:perm_imp:mae_pz} show the difference in MAE for the $p_x$ and $p_z$ components of the neutrinos respectively, of the MMT-model when permuting the input features. For each feature, five different permutation are performed. The features are ranked in decreasing order of the observed reduction. Note, that the mean-square error is again computed as the relative deviation of the $L^2$-norm as before.}
-    \label{fig:regression:perm_imp:comps}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=1.0\textwidth]{plots/compact_reconstructor/ml_metrics/MultiModalTransformer_mae_px_importance.pdf}
+    \caption{MAE $p_x$}
+    \label{fig:regression:perm_imp:mae_px}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=1.0\textwidth]{plots/compact_reconstructor/ml_metrics/MultiModalTransformer_mae_pz_importance.pdf}
+    \caption{MAE $p_z$}
+    \label{fig:regression:perm_imp:mae_pz}
+  \end{subfigure}
+  \caption{The plots \subrefb{fig:regression:perm_imp:mae_px} and
+    \subrefb{fig:regression:perm_imp:mae_pz} show the difference in MAE
+    for the $p_x$ and $p_z$ components of the neutrinos respectively,
+    of the MMT-model when permuting the input features. For each
+    feature, five different permutation are performed. The features are
+    ranked in decreasing order of the observed reduction. Note that
+    the mean-square error is again computed as the relative deviation
+  of the $L^2$-norm as before.}
+  \label{fig:regression:perm_imp:comps}
 \end{figure}%
-Lastly, it should be noted, that the b-tag is kinematically not related to the neutrinos. Thus, its non-zero score implies, that the regression does depend on some internal representation of the jet-assignment or -selection within the transformer's latent-space.
-
+Lastly, it should be noted, that the b-tag is kinematically not
+related to the neutrinos. Thus, its non-zero score implies, that the
+regression does depend on some internal representation of the
+jet-assignment or -selection within the transformer's latent-space.
 
 \subsection{Multitask Learning Benefits}
 \label{sec:multitask-learning-benefits}
-One of the key prospects of combining the jet assignment and neutrino regression tasks in a unified model architecture is the potential for multitask learning benefits. The idea is, that the information exchange and additional context provided by the shared transformer layers can help both tasks to learn more effectively from the data, and thus increasing the overall performance of the model. To investigate this, the same model architecture is trained separately for three different setups: 
+One of the key prospects of combining the jet assignment and neutrino
+regression tasks in a unified model architecture is the potential for
+multitask learning benefits. The idea is, that the information
+exchange and additional context provided by the shared transformer
+layers can help both tasks to learn more effectively from the data,
+and thus increasing the overall performance of the model. To
+investigate this, the same model architecture is trained separately
+for three different setups:
 \begin{enumerate}
-    \item CompactTransformer: a MultiModalTransformer trained only for the jet assignment task, with a loss function that includes only the cross-entropy loss for the jet assignment and no contribution from the neutrino regression task ($w_{\text{assignment}}=1$ and $w_{\text{regression}}=0$).
-    \item MultiModalTransformer: a MultiModalTransformer trained for both the jet assignment and neutrino regression tasks, with a loss function that includes both the cross-entropy loss for the jet assignment and the mean-squared error loss for the neutrino regression, weighted by $w_{\text{assignment}}=1$ and $w_{\text{regression}}=0.2$. For this training setup, two variations were tested: including or excluding weight-updates propagating from the regression head to the cross-attention layers were investigated separately.
-    \item RegressionTransformer: a MultiModalTransformer trained only for the neutrino regression task, with a loss function that includes only the mean-squared error loss for the neutrino regression and no contribution from the jet assignment task ($w_{\text{assignment}}=0$ and $w_{\text{regression}}=1$).
+  \item CompactTransformer: a MultiModalTransformer trained only for
+    the jet assignment task, with a loss function that includes only
+    the cross-entropy loss for the jet assignment and no contribution
+    from the neutrino regression task ($w_{\text{assignment}}=1$ and
+    $w_{\text{regression}}=0$).
+  \item MultiModalTransformer: a MultiModalTransformer trained for
+    both the jet assignment and neutrino regression tasks, with a
+    loss function that includes both the cross-entropy loss for the
+    jet assignment and the mean-squared error loss for the neutrino
+    regression, weighted by $w_{\text{assignment}}=1$ and
+    $w_{\text{regression}}=0.2$. For this training setup, two
+    variations were tested: including or excluding weight-updates
+    propagating from the regression head to the cross-attention
+    layers were investigated separately.
+  \item RegressionTransformer: a MultiModalTransformer trained only
+    for the neutrino regression task, with a loss function that
+    includes only the mean-squared error loss for the neutrino
+    regression and no contribution from the jet assignment task
+    ($w_{\text{assignment}}=0$ and $w_{\text{regression}}=1$).
 \end{enumerate}
-The results of this comparison are shown in \Cref{fig:assignment_multitask_benefits,fig:regression_multitask_benefits}. They compare the regression accuracy and assignment between MultiModalTransformer with the CompactTransformer and RegressionTransformer, respectively, to evaluate the benefits of multitask learning in the unified model architecture. 
-From this, it can be seen that the MultiModalTransformer shows no improvement in the jet assignment accuracy compared to the CompactTransformer, which suggests that the inclusion of the neutrino regression task does not provide significant benefits for the jet assignment task. Further, a small degrading of assignment accuracy can be observed, which despite being miniscule exceeds the error bands. However, for the model with gradient-stopping for weight-updates from the regression head to the cross-attention layer, the performance seems to be on-par with the CompactTransformer. The effect becomes more pronounced at higher numbers of parameters. This indicates, that updating the cross-attention layer based on which jet-features are needed for the regression is not favourable. On the other hand, it was found, that disabling this gradient-propagation did not lead to a reduction in the regression performance. Therefore, it was decided that the standard architecture, henceforth includes the stopping of the gradients.\\
-However, it can be observed that the MultiModalTransformer shows a minor improvement in the neutrino regression performance compared to the RegressionTransformer, which indicates that the inclusion of the jet assignment task provides valuable context and information that helps the model to make more accurate predictions for the neutrino momenta. Notably, this advantage particularly appears for higher embedding dimensions, which indicates that the embedding dimension has to be large enough to fit the relevant information for both tasks. The impact of the included jet assignment on the regression performance is also indicated by the feature importance as discussed in the previous \Cref{sec:regression:feature_importance}, where it was pointed out that the non-vanishing impact of the b-tagging on the regression targets, show, that the model does require an internal assignment of the jets to perform the regression.
-This can be further highlighted by considering the assignment performance of the RegressionTransformer. Due to the weight-updates from the jet-projection via the assignment scores, this model, despite being trained without any assignment labels (i.e. $w_{\text{assignemnt}}$=0), was able to learn to predict the assignment. A corresponding plot is shown in \Cref{fig:regression_transformer_assignment} in the Appendix. It compares the achieved accuracies for the RegressionTransformer and the MultiModalTransformer. While the MultiModalTransformer achieves a much higher performance, the RegressionTransformer can reach accuracies above $75\%$, which is not only far better than a random assignment, but also above the baseline-methods (see \Cref{sec:evaluation:assignment}). This finding conclusively demonstrates the information flow between both tasks is inherently linked. It also indicates that a tool like $\nu^2$-Flows during extraction of the features already develops an understanding for the assignment. These scores could be extracted instead of relying on additional tools like the $\chi^2$-Methods for reconstruction. Not only would this results in superior accuracies for the jet-assignment, but also offer some transparency to the machine-learning method and its internal correlations of the different objects.
+The results of this comparison are shown in
+\Cref{fig:assignment_multitask_benefits,fig:regression_multitask_benefits}.
+They compare the regression accuracy and assignment between
+MultiModalTransformer with the CompactTransformer and
+RegressionTransformer, respectively, to evaluate the benefits of
+multitask learning in the unified model architecture.
+From this, it can be seen that the MultiModalTransformer shows no
+improvement in the jet assignment accuracy compared to the
+CompactTransformer, which suggests that the inclusion of the neutrino
+regression task does not provide significant benefits for the jet
+assignment task. Further, a small degrading of assignment accuracy
+can be observed, which despite being miniscule exceeds the error
+bands. However, for the model with gradient-stopping for
+weight-updates from the regression head to the cross-attention layer,
+the performance seems to be on-par with the CompactTransformer. The
+effect becomes more pronounced at higher numbers of parameters. This
+indicates, that updating the cross-attention layer based on which
+jet-features are needed for the regression is not favourable. On the
+other hand, it was found, that disabling this gradient-propagation
+did not lead to a reduction in the regression performance. Therefore,
+it was decided that the standard architecture, henceforth includes
+the stopping of the gradients.\\
+However, it can be observed that the MultiModalTransformer shows a
+minor improvement in the neutrino regression performance compared to
+the RegressionTransformer, which indicates that the inclusion of the
+jet assignment task provides valuable context and information that
+helps the model to make more accurate predictions for the neutrino
+momenta. Notably, this advantage particularly appears for higher
+embedding dimensions, which indicates that the embedding dimension
+has to be large enough to fit the relevant information for both
+tasks. The impact of the included jet assignment on the regression
+performance is also indicated by the feature importance as discussed
+in the previous \Cref{sec:regression:feature_importance}, where it
+was pointed out that the non-vanishing impact of the b-tagging on the
+regression targets, show, that the model does require an internal
+assignment of the jets to perform the regression.
+This can be further highlighted by considering the assignment
+performance of the RegressionTransformer. Due to the weight-updates
+from the jet-projection via the assignment scores, this model,
+despite being trained without any assignment labels (i.e.
+$w_{\text{assignemnt}}$=0), was able to learn to predict the
+assignment. A corresponding plot is shown in
+\Cref{fig:regression_transformer_assignment} in the Appendix. It
+compares the achieved accuracies for the RegressionTransformer and
+the MultiModalTransformer. While the MultiModalTransformer achieves a
+much higher performance, the RegressionTransformer can reach
+accuracies above $75\%$, which is not only far better than a random
+assignment, but also above the baseline-methods (see
+\Cref{sec:evaluation:assignment}). This finding conclusively
+demonstrates the information flow between both tasks is inherently
+linked. It also indicates that a tool like $\nu^2$-Flows during
+extraction of the features already develops an understanding for the
+assignment. These scores could be extracted instead of relying on
+additional tools like the $\chi^2$-Methods for reconstruction. Not
+only would this results in superior accuracies for the
+jet-assignment, but also offer some transparency to the
+machine-learning method and its internal correlations of the different objects.
 
-Overall, these results highlight the potential advantages of multitask learning in this context and suggest that combining related tasks in a unified model architecture can lead to improved performance for certain tasks by leveraging shared information and context between them. In particular, the jet assignment, which was often overlooked in previous works such as $\nu^2$-Flows, can provide valuable context for the neutrino regression task, which can lead to improvements in its performance when combined in a unified model architecture. Furthermore, it should be mentioned, that the computational cost of training the MultiModalTransformer is not significantly higher than training the CompactTransformer or RegressionTransformer separately, as the shared transformer layers allow for efficient learning of both tasks without requiring a substantial increase in model complexity. Similar arguments hold for the inference time, which is also not significantly higher for the MultiModalTransformer compared to the separate models, as the shared architecture allows for efficient processing of both tasks without a substantial increase in computational requirements. As the computational cost for the $\nu^2$-Flows method could not be evaluated, a direct comparison of the different methods in terms of computational efficiency is not possible. But in general, the benefits of multitask learning in terms of improved performance can be achieved without incurring significant additional computational costs, making it an attractive approach for event reconstruction in the dileptonic \ttbar channel. On the other hand, training and running separate models for both tasks can be expected to approximately double the computational cost, as both models would require separate forward passes and training processes.
+Overall, these results highlight the potential advantages of
+multitask learning in this context and suggest that combining related
+tasks in a unified model architecture can lead to improved
+performance for certain tasks by leveraging shared information and
+context between them. In particular, the jet assignment, which was
+often overlooked in previous works such as $\nu^2$-Flows, can provide
+valuable context for the neutrino regression task, which can lead to
+improvements in its performance when combined in a unified model
+architecture. Furthermore, it should be mentioned, that the
+computational cost of training the MultiModalTransformer is not
+significantly higher than training the CompactTransformer or
+RegressionTransformer separately, as the shared transformer layers
+allow for efficient learning of both tasks without requiring a
+substantial increase in model complexity. Similar arguments hold for
+the inference time, which is also not significantly higher for the
+MultiModalTransformer compared to the separate models, as the shared
+architecture allows for efficient processing of both tasks without a
+substantial increase in computational requirements. As the
+computational cost for the $\nu^2$-Flows method could not be
+evaluated, a direct comparison of the different methods in terms of
+computational efficiency is not possible. But in general, the
+benefits of multitask learning in terms of improved performance can
+be achieved without incurring significant additional computational
+costs, making it an attractive approach for event reconstruction in
+the dileptonic \ttbar channel. On the other hand, training and
+running separate models for both tasks can be expected to
+approximately double the computational cost, as both models would
+require separate forward passes and training processes.
 
-To conclude, while the combination of both tasks in one model did not provide enhancements in the assignment performance as expected, it can be said that the performance of the regression does increase beyond statistical uncertainties if the assignment is added as a training target. Furthermore, the model can perform both tasks without the need for a larger embedding dimension. That indicates, that there is some information sharing and synergy in the embedding and the model does not require additional dimensions to capture both. Thus, a model can be extended to perform the full reconstruction instead of only one singular tasks while maintaining its size and run time. This can significantly decrease computational costs for training and inference. For the analyses of data taken during the High-Lumi era of the \lhc, this is a very important consideration as the computational load will increase considerably due to larger datasets. In general, balancing the computational cost will become much more relevant for upcoming analyses, and approaches that can reduce computational overhead will be favourable.
-
-
+To conclude, while the combination of both tasks in one model did not
+provide enhancements in the assignment performance as expected, it
+can be said that the performance of the regression does increase
+beyond statistical uncertainties if the assignment is added as a
+training target. Furthermore, the model can perform both tasks
+without the need for a larger embedding dimension. That indicates,
+that there is some information sharing and synergy in the embedding
+and the model does not require additional dimensions to capture both.
+Thus, a model can be extended to perform the full reconstruction
+instead of only one singular tasks while maintaining its size and run
+time. This can significantly decrease computational costs for
+training and inference. For the analyses of data taken during the
+High-Lumi era of the \lhc, this is a very important consideration as
+the computational load will increase considerably due to larger
+datasets. In general, balancing the computational cost will become
+much more relevant for upcoming analyses, and approaches that can
+reduce computational overhead will be favourable.
 
 \begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.7\textwidth]{plots/hyperparams_full_reco_ap_grad/assignment_accuracy_vs_num_parameters.pdf}
-    \caption{
-        Assignment Accuracy of the MultiModalTransformer trained for both the jet assignment and neutrino regression tasks compared to CompactTransformer, which features the same architecture trained only for the jet assignment task, as a function of the number of trainable parameters. Additionally the MMT-architecture without propagation of weight-changes from the regression head to the cross-attention layer is shown as (Gradient Stop)
-    }
-    \label{fig:assignment_multitask_benefits}
+  \centering
+  \includegraphics[width=0.7\textwidth]{plots/hyperparams_full_reco_ap_grad/assignment_accuracy_vs_num_parameters.pdf}
+  \caption{
+    Assignment Accuracy of the MultiModalTransformer trained for both
+    the jet assignment and neutrino regression tasks compared to
+    CompactTransformer, which features the same architecture trained
+    only for the jet assignment task, as a function of the number of
+    trainable parameters. Additionally the MMT-architecture without
+    propagation of weight-changes from the regression head to the
+    cross-attention layer is shown as (Gradient Stop)
+  }
+  \label{fig:assignment_multitask_benefits}
 \end{figure}%
 \begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.7\textwidth]{plots/hyperparams_regression/regression_mse_vs_num_parameters.pdf}
-    \caption{
-        Relative $L^2$ deviation of the predicted neutrino momenta compared to the true values for the MultiModalTransformer and the RegressionTransformer as a function of the number of trainable parameters.
-    }
-    \label{fig:regression_multitask_benefits}
+  \centering
+  \includegraphics[width=0.7\textwidth]{plots/hyperparams_regression/regression_mse_vs_num_parameters.pdf}
+  \caption{
+    Relative $L^2$ deviation of the predicted neutrino momenta
+    compared to the true values for the MultiModalTransformer and the
+    RegressionTransformer as a function of the number of trainable parameters.
+  }
+  \label{fig:regression_multitask_benefits}
 \end{figure}
-

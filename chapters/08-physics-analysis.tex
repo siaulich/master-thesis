@@ -1,138 +1,343 @@
 \chapter{Data-Driven Validation Studies}
 \label{chap:physics-analysis}
-This Chapter showcases the use of the developed tools in an analysis setting. For this, a setup that resembles the study of Quasi-bound states effects in Reference \cite{atlas_toponium} is used to perform an Asimov-fit. This serves to show the performance of the tool in a full-scale analysis, and it allows estimating whether enhancements in the sensitivity of measurements can be expected. Lastly, plots comparing the simulated distributions with experimental data taken by \atlas during the year 2018 is used, to validate the agreement of model outputs between simulation and data.
-
+This Chapter showcases the use of the developed tools in an analysis
+setting. For this, a setup that resembles the study of Quasi-bound
+states effects in Reference \cite{atlas_toponium} is used to perform
+an Asimov-fit. This serves to show the performance of the tool in a
+full-scale analysis, and it allows estimating whether enhancements in
+the sensitivity of measurements can be expected. Lastly, plots
+comparing the simulated distributions with experimental data taken by
+\atlas during the year 2018 is used, to validate the agreement of
+model outputs between simulation and data.
 
 \section{Data and Simulation Samples}
 \label{sec:samples}
-While the previous chapters used the nominal sample of Top-quark pairs introduced in \Cref{sec:data-and-simulation} to set up and evaluate the ml-tools, analysing event data requires a more comprehensive treatment of the contributing physics-processes.
-Since the focus of this thesis lies on the machine-learning methods and their evaluation, an in-depth discussion of the samples, used here, is omitted. The samples used in this chapter mostly follow the Reference \cite{atlas_toponium}.
-Modelling the production of top-quark pairs follows the description in \Cref{sec:data-and-simulation}, with a reweighting applied to match the cross-section calculation at next-to-next-to-leading order. This contribution is called pQCD -- short for perturbative QCD.
+While the previous chapters used the nominal sample of Top-quark
+pairs introduced in \Cref{sec:data-and-simulation} to set up and
+evaluate the ml-tools, analysing event data requires a more
+comprehensive treatment of the contributing physics-processes.
+Since the focus of this thesis lies on the machine-learning methods
+and their evaluation, an in-depth discussion of the samples, used
+here, is omitted. The samples used in this chapter mostly follow the
+Reference \cite{atlas_toponium}.
+Modelling the production of top-quark pairs follows the description
+in \Cref{sec:data-and-simulation}, with a reweighting applied to
+match the cross-section calculation at next-to-next-to-leading order.
+This contribution is called pQCD -- short for perturbative QCD.
 
-Additionally, bound state effects arise due to contributions from non-relativistic QCD interactions, shortened to NRQCD, which can modify the cross-section with respect to the pQCD-calculation. 
-For this analysis, these contributions are modelled according to the description in the Reference \cite{NRQCD_toponium_2}. The details of the implementation into the event generation and samples used here, can be found in \cite{atlas_toponium}.
+Additionally, bound state effects arise due to contributions from
+non-relativistic QCD interactions, shortened to NRQCD, which can
+modify the cross-section with respect to the pQCD-calculation.
+For this analysis, these contributions are modelled according to the
+description in the Reference \cite{NRQCD_toponium_2}. The details of
+the implementation into the event generation and samples used here,
+can be found in \cite{atlas_toponium}.
 
-Lastly, other Standard Model processes with similar experimental signatures have to be considered. These processes contribute to the event yield in the signal, without stemming from the process of interest -- here the \ttbar-production.
+Lastly, other Standard Model processes with similar experimental
+signatures have to be considered. These processes contribute to the
+event yield in the signal, without stemming from the process of
+interest -- here the \ttbar-production.
 These are called backgrounds in the following.
-As before, this follows closely the description in \cite{atlas_toponium}. The inclusion of backgrounds only serves to provide a realistic benchmark to test the different reconstruction methods in an analysis, and to show agreement of the tools between simulation and data. 
-For simplicity, only the two leading background processes are considered here. 
-One of these processes is the production of a top quark in association with a W-Boson ($tW$). It was found to contribute about $4\%$ of the total event yield in the signal regions. Related background contributions from other processes involving the production of a single or pair of top-quarks in conjunction with other particle, were neglected here, as they were found to make up only $0.5\%$ of the yield in the signal region \cite{atlas_toponium}.
-The second background process to be considered here, is the so-called $Z$+jets process, which mostly encompasses leptonically decaying $Z$-Bosons from Drell-Yan production, with additional hadronic content in the event. 
-Modelling this background comes with significant uncertainties, thus it's contribution controlled and adjusted to the data in a dedicated control region.
-Further contributions include so-called fakes, where at least one fake or non-prompt lepton fulfils the lepton identification criteria described earlier. These stem mostly from \ttbar-production with hadronic decays. Such processes were found to contribute around $1.5\%$ of the total event yields \cite{atlas_toponium}. Therefore, fakes were not considered for the analysis-setup used in this work.
+As before, this follows closely the description in
+\cite{atlas_toponium}. The inclusion of backgrounds only serves to
+provide a realistic benchmark to test the different reconstruction
+methods in an analysis, and to show agreement of the tools between
+simulation and data.
+For simplicity, only the two leading background processes are considered here.
+One of these processes is the production of a top quark in
+association with a W-Boson ($tW$). It was found to contribute about
+$4\%$ of the total event yield in the signal regions. Related
+background contributions from other processes involving the
+production of a single or pair of top-quarks in conjunction with
+other particle, were neglected here, as they were found to make up
+only $0.5\%$ of the yield in the signal region \cite{atlas_toponium}.
+The second background process to be considered here, is the so-called
+$Z$+jets process, which mostly encompasses leptonically decaying
+$Z$-Bosons from Drell-Yan production, with additional hadronic
+content in the event.
+Modelling this background comes with significant uncertainties, thus
+it's contribution controlled and adjusted to the data in a dedicated
+control region.
+Further contributions include so-called fakes, where at least one
+fake or non-prompt lepton fulfils the lepton identification criteria
+described earlier. These stem mostly from \ttbar-production with
+hadronic decays. Such processes were found to contribute around
+$1.5\%$ of the total event yields \cite{atlas_toponium}. Therefore,
+fakes were not considered for the analysis-setup used in this work.
 
-Finally, for the data-driven validation of the output-distributions, event data collected from the \atlas-experiment in the year 2018 is used. The amount of recorded events during this period is equivalent to a luminosity of $\mathcal{L}\approx 58~\unit{fb^{-1}}$.
+Finally, for the data-driven validation of the output-distributions,
+event data collected from the \atlas-experiment in the year 2018 is
+used. The amount of recorded events during this period is equivalent
+to a luminosity of $\mathcal{L}\approx 58~\unit{fb^{-1}}$.
 
 \section{Analysis Setup}
 \label{sec:analysis-setup}
 \begin{table}[ht]
-    \centering
-    \caption{Summary of event selection criteria for the SRs and CRs in the analysis. The letter $\ell$ refers to $e$ and $\mu$.}
-    \newlength{\mycolw}
-    \setlength{\mycolw}{3cm}  % adjust to taste
-    \newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
-    \begin{tabular}{c|P{\mycolw}|P{\mycolw}|c}
-        \multicolumn{2}{c|}{\textbf{Asimov-Fit}} & \multicolumn{2}{|c}{\textbf{Data-Validation}}\\
-        \toprule
-        \textbf{SRs} & \textbf{CR-Z} & \textbf{CR-Z} & \textbf{CR-$\ell\ell$}\\
-        \midrule
-        \multicolumn{4}{c}{$\ell^\pm\ell'^\mp$ with $\pt(\ell) \geq 10~\GeV$}\\
-        \multicolumn{4}{c}{$\geq 1$ trigger-matched lepton with $\pt \geq 28~\GeV$}\\
-        \multicolumn{4}{c}{$\geq 2$ jets with $\pt \geq 25~\GeV$}\\
-        \multicolumn{4}{c}{$\geq 1$ $b$-tagged jet (85\% efficiency WP)}\\
-        \multicolumn{4}{c}{$m_{\ell\ell} \geq 15~\GeV$ for $ee$ and $\mu\mu$ events}\\
-         \multicolumn{4}{c}{ $\met \geq 60~\GeV$ for $ee$ and $\mu\mu$ events}\\
-        \midrule
-        \multicolumn{2}{c|}{$m_{t\bar{t}} \leq 500~\GeV$} & \multicolumn{2}{c}{$m_{t\bar{t}} > 500~\GeV$}\\
-        \midrule
-        $|m_{\ell\ell} - m_Z| > 10~\GeV$ & \multicolumn{2}{c|}{$|m_{\ell\ell} - m_Z| \leq 10~\GeV$} & $|m_{\ell\ell} - m_Z| \leq 10~\GeV$\\
-        \bottomrule
-    \end{tabular}
-    \label{tab:selection_2l}
+  \centering
+  \caption{Summary of event selection criteria for the SRs and CRs in
+  the analysis. The letter $\ell$ refers to $e$ and $\mu$.}
+  \newlength{\mycolw}
+  \setlength{\mycolw}{3cm}  % adjust to taste
+  \newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+  \begin{tabular}{c|P{\mycolw}|P{\mycolw}|c}
+    \multicolumn{2}{c|}{\textbf{Asimov-Fit}} &
+    \multicolumn{2}{|c}{\textbf{Data-Validation}}\\
+    \toprule
+    \textbf{SRs} & \textbf{CR-Z} & \textbf{CR-Z} & \textbf{CR-$\ell\ell$}\\
+    \midrule
+    \multicolumn{4}{c}{$\ell^\pm\ell'^\mp$ with $\pt(\ell) \geq 10~\GeV$}\\
+    \multicolumn{4}{c}{$\geq 1$ trigger-matched lepton with $\pt \geq
+    28~\GeV$}\\
+    \multicolumn{4}{c}{$\geq 2$ jets with $\pt \geq 25~\GeV$}\\
+    \multicolumn{4}{c}{$\geq 1$ $b$-tagged jet (85\% efficiency WP)}\\
+    \multicolumn{4}{c}{$m_{\ell\ell} \geq 15~\GeV$ for $ee$ and
+    $\mu\mu$ events}\\
+    \multicolumn{4}{c}{ $\met \geq 60~\GeV$ for $ee$ and $\mu\mu$ events}\\
+    \midrule
+    \multicolumn{2}{c|}{$m_{t\bar{t}} \leq 500~\GeV$} &
+    \multicolumn{2}{c}{$m_{t\bar{t}} > 500~\GeV$}\\
+    \midrule
+    $|m_{\ell\ell} - m_Z| > 10~\GeV$ &
+    \multicolumn{2}{c|}{$|m_{\ell\ell} - m_Z| \leq 10~\GeV$} &
+    $|m_{\ell\ell} - m_Z| \leq 10~\GeV$\\
+    \bottomrule
+  \end{tabular}
+  \label{tab:selection_2l}
 \end{table}
 
-The setup of the analysis setup again follows what was developed in Reference \cite{atlas_toponium}, however, minor simplification are made.
-The object definitions and reconstruction methods are the same as described in \Cref{sec:reconstruction-methods}. For the jet-assignment and neutrino regression, three different setups are tested: $\nu$-Weighter, $\nu^2$-Flows, MultiModalTransformer. Note, that the two baseline reconstruction methods are used in conjunction with the $\chi^2$-method for jet-assignment. Further, events where the $\nu$-Weighter yields no solution are excluded for regions using the method. While previous analyses used fallback methods for such events, this would skew the comparison of the different methods conducted here.
+The setup of the analysis setup again follows what was developed in
+Reference \cite{atlas_toponium}, however, minor simplification are made.
+The object definitions and reconstruction methods are the same as
+described in \Cref{sec:reconstruction-methods}. For the
+jet-assignment and neutrino regression, three different setups are
+tested: $\nu$-Weighter, $\nu^2$-Flows, MultiModalTransformer. Note
+that the two baseline reconstruction methods are used in conjunction
+with the $\chi^2$-method for jet-assignment. Further, events where
+the $\nu$-Weighter yields no solution are excluded for regions using
+the method. While previous analyses used fallback methods for such
+events, this would skew the comparison of the different methods conducted here.
 
-To extract the parameter of interest, i.e. the cross-section of the ${t\bar{t}}_{\text{NRQCD}}$-contribution, events are required to pass selection-criteria and are then further categorised into regions. An overview over the selection criteria for the analysis-regions are shown in \Cref{tab:selection_2l}. The different regions can categorised as signal and control regions, abbreviated to SR and CR, respectively. Both share the same preselection, which puts the focus to events, that contain the particle demanded by the final-state of dileptonic \ttbar-production, i.e. two opposite charged leptons and at least two jets. Further requirements to these observed particle were found to reduce the contribution of background events. Events passing these criteria, are then further divided.
-For the data-driven validation, four control regions are used, all of them require a cut on the invariant mass $m(t\bar{t})>500~\GeV$. The selection of events with high invariant mass $m(t\bar{t})$ ensures that the regions used for data validation are disjunct to the signal regions, which are sensitive to the Quasi-bound state effects. This is part of the blinding protocol, and allows comparing data and simulation without biasing future analyses in the sensitive regions.
-The CR-Z is used for the normalisation of the $Z$+jets contribution. For this region, the invariant mass of the two leptons is required to be in a window of $10~\GeV$ around the nominal $Z$-Boson mass. This enhances the contribution of events with leptons from resonant Drell-Yan-production.
-The regions used for the validation of data and simulation is exactly disjunct with respect to the CR-Z; it features the same event-selection but enforce events to be outside the dilepton-mass window.
-For these events, three different control regions are defined based on the possible lepton flavour combinations, i.e. $ee$, $\mu\mu$, and $e\mu$.
+To extract the parameter of interest, i.e. the cross-section of the
+${t\bar{t}}_{\text{NRQCD}}$-contribution, events are required to pass
+selection-criteria and are then further categorised into regions. An
+overview over the selection criteria for the analysis-regions are
+shown in \Cref{tab:selection_2l}. The different regions can
+categorised as signal and control regions, abbreviated to SR and CR,
+respectively. Both share the same preselection, which puts the focus
+to events, that contain the particle demanded by the final-state of
+dileptonic \ttbar-production, i.e. two opposite charged leptons and
+at least two jets. Further requirements to these observed particle
+were found to reduce the contribution of background events. Events
+passing these criteria, are then further divided.
+For the data-driven validation, four control regions are used, all of
+them require a cut on the invariant mass $m(t\bar{t})>500~\GeV$. The
+selection of events with high invariant mass $m(t\bar{t})$ ensures
+that the regions used for data validation are disjunct to the signal
+regions, which are sensitive to the Quasi-bound state effects. This
+is part of the blinding protocol, and allows comparing data and
+simulation without biasing future analyses in the sensitive regions.
+The CR-Z is used for the normalisation of the $Z$+jets contribution.
+For this region, the invariant mass of the two leptons is required to
+be in a window of $10~\GeV$ around the nominal $Z$-Boson mass. This
+enhances the contribution of events with leptons from resonant
+Drell-Yan-production.
+The regions used for the validation of data and simulation is exactly
+disjunct with respect to the CR-Z; it features the same
+event-selection but enforce events to be outside the dilepton-mass window.
+For these events, three different control regions are defined based
+on the possible lepton flavour combinations, i.e. $ee$, $\mu\mu$, and $e\mu$.
 
+A slightly different set of regions is defined for the Asimov-fit.
+While they share the pre-selection, the SRs and CR-Z both require the
+events to have an invariant mass $m(t\bar{t})\leq 500~\GeV$. This
+aims to enhance the contribution of non-relativistic QCD effects,
+which are dominant close to the production threshold. For the signal
+region, events are once again, required to have a dilepton mass
+outside the $10~\GeV$-windows around the $Z$-Boson mass. Events that
+are within this dilepton mass-windows make up the CR-Z, which is used
+to extract the normalisation of the $Z$+jets background.
 
-A slightly different set of regions is defined for the Asimov-fit. While they share the pre-selection, the SRs and CR-Z both require the events to have an invariant mass $m(t\bar{t})\leq 500~\GeV$. This aims to enhance the contribution of non-relativistic QCD effects, which are dominant close to the production threshold. For the signal region, events are once again, required to have a dilepton mass outside the $10~\GeV$-windows around the $Z$-Boson mass. Events that are within this dilepton mass-windows make up the CR-Z, which is used to extract the normalisation of the $Z$+jets background.
+While a full analysis, requires an in-depth investigation of
+systematic uncertainties from various sources, only statistical
+uncertainties are considered here. This is due the scope of this
+thesis; statistical uncertainties are sufficient to evaluate the
+methods with respect to their sensitive and validate the method on event data.
 
-While a full analysis, requires an in-depth investigation of systematic uncertainties from various sources, only statistical uncertainties are considered here. This is due the scope of this thesis; statistical uncertainties are sufficient to evaluate the methods with respect to their sensitive and validate the method on event data. 
-
-All fits are performed as binned profile-likelihood fits, where specific binning variables are used for each region. The fit-parameters are so-called normalisation factors, which measure the quotient of the measured cross-section and the prediction
+All fits are performed as binned profile-likelihood fits, where
+specific binning variables are used for each region. The
+fit-parameters are so-called normalisation factors, which measure the
+quotient of the measured cross-section and the prediction
 \begin{equation}
-    \mu_X=\frac{\sigma_{\text{exp.}}(X)}{\sigma_{\text{pred.}}(X)}\,,
-\end{equation} where $\sigma_{\text{exp.}/\text{pred.}}(X)$ denote the measured and predicted cross-section of a process $X$, respectively.
+  \mu_X=\frac{\sigma_{\text{exp.}}(X)}{\sigma_{\text{pred.}}(X)}\,,
+\end{equation} where $\sigma_{\text{exp.}/\text{pred.}}(X)$ denote
+the measured and predicted cross-section of a process $X$, respectively.
 
 \section{Asimov Fit}
 \begin{figure}[ht]
-    \centering
-    \includegraphics[width=.5\textwidth]{figures/signal_regions.png}
-    \caption{Categorisation of the signal regions used in the fit. The events are divided based on their reconstructed values of the spin-sensitive variables \chel and \chan. The Figure is adapted from Reference \cite{atlas_toponium}.}
-    \label{fig:def:sr}
+  \centering
+  \includegraphics[width=.5\textwidth]{figures/signal_regions.png}
+  \caption{Categorisation of the signal regions used in the fit. The
+    events are divided based on their reconstructed values of the
+    spin-sensitive variables \chel and \chan. The Figure is adapted
+  from Reference \cite{atlas_toponium}.}
+  \label{fig:def:sr}
 \end{figure}
-For the Asimov-fit, only the SRs and the CR-Z is used. Due to the reduced fit-setup applied here, the fit parameters are  $\mu(t\bar{t}_{\text{NRQCD}})$ (also \textit{signal strength}), $\mu(t\bar{t}_{\text{pQCD}})$, and $\mu(t\bar{t}_{Z\text{+jets}})$. The latter is fitted in the CR-Z region, with events binned with respect to the dilepton-mass. Normalisation factors for the \ttbar-production processes are adjusted in 9 signal regions, which require the event selection described in the previous section and are further categorised in SRs defined in \Cref{fig:def:sr} according to their values of \chel and \chan. Within these regions, the events are binned with respect to the reconstructed $m(t\bar{t})$ with a width of $50~\GeV$. Defining the signal regions with respect to the spin-sensitive variables allows a more sophisticated test of the spin-structure of the cross-section enhancement at the threshold. As it was outlined in \Cref{sec:spin_sensitive_variables}, different spin states show distinctive distributions of the markers \chel and \chan, making the fit sensitive to not only the enhancement of the cross-section but also the internal structure of the decaying \ttbar-system.
-The Asimov-data used for fitting, is obtained by summing all samples with normalisation factors set to $1$. 
+For the Asimov-fit, only the SRs and the CR-Z is used. Due to the
+reduced fit-setup applied here, the fit parameters are
+$\mu(t\bar{t}_{\text{NRQCD}})$ (also \textit{signal strength}),
+$\mu(t\bar{t}_{\text{pQCD}})$, and $\mu(t\bar{t}_{Z\text{+jets}})$.
+The latter is fitted in the CR-Z region, with events binned with
+respect to the dilepton-mass. Normalisation factors for the
+\ttbar-production processes are adjusted in 9 signal regions, which
+require the event selection described in the previous section and are
+further categorised in SRs defined in \Cref{fig:def:sr} according to
+their values of \chel and \chan. Within these regions, the events are
+binned with respect to the reconstructed $m(t\bar{t})$ with a width
+of $50~\GeV$. Defining the signal regions with respect to the
+spin-sensitive variables allows a more sophisticated test of the
+spin-structure of the cross-section enhancement at the threshold. As
+it was outlined in \Cref{sec:spin_sensitive_variables}, different
+spin states show distinctive distributions of the markers \chel and
+\chan, making the fit sensitive to not only the enhancement of the
+cross-section but also the internal structure of the decaying \ttbar-system.
+The Asimov-data used for fitting, is obtained by summing all samples
+with normalisation factors set to $1$.
 \begin{table}
-    \centering
-    \caption{Fit results for different reconstruction methods. The norm factors and their corresponding errors are shown. The significance is the number of standard deviations the extracted norm factor of $t\bar{t}_{\text{NRQCD}}$ differs from zero.}
-    \begin{tabular}{ccccc}
-        \toprule
-        Method & $\mu(Z+\text{jets})$  & $\mu(t\bar{t}_{\text{pQCD}})$ & $\mu(t\bar{t}_{\text{NRQCD}})$ & Significance\\
-        \midrule
-        $\nu$-Weighter & $1\pm 0.0512$ & $1\pm 0.00659$ & $1\pm 0.596$ & $1.689\sigma$ \\
-        $\nu^2$-Flows & $1\pm 0.0253$ & $1\pm 0.00345$ & $1\pm 0.321$ & $3.131\sigma$ \\
-        MultiModalTransformer &  $1\pm 0.0196$ & $1\pm 0.00241$ & $1\pm 0.193$ & $5.222\sigma$ \\
-        \bottomrule
-    \end{tabular}
-    \label{tab:asimov_fit}
+  \centering
+  \caption{Fit results for different reconstruction methods. The norm
+    factors and their corresponding errors are shown. The significance
+    is the number of standard deviations the extracted norm factor of
+  $t\bar{t}_{\text{NRQCD}}$ differs from zero.}
+  \begin{tabular}{ccccc}
+    \toprule
+    Method & $\mu(Z+\text{jets})$  & $\mu(t\bar{t}_{\text{pQCD}})$ &
+    $\mu(t\bar{t}_{\text{NRQCD}})$ & Significance\\
+    \midrule
+    $\nu$-Weighter & $1\pm 0.0512$ & $1\pm 0.00659$ & $1\pm 0.596$ &
+    $1.689\sigma$ \\
+    $\nu^2$-Flows & $1\pm 0.0253$ & $1\pm 0.00345$ & $1\pm 0.321$ &
+    $3.131\sigma$ \\
+    MultiModalTransformer &  $1\pm 0.0196$ & $1\pm 0.00241$ & $1\pm
+    0.193$ & $5.222\sigma$ \\
+    \bottomrule
+  \end{tabular}
+  \label{tab:asimov_fit}
 \end{table}
-The results for the Asimov-fit for the reconstruction methods investigated here are shown in \Cref{tab:asimov_fit}. Note, that a computation of the expected significance demands a more comprehensive treatment of background and systematic uncertainties is necessary. As these contributions are largely independent of the reconstruction method used here, it still provides a meaningful comparison of the methods itself. The results show substantial differences in the uncertainties of the norm factors and the extracted significance of the $t\bar{t}_{\text{NRQCD}}$-process. Furthermore, the previously observed pattern for the performance of the different methods propagates to the significance of analysis: the $\nu$-Weighter has the largest error and in turn also the lowest significance. While $\nu^2$-Flows provides an improvement by a factor of $2$, the use of the MMT enhances the significance by around $66\%$ with respect to $\nu^2$-Flows. Compared to the baseline of the $\nu$-Weighter this results in a 3-fold increase.
-Thus, it can be concluded that the sensitivity of an analysis can be increased by using the MultiModalTransformer.
-While a thorough investigation of the effect leading to the increased sensitivity would exceed the scope of this thesis, a few should be shed on the underlying properties of the reconstruction influencing this effect. One major aspect deteriorating the performance of the $\nu$-Weighter is its limited efficiency; the reduced number of events in the signal region leads to larger statistical uncertainties. While the two ml-based methods share the perfect efficiency, the previous \Cref{chap:performance-evaluation} found the MMT to provide a considerably increased resolution. As the resolution quantifies the spread of the reconstructed variable around its true value, it can be assumed that a method with better resolution leads to less diffused peaks in distributions. Considering, that the quasi-bound state effects manifest as a narrow peak in the invariant mass distribution as shown in \Cref{fig:toponium_mttbar}, the sensitivity to such a signal gets enhanced by a reconstruction with a higher resolution. At reco-level this can be seen in \Cref{fig:sr_9_post_asimov_fit} in the Appendix, which shows the simulated reconstructed distributions for the methods used here.
-Despite the apparent advantages of the MMT for reconstruction, it should be noted that a major problem of this method is the previously discussed bias introduced into many distributions. While this might be less relevant for a fit, it can make resulting distributions unphysical. One example is, that the bulk part of the invariant mass of the \ttbar-system is situated below the production threshold for the MultiModalTransformer.
-
+The results for the Asimov-fit for the reconstruction methods
+investigated here are shown in \Cref{tab:asimov_fit}. Note that a
+computation of the expected significance demands a more comprehensive
+treatment of background and systematic uncertainties is necessary. As
+these contributions are largely independent of the reconstruction
+method used here, it still provides a meaningful comparison of the
+methods itself. The results show substantial differences in the
+uncertainties of the norm factors and the extracted significance of
+the $t\bar{t}_{\text{NRQCD}}$-process. Furthermore, the previously
+observed pattern for the performance of the different methods
+propagates to the significance of analysis: the $\nu$-Weighter has
+the largest error and in turn also the lowest significance. While
+$\nu^2$-Flows provides an improvement by a factor of $2$, the use of
+the MMT enhances the significance by around $66\%$ with respect to
+$\nu^2$-Flows. Compared to the baseline of the $\nu$-Weighter this
+results in a 3-fold increase.
+Thus, it can be concluded that the sensitivity of an analysis can be
+increased by using the MultiModalTransformer.
+While a thorough investigation of the effect leading to the increased
+sensitivity would exceed the scope of this thesis, a few should be
+shed on the underlying properties of the reconstruction influencing
+this effect. One major aspect deteriorating the performance of the
+$\nu$-Weighter is its limited efficiency; the reduced number of
+events in the signal region leads to larger statistical
+uncertainties. While the two ml-based methods share the perfect
+efficiency, the previous \Cref{chap:performance-evaluation} found the
+MMT to provide a considerably increased resolution. As the resolution
+quantifies the spread of the reconstructed variable around its true
+value, it can be assumed that a method with better resolution leads
+to less diffused peaks in distributions. Considering, that the
+quasi-bound state effects manifest as a narrow peak in the invariant
+mass distribution as shown in \Cref{fig:toponium_mttbar}, the
+sensitivity to such a signal gets enhanced by a reconstruction with a
+higher resolution. At reco-level this can be seen in
+\Cref{fig:sr_9_post_asimov_fit} in the Appendix, which shows the
+simulated reconstructed distributions for the methods used here.
+Despite the apparent advantages of the MMT for reconstruction, it
+should be noted that a major problem of this method is the previously
+discussed bias introduced into many distributions. While this might
+be less relevant for a fit, it can make resulting distributions
+unphysical. One example is, that the bulk part of the invariant mass
+of the \ttbar-system is situated below the production threshold for
+the MultiModalTransformer.
 
 \section{Validation Using ATLAS 2018 Data}
 \label{sec:results}
-To verify the distributions produced with the tool presented in this thesis, data and simulation is compared in the control regions introduced earlier. As before, the CR-Z region serves to adjust the normalisation of the $Z$+jets background.
-In the CR-$\ell\ell$ the normalisation of the top-quark production is fitted. Note, that only $\mu(t\bar{t}_{\text{pQCD}})$ is adjusted during the fit, as the non-relativistic production is expected to be negligible in the high-mass regions. For the likelihood-fit the events are binned with respect to the reconstructed mass of the top-quark. The result of the fit is best expressed by the optimal norm-factors, which are found to be
+To verify the distributions produced with the tool presented in this
+thesis, data and simulation is compared in the control regions
+introduced earlier. As before, the CR-Z region serves to adjust the
+normalisation of the $Z$+jets background.
+In the CR-$\ell\ell$ the normalisation of the top-quark production is
+fitted. Note that only $\mu(t\bar{t}_{\text{pQCD}})$ is adjusted
+during the fit, as the non-relativistic production is expected to be
+negligible in the high-mass regions. For the likelihood-fit the
+events are binned with respect to the reconstructed mass of the
+top-quark. The result of the fit is best expressed by the optimal
+norm-factors, which are found to be
 \begin{align}
-    \mu(t\bar{t}_{\text{pQCD}})&=0.966^{+0.002}_{-0.002},& \mu(Z\text{+jets})&=1.08^{+0.03}_{-0.03}.
-    \label{eg:data_validation:results}
+  \mu(t\bar{t}_{\text{pQCD}})&=0.966^{+0.002}_{-0.002},&
+  \mu(Z\text{+jets})&=1.08^{+0.03}_{-0.03}.
+  \label{eg:data_validation:results}
 \end{align}
-For both processes, the normalisations are close to the nominal value of one. While the normalisation for the top-quark pair production deviates from one beyond its uncertainties, this can be attributed to the simplified modelling of the background and the lack of systematic uncertainties. This is further supported by the observation, that the norm factors show similar departures from the nominal values for the baseline reconstruction methods. Thus, this deviation does not originate from the reconstruction of the MultiModalTransformer. The corresponding fit results using the baseline methods can be found in \Cref{tab:fit_result_baseline} in the Appendix. \Cref{fig:cr_data} summarises the distributions in the different regions with fit-adjusted normalisations (Post-fit). Generally, the data seems to be in superb agreement with the simulation. The distribution match very closely in all bins with sufficient events. Moreover, the distributions are very similar for the different leptons. Notably, all distributions show a peak for the reconstructed top-quark mass significantly below the nominal value. This is consistent with the biases discussed in the Chapters before. 
-Other variables insensitive variables that rely on reconstruction and neutrino assignment were investigated, such as $p_T(t/W),E(t/W),\eta(t/W)$. For these variables, a similar agreement between the data and simulation was found.
-It can be concluded, that the MultiModalTransformer is expected to behave similarly on data as it does on the simulated events, which is important for its application in future analyses.
+For both processes, the normalisations are close to the nominal value
+of one. While the normalisation for the top-quark pair production
+deviates from one beyond its uncertainties, this can be attributed to
+the simplified modelling of the background and the lack of systematic
+uncertainties. This is further supported by the observation, that the
+norm factors show similar departures from the nominal values for the
+baseline reconstruction methods. Thus, this deviation does not
+originate from the reconstruction of the MultiModalTransformer. The
+corresponding fit results using the baseline methods can be found in
+\Cref{tab:fit_result_baseline} in the Appendix. \Cref{fig:cr_data}
+summarises the distributions in the different regions with
+fit-adjusted normalisations (Post-fit). Generally, the data seems to
+be in superb agreement with the simulation. The distribution match
+very closely in all bins with sufficient events. Moreover, the
+distributions are very similar for the different leptons. Notably,
+all distributions show a peak for the reconstructed top-quark mass
+significantly below the nominal value. This is consistent with the
+biases discussed in the Chapters before.
+Other variables insensitive variables that rely on reconstruction and
+neutrino assignment were investigated, such as
+$p_T(t/W),E(t/W),\eta(t/W)$. For these variables, a similar agreement
+between the data and simulation was found.
+It can be concluded, that the MultiModalTransformer is expected to
+behave similarly on data as it does on the simulated events, which is
+important for its application in future analyses.
 
 \begin{figure}
-    \centering
-    \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=1.0\textwidth]{plots/data_mc_plots/data_validation_dilep_assigner/my_fit/Plots/dilep_assigner_cr_ee_dilep_assigner_top_mass_postFit.pdf}
-        \caption{CR $ee$}
-        \label{fig:cr_ee:top_mass}
-    \end{subfigure}
-    \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=1.0\textwidth]{plots/data_mc_plots/data_validation_dilep_assigner/my_fit/Plots/dilep_assigner_cr_mumu_dilep_assigner_top_mass_postFit.pdf}
-        \caption{CR $\mu\mu$}
-        \label{fig:cr_mumu:top_mass}
-    \end{subfigure}
-    \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=1.0\textwidth]{plots/data_mc_plots/data_validation_dilep_assigner/my_fit/Plots/dilep_assigner_cr_emu_dilep_assigner_top_mass_postFit.pdf}
-        \caption{CR $e\mu$}
-        \label{fig:cr_emu:top_mass}
-    \end{subfigure}
-    \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=1.0\textwidth]{plots/data_mc_plots/data_validation_dilep_assigner/my_fit/Plots/dilep_assigner_crZ_dilepton_mass_postFit.pdf}
-        \caption{CR Z}
-        \label{fig:cr_z_dilep_mass}
-    \end{subfigure}
-    \caption{Plots showing the comparison between data and simulation of top-quark pair production and its leading backgrounds. The different control regions used in the fits are shown as stacked histograms of the Post-fit distributions. Note, that the reconstruction of the \ttbar-system is performed using the MultiModalTransformer.}
-    \label{fig:cr_data}
+  \centering
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=1.0\textwidth]{plots/data_mc_plots/data_validation_dilep_assigner/my_fit/Plots/dilep_assigner_cr_ee_dilep_assigner_top_mass_postFit.pdf}
+    \caption{CR $ee$}
+    \label{fig:cr_ee:top_mass}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=1.0\textwidth]{plots/data_mc_plots/data_validation_dilep_assigner/my_fit/Plots/dilep_assigner_cr_mumu_dilep_assigner_top_mass_postFit.pdf}
+    \caption{CR $\mu\mu$}
+    \label{fig:cr_mumu:top_mass}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=1.0\textwidth]{plots/data_mc_plots/data_validation_dilep_assigner/my_fit/Plots/dilep_assigner_cr_emu_dilep_assigner_top_mass_postFit.pdf}
+    \caption{CR $e\mu$}
+    \label{fig:cr_emu:top_mass}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=1.0\textwidth]{plots/data_mc_plots/data_validation_dilep_assigner/my_fit/Plots/dilep_assigner_crZ_dilepton_mass_postFit.pdf}
+    \caption{CR Z}
+    \label{fig:cr_z_dilep_mass}
+  \end{subfigure}
+  \caption{Plots showing the comparison between data and simulation
+    of top-quark pair production and its leading backgrounds. The
+    different control regions used in the fits are shown as stacked
+    histograms of the Post-fit distributions. Note that the
+    reconstruction of the \ttbar-system is performed using the
+  MultiModalTransformer.}
+  \label{fig:cr_data}
 \end{figure}
