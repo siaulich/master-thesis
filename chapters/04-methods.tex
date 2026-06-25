@@ -10,21 +10,8 @@ Machine learning can be broadly categorised into supervised and unsupervised lea
 
 
 \subsection{Monte Carlo Training Data}
-\begin{figure}
-    \centering
-    \includegraphics[width=0.6\textwidth]{figures/event_svg-tex.pdf}
-    \caption{Schematic representation of the Monte Carlo event generation process in particle physics. Colouring of vertices and particles indicates the event generation stage: hard scattering process (big red blob), QCD radiation (blue), hadronisation (light green), showering (dark green), and a secondary vertex (purple). The Figure is taken from Reference~\cite{sherpa_1}.}
-\end{figure}
-\label{sec:mc_training_data}
-Events are usually simulated using a cascade of different programs, each simulating a different state of the event. First the hard scattering process is simulated using matrix element generators. These programs calculate the probabilities of different particle interactions based on the underlying physics theories, such as the Standard Model. Using these probabilities, they generate events that represent the initial state of the particles after the collision. The possible kinematic phase space is sampled according to these probabilities, resulting in a set of particles with specific momenta and energies. This type of event variables is often referred to as \textit{parton level}.
+As mentioned before, supervised training requires labels associated with the input data. While this can be a major bottleneck for many applications of machine learning, this limitation is largely absent in particle physics. In \Cref{sec:mc_colliders} it was elaborated how fundamental physics are simulated at colliders. Events are sampled from the underlying distributions of the partons and then further processed to match the observed structure at the level of the detector. Thus, the necessary labels, which are sought to be predicted by the model, are readily available for simulated events.
 
-Next, the parton showering and hadronization processes are simulated. Parton showering models the emission of additional particles from the initial partons, while hadronization simulates the formation of hadrons from quarks and gluons. These processes are crucial for accurately modelling the final state particles observed in detectors.
-
-Finally, detector simulation programs are used to simulate the interaction of particles with the detector material, producing realistic detector responses. This includes simulating the energy deposits in calorimeters, hits in tracking detectors, and other relevant signals.
-
-While the actual detector response is simulated using complex detector simulation software, for many machine learning applications, a simplified representation of the detector response is sufficient. This can involve smearing the particle momenta and energies according to the detector resolution, applying efficiency corrections, and simulating the effects of pile-up.
-
-This is because, for the reconstruction of the physics objects, such as jets, leptons, and missing transverse energy, highly sophisticated algorithms are used that already take into account the detector effects (Note that these algorithms may also be machine learning based). Therefore, the input features for machine learning models can often be derived directly from these reconstructed objects, rather than relying on the raw detector signals. The reconstructed object event variables are called \textit{reco-level}.
 
 \subsection{Training}
 During the training phase, the model is presented with a set of input features derived from the reco-level event variables, along with their corresponding target outputs, which are typically derived from the parton-level event variables. The model learns to map the input features to the target outputs by minimizing a loss function that quantifies the difference between the predicted and true values. Common loss functions include mean squared error (MSE) for regression tasks and cross-entropy loss \cite{cross-entropy} for classification tasks.

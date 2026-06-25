@@ -90,6 +90,25 @@ This process is typically described in terms of:
 
 These aspects of QCD are essential for the reconstruction of hadronic final states and for Monte Carlo simulations of \lhc physics.
 
+\subsection{Monte-Carlo Simulation at Colliders}
+\label{sec:mc_colliders}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.6\textwidth]{figures/event_svg-tex.pdf}
+    \caption{Schematic representation of the Monte Carlo event generation process in particle physics. Colouring of vertices and particles indicates the event generation stage: hard scattering process (big red blob), QCD radiation (blue), hadronisation (light green), showering (dark green), and a secondary vertex (purple). The Figure is taken from Reference~\cite{sherpa_1}.}
+    \label{fig:mc_stages}
+\end{figure}
+
+The complex mathematical structure of the standard model combined with the different scales that are involved in the processes at colliders, means analytical predictions are rarely feasible. Therefore, predictions are almost exclusively obtained via Monte-Carlo (MC) simulations of the involved physics processes. For this, samples of events are created by randomly sampling from models of the underlying probability distributions.
+
+Events are usually simulated using a cascade of different programs, each simulating a different state of the event. First the hard scattering process is simulated using matrix element generators. These programs calculate the probabilities of different particle interactions based on the underlying physics theories, such as the Standard Model. Using these probabilities, they generate events that represent the initial state of the particles after the collision. The possible kinematic phase space is sampled according to these probabilities, resulting in a set of particles with specific momenta and energies. This type of event variables is often referred to as \textit{parton level}.
+
+Next, the parton showering and hadronization processes are simulated. Parton showering models the emission of additional particles from the initial partons, while hadronization simulates the formation of hadrons from quarks and gluons. These processes are crucial for accurately modelling the final state particles observed in detectors.
+
+Finally, detector simulation programs are used to simulate the interaction of particles with the detector material, producing realistic detector responses. This includes simulating the energy deposits in calorimeters, hits in tracking detectors, and other relevant signals.
+
+While the actual detector response is simulated using complex detector simulation software, for many applications, a simplified representation of the detector response is sufficient. This can involve smearing the particle momenta and energies according to the detector resolution, applying efficiency corrections, and simulating the effects of pile-up.
+
 \section{Top-Quark Physics}
 \label{sec:top-quark}
 \begin{figure}[t]
@@ -124,7 +143,7 @@ These aspects of QCD are essential for the reconstruction of hadronic final stat
     \caption{Leading order Feynman diagrams for top-quark pair production in \subrefb{fig:top_production_qq_s_channel} quark-antiquark annihilation and \subrefb{fig:top_production_gg_t_channel}, \subrefb{fig:top_production_gg_s_channel} \& \subrefb{fig:top_production_gg_u_channel} gluon fusion (ggF).}
     \label{fig:top_production}
 \end{figure}
-The top quark is the heaviest known elementary particle. The prediction of its existence arose due the already observed CP-Violation in the kaon system, which required a third generation of quarks to be explained within the SM framework~\cite{kobayashi_maskawa}. Furthermore, the discovery of the bottom quark in 1977~\cite{bottom_discovery} implied the existence of its weak isospin partner, the top quark. The top quark was eventually discovered in 1995 by the \cdf and \dzero collaborations at the \tevatron collider~\cite{top_discovery_cdf,top_discovery_d0}.
+The top quark is the heaviest known elementary particle. The prediction of its existence arose due to the already established CP-Violation in the kaon system, which required a third generation of quarks to be explained within the SM framework~\cite{kobayashi_maskawa}. Furthermore, the discovery of the bottom quark in 1977~\cite{bottom_discovery} implied the existence of its weak isospin partner, the top quark. The top quark was eventually discovered in 1995 by the \cdf and \dzero collaborations at the \tevatron collider~\cite{top_discovery_cdf,top_discovery_d0}.
 Currently, the world average of the top-quark mass is measured to be~\cite{PDG2024}
 \begin{equation}
     m_t = 172.56 \pm 0.31\,\unit{\giga\electronvolt}.
