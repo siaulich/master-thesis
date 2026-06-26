@@ -2,178 +2,59 @@
 \label{chap:conclusion}
 \section{Summary}
 \label{sec:summary}
-Many open questions and insightful measurements can be performed
-using dileptonic decays of top-quarks. While the channel has a low
-branching ratio, it can over a particularly clean event environments.
-The recent analyses of quantum effects and quasi-bound state effects
-near the production threshold, have motivated further investigations
-into this region. The dileptonic decays provide unique and
-unparalleled precision for tests of spin-structures in the involved
-physics-processes.
-Despite offering a clean environment for analyses, the channel has it
-own challenges. The presence of two neutrinos from the leptonic decay
-of the $W$-bosons leaves $6$ unknown momenta components. Furthermore,
-selecting and assigning the $b$-jets to their parent top-quarks
-provides additional ambiguities. While the neutrino regression has
-been studied in the past, the assignment of the neutrinos is not only
-understudied, but the two tasks are also inherently intertwined. Many
-variables that are essential for the measurements of the internal
-structure, require a full reconstruction of the top-quarks four
-momenta. Thus, the reconstruction and its performance is an essential
-aspect for the sensitive of many studies of the top-quark pairs.
 
-To address the jet-assignment, a transformer-based machine-learning
-model was developed and trained. Different architectures and layouts
-have been tested, but showed very similar performance -- despite
-incorporating distinct symmetries of the kinematic objects. The
-developed model was found to provide substantial improvement in the
-efficiency of the jet-assignment. This increased accuracy propagates
-to smaller errors for the reconstruction, and lastly also improved
-resolutions for these variables, which ultimately increases the
-sensitivity of measurements.
-Apart from the general improvements that were observed, a more
-detailed investigation revealed which regions of phase-space benefit
-the most from the reconstruction using the ml-approach.
-Notably, the region near the production-threshold proofed to be
-particularly challenging. For this region, no substantial improvement
-in accuracy compared to the baseline-methods was observed. Some
-kinematic features, making reconstruction in this regime difficult
-could be identified, but a share of these effects remains elusive.
+Dileptonic decays of top quarks enable the exploration of numerous open questions and facilitate precise measurements. Although this channel exhibits a low branching ratio, it offers a particularly clean event environment.
 
-To further improve the event reconstruction, and resolve the
-interdependencies of the two tasks, a model capable to provide
-jet-assignment and neutrino regression was developed. The underlying
-model architecture extended the previous layout by an additional
-output head for the neutrino momenta. While one initial aim was to
-resolve the interdependency, the improvements by a combined approach
-were limited. Comparing the performance of models performing only
-either of the two tasks with the multi-task model, showed no
-improvement for accuracy of jet-assignment and only minor
-improvements for the regression.
-It was, however, found that some cross-talk between the tasks exist.
-Therefore, already existing tools that provide neutrino-regression,
-both analytical and ml-based, can be expected to provide valuable
-information on the jet-assignment.
-Further, the developed methods could improve both the error of the
-neutrino regression, and the resolution of derived variables -- such
-as spin-sensitive markers, and the invariant mass of the
-\ttbar-system. However, despite the improvement in the variable
-reconstruction, the model was found to come with strong biases in the
-reconstructed variables, which led to significant distortions in the
-distributions of reconstructed variables. Some measures to correct
-such distortions could be identified and discussed. Yet, the
-underlying cause for these effects was found to be, most likely, the
-probabilistic nature of the neutrino momenta. Since the neutrinos are
-inherently underdetermined, they are most accurately modelled by a
-conditional probability density. Training a regression model
-collapses the output to the mean of this probability distribution,
-which can lead to biases in the computation of non-linear variables.
-This can be mitigated by modelling and propagating the conditional
-density from the neutrino momenta to reconstructed variables and
-averaging over their distributions instead. Generally, this would
-provide a more complete representation of the kinematics.
+Recent studies of quantum and quasi-bound-state effects near the production threshold have motivated further investigation of this region. Dileptonic decays offer unique precision for probing spin structures in the underlying physical processes.
 
-Lastly, the performance of the methods developed here was showcased
-by reproducing the analysis of bound-state effects at the production
-threshold in a highly simplified setting. An Asimov-fit, aimed to
-assess the potential impact on an analysis, found that the
-uncertainties associated with the signal strength are significantly
-decreased by methods with enhance resolution such as $\nu^2$-Flows
-and the MultiModalTransformer, as it was presented in this work. The
-latter is able to achieve a 3-fold increase in the significance of
-the signal strength, which presents are remarkable improvement. In
-practice, however, this will be limited by contributions from
-systematic uncertainties. Moreover, the enhanced reconstruction of
-the MultiModalTransformer comes with a stark limitation of its own:
-reconstructed variables of the top-quarks such as the invariant mass
-of the \ttbar-system and the spin-sensitive \chel and \chan comes
-with significant biases and distortions in the shape. While it was
-shown that this does not impact -- as data and simulation are
-distorted in the same way, this can be critical for analyses that
-extract information from the distributions directly. One notable
-example is the measurement of quantum effects in Reference
-\cite{atlas_entanglement}, which used the slope of the
-\chel-distribution as its marker for entanglement. Hence, additional
-consideration would be necessary for such an analysis. Especially the
-distributions of reconstructed masses show very clearly, that this
-ml-based method provides conceptually different results from other
-methods, that preserve the physical constraints more consistently.
-Thus, it might be necessary to investigate which method provides the
-most sound results for the particular analysis, one is interested in
-and adapt accordingly.
+Despite the clean environment provided by this channel, several challenges persist. The presence of two neutrinos from the leptonic decay of the $W$-bosons results in six unknown momentum components. Additionally, the selection and assignment of $b$-jets to their parent top quarks introduce further ambiguities. While neutrino regression has been previously investigated, neutrino assignment remains understudied, and both tasks are inherently interconnected. Accurate measurement of variables related to the internal structure requires full reconstruction of the top quark four-momenta. Therefore, reconstruction quality is critical to the sensitivity of top-quark pair studies.
 
-For reconstructed variables, it is always important that they are
-well-modelled by the simulations. To ensure such a consistency for
-the reconstruction provided by the MultiModalTransformer,
-distributions of reconstructed variables such as the top-quark mass
-were compared between simulation and data collected by \atlas.
+A transformer-based machine-learning model was developed and trained to address the jet assignment problem. Various architectures and layouts were evaluated, all demonstrating similar performance despite incorporating different kinematic symmetries. The resulting model substantially improved jet assignment efficiency. This enhanced accuracy led to reduced reconstruction errors and improved resolution of key variables, thereby increasing the sensitivity of subsequent measurements.
+
+Beyond the overall improvements, detailed analysis identified specific regions of phase space that benefit most from machine-learning-based reconstruction.
+
+The region near the production threshold was particularly challenging. In this regime, no significant improvement in accuracy over baseline methods was observed. Certain kinematic features contributing to reconstruction difficulties were identified, although some effects remain unexplained.
+
+To further enhance event reconstruction and address the interdependencies between jet assignment and neutrino regression, a model capable of performing both tasks was developed. The architecture extended the previous design by adding an output head for neutrino momenta. Although resolving the interdependency was an initial objective, the combined approach yielded limited improvements. Comparisons between single-task and multi-task models revealed no enhancement in jet-assignment accuracy and only minor gains in regression.
+
+However, some cross-talk between the tasks was observed.
+
+Therefore, existing tools for neutrino regression, whether analytical or machine-learning-based, are expected to provide valuable information for jet assignment.
+
+Additionally, the developed methods can reduce errors in neutrino regression and improve the resolution of derived variables, such as spin-sensitive markers and the invariant mass of the \ttbar system. Despite these improvements, the model exhibited significant biases in the reconstructed variables, resulting in distortions in their distributions. Some corrective measures were identified and discussed. The primary cause of these effects is likely the probabilistic nature of the neutrino momenta. Because the neutrinos are inherently underdetermined, they are best represented by a conditional probability density. Training a regression model collapses the output to the mean of the underlying distribution, which can introduce bias when computing nonlinear functions.
+
+This issue can be mitigated by modeling and propagating the conditional density from the neutrino momenta to the reconstructed variables and averaging over their distributions. In general, this approach provides a more comprehensive representation of the kinematics.
+
+The performance of the developed methods was demonstrated by reproducing the analysis of bound-state effects at the production threshold in a simplified setting. An Asimov-fit, designed to assess the potential analytical impact, indicated that uncertainties associated with the signal strength are significantly reduced by methods with enhanced resolution, such as $\nu^2$-Flows and the MultiModalTransformer. The MultiModalTransformer, in particular, achieved a threefold increase in the significance of the signal strength, representing a substantial improvement. However, in practical applications, this enhancement will be constrained by systematic uncertainties. Furthermore, the improved reconstruction provided by the MultiModalTransformer presents a notable limitation:
+
+Reconstructed variables of the top quarks, such as the invariant mass of the \ttbar system and the spin-sensitive \chel and \chan, exhibit significant biases and distortions in their shapes. Although it has been demonstrated that this does not affect results when both the data and the simulation are similarly distorted, this issue can be critical for analyses that extract information directly from the distributions. For example, the measurement of quantum effects in Reference \cite{atlas_entanglement} utilised the slope of the \chel distribution as a marker for entanglement. Therefore, additional consideration is required for such analyses. Notably, the distributions of reconstructed masses indicate that this machine-learning-based method yields conceptually distinct results compared with other approaches and more consistently preserves physical constraints.
+
+Therefore, it is necessary to determine which method yields the most reliable results for a given analysis and to adapt the approach accordingly.
+
+For reconstructed variables, it is essential that they are accurately modeled by simulations. To ensure consistency in the reconstruction provided by the MultiModalTransformer, distributions of reconstructed variables, such as the top-quark mass, were compared between simulation and data collected by \atlas.
+
 Generally, a very good agreement in the distributions was found.
-Highlighting that this tools can be applied to simulation as well as
-event data. The distributions show the robustness of the method to be
-used on data and in future analyses.
 
-Combined with the thorough evaluation of the method's performance, it
-provides a clear motivation to use an approach developed here, or a
-similar one, in future research. Lastly, the combination of two
-reconstruction tasks into a single model not only resolves
-interdependencies but can also cut computational load. The transition
-to the HL-LHC, which will increase the event number by up to one
-order of magnitude, will bring additional challenges related to the
-computation time of analyses. Therefore, tools that combine tasks are
-becoming increasingly important as they reduce redundancies.
+This demonstrates that these tools are applicable to both simulation and event data. The distributions indicate the method's robustness for use with data and in future analyses.
+
+Combined with the thorough evaluation of the method's performance, these findings provide strong motivation to adopt the approach developed here or similar methods in future research. Additionally, integrating two reconstruction tasks into a single model not only addresses interdependencies but also reduces computational demands. The transition to the HL-LHC, which will increase the number of events by up to an order of magnitude, will introduce further challenges related to analysis computation time. Therefore, tools that combine tasks are increasingly important as they minimize redundancies.
 
 \section{Outlook}
 \label{sec:outlook}
-This thesis provided a comprehensive coverage of the strengths and
-weaknesses of the methods. Based on the research conducted, new
-research goals and questions have emerged.
 
-One very important aspect this thesis highlighted was the
-interdependency of the reconstruction tasks in the dilepton channel.
-The analysis conducted here showed conclusively that the two tasks
-are inherently linked. Thus, it is strongly encouraged that a tool
-like $\nu^2$-Flows, which provides a neutrino regression, is extended
-to output the assignment. This is motivated by the finding, that a
-transformer trained to regress the neutrinos build an internal
-understanding about the assignment structure. Hence, a tool should
-generally provide both aspect. This would also increase consistency
-between the assignment of jets and regression of neutrinos, which
-might be lost when interfaced with additional tools.
+This thesis has comprehensively examined the strengths and weaknesses of the methods. Based on the research conducted, new research objectives and questions have emerged.
 
-The next open question is the aforementioned propagating of the
-neutrino posterior to derived event variables. It was shown that
-averaging over the posterior of event variables instead of computing
-event variables from averaged momenta can lead to improvement such as
-reduced biases and enhanced resolutions. Furthermore, it might be
-useful to incorporate such a posterior of an event variable into a
-fit or perhaps the uncertainty. This would provide a more
-comprehensive description of the underdetermined neutrinos.
+A key aspect highlighted in this thesis is the interdependence of the reconstruction tasks in the dilepton channel.
 
-Going one step further, it is also possible to incorporate the
-probability distribution of reconstructed variables to the
-loss-function itself. Using automatic differentiation to compute the
-Jacobian, the probability density of the neutrinos can be transformed
-to the probability density of the reconstructed variables. This would
-allow one to optimise the model with respect to the variables, that
-one is eventually interested in -- i.e. reconstructed variables such
-as $m(t\bar{t})$, \chel, or \chan. Similarly, regression these
-variables directly could also be investigated. In case where the
-interpretability is less important than the separation power of
-variable, one might also consider training a discriminator. One
-notable example is the search for contributions from non-relativistic
-bound state effects. For such an analysis, a discriminating neural
-network can be trained to separate events from both states and this
-provide one, or possibly multiple, sensitive variables.
+The analysis presented here demonstrates that the two tasks are inherently linked. Therefore, it is strongly recommended that tools such as $\nu^2$-Flows, which perform neutrino regression, be extended to include jet assignment. This recommendation is based on the observation that a transformer trained for neutrino regression develops an internal understanding of the assignment structure. Consequently, a tool should generally provide both functionalities. This approach would also enhance consistency between jet assignment and neutrino regression, which may be compromised when using separate tools.
 
-Lastly, as it was shown that the tool can provide improvements for
-the analyses involving dileptonic decays of top-quark pairs, it can
-be expected to be used in future investigations. The most notable one
-remains the investigation of bound-state effects at the
-\ttbar-production threshold. For a measurement of the cross-section,
-a significant improvement in the uncertainty is projected by the use
-of the MultiModalTransformer. To facilitate an application in a
-measurement by \atlas, the tool was made available in the central
-software used for top-related analyses: TopCPToolkit \cite{topcptoolkit}.
-Combined with the increased statistics offered by the \LHCruniii in
-the near future, very promising progress in the understanding of
-these effects can be expected.
+An important open question concerns the propagation of the neutrino posterior to derived event variables. It was demonstrated that averaging over the posterior of event variables, rather than computing event variables from averaged momenta, can reduce biases and enhance resolution. Extending this to more sophisticated models of posterior distributions, such as $\nu^2$-Flows, is expected to significantly improve reconstruction performance.
+
+Furthermore, incorporating the posterior of an event variable into a fit or uncertainty estimation may be beneficial. This approach would provide a more comprehensive description of the underdetermined neutrinos.
+
+Furthermore, it is possible to incorporate the probability distribution of reconstructed variables directly into the loss function. By employing automatic differentiation to compute the Jacobian, the probability density of the neutrinos can be transformed into the probability density of the reconstructed variables. This enables optimization of the model with respect to the variables of primary interest, such as $m(t\bar{t})$, \chel, or \chan. Direct regression of these variables could also be explored. In scenarios where interpretability is less critical than the discriminative power of the variable, training a discriminator may be advantageous. For example, in the search for contributions from non-relativistic bound state effects, a discriminative neural network can be trained to distinguish events from both states, thereby providing one or more sensitive variables.
+
+As the tool has demonstrated improvements in analyses involving dileptonic decays of top-quark pairs, it is anticipated to be utilized in future studies. The most prominent application remains the investigation of bound-state effects at the \ttbar production threshold. For cross-section measurements, a significant reduction in uncertainty is expected when using the MultiModalTransformer. To support its application in measurements by \atlas, the tool has been integrated into the central software for top-related analyses: TopCPToolkit~\cite{topcptoolkit}.
+
+Combined with the increased statistics provided by \LHCruniii in the near future, substantial progress in understanding these effects is anticipated.
+

@@ -1,102 +1,23 @@
 \chapter{Introduction}
 \label{chap:introduction}
-The top quark, being the heaviest known elementary particle, plays a
-crucial role in the Standard Model of particle physics. Due to its
-large mass, it stands out in two ways; for one, as having the highest
-Yukawa-coupling to the Higgs boson and secondly, as being the
-shortest-lived elementary particle. While the Yukawa-coupling makes
-it very interesting for Higgs physics, the short lifetime of the top
-quark presents it as the only window allowing us to study at the bare
-coupling of quarks. The top quark decays almost exclusively into a
-$W$ boson and a $b$-quark. These properties make processes involving
-top quarks some of the most studied at the Large Hadron Collider
-(\lhc) at \cern.
+The top quark, being the heaviest known elementary particle, plays a crucial role in the Standard Model of particle physics. Due to its large mass, it stands out in two ways; for one, as having the highest Yukawa coupling to the Higgs boson and secondly, as being the shortest-lived elementary particle. While the Yukawa coupling makes it very interesting for Higgs physics, the short lifetime of the top quark presents it as the only window allowing us to study the bare coupling of quarks. The top quark decays almost exclusively into a $W$ boson and a $b$-quark. These properties make processes involving top quarks among the most studied at the Large Hadron Collider (\lhc) at \cern.
 
-Top quarks are predominantly produced in pairs (\ttbar) via the
-strong interaction in proton-proton collisions at the \lhc. Each $W$
-boson coming from the top decay can decay either leptonically (into a
-charged lepton and neutrino) or hadronically (into a pair of quarks).
-The dileptonic decay channel, where both $W$ bosons decay
-leptonically, results in a final state with two charged leptons, two
-$b$-jets, and two neutrinos. This channel, while having a lower
-branching ratio compared to other decay modes, offers a cleaner
-experimental signature due to the presence of leptons and reduced
-hadronic activity. Leptons in particular can be reconstructed with a
-high efficiency in a hadron collider environment.
-However, the presence of two neutrinos in the final state poses
-significant challenges for event reconstruction, as they evade
-detection, leading to missing transverse energy (\met) in the event.
+Top quarks are predominantly produced in pairs (\ttbar) via the strong interaction in proton-proton collisions at the \lhc. Each $W$ boson coming from the top decay can decay either leptonically (into a charged lepton and neutrino) or hadronically (into a pair of quarks).
 
-Due to its clean signature and sensitivity to various top-quark
-properties, the dileptonic \ttbar channel is widely used for
-precision measurements of the top properties and spin correlations in
-particular. Two recent highlights in top-quark physics are the tests
-of spin correlations and quantum entanglement in pairs of top
-quarks~\cite{atlas_entanglement}, and the observation of a possible
-quasi-bound state resonance in the $t\bar{t}$ invariant mass
-spectrum~\cite{atlas_toponium,CMS2025Pseudoscalar}. Both effects are
-predominantly studied in the dilepton decay channel of the top quark
-in a mass range close to the on-shell production threshold of two top
-quarks $m(t\bar{t})\gtrsim 2\cdot m_t\approx
-350\,\unit{\giga\electronvolt}$. Compared to hadronic decays, the
-leptons allow a more accurate probing of the top quark's spin by
-preserving a larger fraction of the spin
-information~\cite{spin_analyzing_power,spin_analyzing_power_jets}.
+The dileptonic decay channel, where both $W$ bosons decay leptonically, results in a final state with two charged leptons, two $b$-jets, and two neutrinos. This channel, while having a lower branching ratio compared to other decay modes, offers a cleaner experimental signature due to the presence of leptons and reduced hadronic activity. Leptons, in particular, can be reconstructed with high efficiency in a hadron collider environment. However, the presence of two neutrinos in the final state poses significant challenges for event reconstruction, as they evade detection, resulting in missing transverse energy (\met).
 
-Both analyses rely on measurements of angular distributions and
-correlations between the decay products of the top quarks. Probing
-this system requires a precise reconstruction of the top quarks from
-their decay products, which is complicated by the presence of the two
-neutrinos. While analytical neutrino regression strategies have been
-studied extensively, the problem of correctly assigning $b$-jets to
-their parent top quarks remains largely unstudied. In channels with
-hadronically decaying top quarks, various methods for jet assignment
-have been developed and employed successfully~\cite{spanet}. However,
-in the dileptonic channel, the jet assignment problem was often
-simplified or overlooked due to a focus on neutrino reconstruction.
-However, many of the sensitive variables used in measurements of spin
-correlations depend critically on the correct assignment of the jets.
-Misassignments degrade the resolution of reconstructed observables,
-ultimately limiting the precision of measurements.
+Due to its clean signature and sensitivity to various top-quark properties, the dileptonic \ttbar channel is widely used for precision measurements of top properties, particularly spin correlations. Two recent highlights in top-quark physics are the tests of spin correlations and quantum entanglement in pairs of top quarks~\cite{atlas_entanglement}, and the observation of a possible quasi-bound-state resonance in the $t\bar{t}$ invariant mass spectrum~\cite{atlas_toponium,CMS2025Pseudoscalar}. Both effects are predominantly studied in the dilepton decay channel of the top quark in a mass range close to the on-shell production threshold of two top quarks $m(t\bar{t})\gtrsim 2\cdot m_t\approx 350\,\unit{\giga\electronvolt}$. Compared to hadronic decays, the leptons allow more accurate probing of the top quark's spin by preserving a larger fraction of the spin information~\cite{spin_analyzing_power,spin_analyzing_power_jets}.
 
-Furthermore, the jet assignment problem is not only relevant for the
-reconstruction of the top quarks but also for the neutrino regression
-itself. Many of the conventional neutrino regression methods rely on
-kinematic constraints that are applied to the decay products of each
-top quark. If the jets are misassigned, these constraints can lead to
-incorrect solutions for the neutrino momenta, further degrading the
-reconstruction performance.
-Consequently, this thesis seeks to address the jet assignment
-problem in close combination with the neutrino regression, with the
-goal of improving the overall reconstruction of dileptonic \ttbar
-events. The properties of different model architectures are examined,
-and the impact of multi-task learning is analysed. To account for the
-great deal of degeneracy in evaluating the performance of the
-different methods, a detailed comparison with respect to different
-metrics and kinematic regimes is carried out. This analysis provides
-some additional insights into the kinematic structure of the events
-and allows a more nuanced description of each method's performance.
-Lastly, it is investigated how the performances of the different
-methods propagate to the sensitivity of a measurement based on a
-binned likelihood fit. Whether the model behaves on event data as
-expected is shown by comparing distributions of reconstructed
-variables for \atlas run data and simulated events.
+Both analyses rely on measurements of angular distributions and correlations between the decay products of the top quarks. Probing this system requires a precise reconstruction of the top quarks from their decay products, which is complicated by the presence of the two neutrinos. While analytical neutrino regression strategies have been studied extensively, the problem of correctly assigning $b$-jets to their parent top quarks remains largely unstudied. In channels with hadronically decaying top quarks, various methods for jet assignment have been developed and employed successfully~\cite{spanet}. However, in the dileptonic channel, the jet assignment problem was often simplified or overlooked due to a focus on neutrino reconstruction.
 
-Begginning with a review of the theoretical background
-\Cref{chap:background} and the experimental setup in
-\Cref{chap:experiment_setup}, the thesis provides the necessary
-context for understanding the challenges of reconstructing dileptonic
-\ttbar events. The following \Cref{chap:machine-learning} introduces
-the foundations of the machine learning techniques employed in this
-work. The general setup of \ttbar analyses and the conventional
-reconstruction methods are outlined in
-\Cref{chap:reconstruction-methods}. Starting with
-\Cref{chap:ml-reconstruction}, the novel machine learning-based
-reconstruction methods are developed and evaluated. Following this,
-the performance of the proposed methods is assessed in
-\Cref{chap:performance-evaluation}, and they are applied to a physics
-analysis in \Cref{chap:physics-analysis} to demonstrate their in-situ
-performance and highlight their availability for future analyses.
-Finally, \Cref{chap:conclusion} summarises the findings of this
-thesis and discusses potential future directions for improving the
-reconstruction of dileptonic \ttbar events.
+However, many of the sensitive variables used to measure spin correlations depend critically on the correct assignment of the b-jets. Misassignments degrade the resolution of reconstructed observables, ultimately limiting measurement precision.
+
+Furthermore, the jet assignment problem is not only relevant for the reconstruction of the top quarks but also for the neutrino regression itself. Many of the conventional neutrino regression methods rely on kinematic constraints that are applied to the decay products of each top quark. If the jets are misassigned, these constraints can lead to incorrect neutrino momentum estimates, further degrading reconstruction performance.
+
+Consequently, this thesis seeks to address the jet assignment problem in close combination with the neutrino regression, with the goal of improving the overall reconstruction of dileptonic \ttbar events. The properties of different model architectures are examined, and the impact of multi-task learning is analysed. To account for the substantial degeneracy in evaluating the performance of the different methods, a detailed comparison across metrics and kinematic regimes is conducted. This analysis provides some additional insights into the kinematic structure of the events and allows a more nuanced description of each method's performance.
+Lastly, it is investigated how the performance of the different methods propagates into the sensitivity of a measurement based on a binned likelihood fit. Whether the model behaves on event data as expected is assessed by comparing the distributions of reconstructed variables between \atlas run data and simulated events.
+
+Beginning with a review of the theoretical background \Cref{chap:background} and the experimental setup in \Cref{chap:experiment_setup}, the thesis provides the necessary context for understanding the challenges of reconstructing dileptonic \ttbar events. The following \Cref{chap:machine-learning} introduces the foundations of the machine learning techniques employed in this work. The general setup of \ttbar analyses and the conventional reconstruction methods are outlined in \Cref{chap:reconstruction-methods}. Starting with \Cref{chap:ml-reconstruction}, the novel machine learning-based reconstruction methods are developed and evaluated. Following this, the performance of the proposed methods is assessed in \Cref{chap:performance-evaluation}, and they are applied to a physics analysis in \Cref{chap:physics-analysis} to demonstrate their in-situ performance and highlight their availability for future analyses.
+
+Finally, \Cref{chap:conclusion} summarises the findings of this thesis and discusses potential future directions for improving the reconstruction of dileptonic \ttbar events.
+
