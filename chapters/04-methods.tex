@@ -10,7 +10,7 @@ The function $f$ is parameterised by a set of learnable parameters $\theta$, whi
 Machine learning can be broadly categorised into supervised and unsupervised learning. This thesis focuses on the former of the two: in supervised learning, the model is trained on a labelled dataset, where each input data point is associated with a corresponding target output. The goal of the model is to learn a mapping from inputs to outputs, enabling it to make accurate predictions on unseen data.
 
 \subsection{Monte Carlo Training Data}
-As mentioned before, supervised training requires labels associated with the input data. While this can be a major bottleneck for many machine learning applications, it is largely absent in particle physics. In \Cref{sec:mc_colliders}, it was elaborated on how fundamental physics is simulated at colliders. Events are sampled from the underlying parton distributions and then further processed to match the observed detector-level structure. Thus, the necessary labels that the model seeks to predict are readily available for simulated events.
+As mentioned before, supervised training requires labels associated with the input data. While this can be a major bottleneck for many machine learning applications, this limitation is largely absent in particle physics. In \Cref{sec:mc_colliders}, it was elaborated on how fundamental physics is simulated at colliders. Events are sampled from the underlying probability distributions of the produced particles and then further processed to match the observed detector-level structure. Thus, the necessary labels that the model seeks to predict are readily available for simulated events.
 
 \subsection{Training}
 During the training phase, the model is presented with a set of input features derived from the reco-level event variables, along with their corresponding target outputs, which are typically derived from the parton-level event variables. The model learns to map the input features to the target outputs by minimising a loss function that quantifies the difference between the predicted and true values.
@@ -28,19 +28,18 @@ To highlight important distinctions among machine learning tasks, it is useful t
 \subsection{Supervised Learning as Risk Minimisation}
 In supervised learning, the goal is to learn a parametrised function $f_\theta$ that maps input data $\mathbf{x}$ to output predictions $\mathbf{y}$. This can be formalised as a risk minimisation problem, in which the objective is to minimise the expected loss under the joint distribution of inputs and outputs. The expected risk can be expressed as:
 \begin{equation}
-R(f) = \mathbb{E}{\mathbf{x}, \mathbf{y}}[L(\mathbf{y},   f\theta(\mathbf{x}))]
+    R(f) = \mathbb{E}_{\mathbf{x}, \mathbf{y}}[L(\mathbf{y},   f\theta(\mathbf{x}))]
 \end{equation}
 where $L$ is the loss function that quantifies the discrepancy between the true output $\mathbf{y}$ and the predicted output $f_\theta(\mathbf{x})$. The goal of training is to find the parameters $\theta$ that minimise this expected risk, which is typically approximated using empirical risk minimisation on the training dataset.
 \subsection{Regression}
 \label{sec:regression}
 In regression tasks, the output $\mathbf{y}$ is a continuous variable, and the model is trained to predict a specific value for each input $\mathbf{x}$. The loss function commonly used for regression is the mean squared error (MSE), which measures the average squared difference between the predicted values and the true values:
 \begin{equation}
-L_{\text{MSE}}(\mathbf{y}, f(\mathbf{x})) = \frac{1}{N}
-\sum_{i=1}^{N} (y_i - f_\theta(\mathbf{x}i))^2
+    L_{\text{MSE}}(\mathbf{y}, f(\mathbf{x})) = \frac{1}{N}\sum_{i=1}^{N} (y_i - f_\theta(\mathbf{x}i))^2
 \end{equation}
-where $N$ is the number of samples in the dataset. The model learns to minimise this loss function. If the labels are not deterministic, meaning that there is inherent uncertainty in the target values, one can describe the labels using a conditional probability distribution $p(\mathbf{y}|\mathbf{x})$. In this case, minimising the MSe corresponds to learning the conditional mean of the distribution (see \Cref{app:mse_mean} for a proof):
+where $N$ is the number of samples in the dataset. The model learns to minimise this loss function. If the labels are not deterministic, meaning that there is inherent uncertainty in the target values, one can describe the labels using a conditional probability distribution $p(\mathbf{y}|\mathbf{x})$. In this case, minimising the MSE corresponds to learning the conditional mean of the distribution (see \Cref{app:mse_mean} for a proof):
 \begin{equation}
-f\theta(\mathbf{x}) = \mathbb{E}[\mathbf{y}|\mathbf{x}] = \int   \mathbf{y} p(\mathbf{y}|\mathbf{x}) d\mathbf{y},.
+    f\theta(\mathbf{x}) = \mathbb{E}[\mathbf{y}|\mathbf{x}] = \int   \mathbf{y} p(\mathbf{y}|\mathbf{x}) d\mathbf{y},.
 \end{equation}
 Depending on the loss function used, the model can learn different statistics of the conditional distribution. For example, using the mean absolute error (MAE) loss function would cause the model to learn the conditional median rather than the mean.
 
@@ -48,18 +47,16 @@ Depending on the loss function used, the model can learn different statistics of
 \label{sec:conditional_density}
 In contrast to regression, conditional density learning aims to learn the entire conditional probability distribution $p(\mathbf{y}|\mathbf{x})$ rather than just a point estimate. This is particularly useful when the target variable has inherent uncertainty or when multiple outcomes are possible for a given input. To quantify the difference between the true conditional distribution and the model's predicted distribution, the Kullback-Leibler (KL) divergence is often used as a loss function~\cite{kl_divergence}
 \begin{equation}
-L_{\text{KL}}(p, q) = \int p(\mathbf{y}|\mathbf{x}) \log \left(
-\frac{p(\mathbf{y}|\mathbf{x})}{q_\theta(\mathbf{y}|\mathbf{x})}
-\right) d\mathbf{y}
+    L_{\text{KL}}(p, q) = \int p(\mathbf{y}|\mathbf{x}) \log \left(\frac{p(\mathbf{y}|\mathbf{x})}{q_\theta(\mathbf{y}|\mathbf{x})}\right) d\mathbf{y}
 \end{equation}
-where $p(\mathbf{y}|\mathbf{x})$ is the true conditional distribution and $q_\theta(\mathbf{y}|\mathbf{x})$ is the model's predicted distribution. Minimising this loss function encourages the model to produce a predicted distribution that closely matches the true distribution, allowing for a more comprehensive understanding of the uncertainty and variability in the target variable. In practice, computing the KL divergence can be challenging because the true distribution may be unknown or difficult to estimate. In such cases, one relies on the data to provide an empirical estimate of the true distribution, and the loss function is approximated using samples from the dataset. It can be shown that minimising the KL divergence is equivalent to maximising the likelihood of the observed data under the model's predicted distribution, which is a common approach in training probabilistic models; see \Cref{app:ml_kld} for details. One notable case is a discrete target variable, for which this corresponds to minimising the cross-entropy loss, a widely used measure in classification tasks~\cite{cross-entropy}.
+where $p(\mathbf{y}|\mathbf{x})$ is the true conditional distribution and $q_\theta(\mathbf{y}|\mathbf{x})$ is the model's predicted distribution. Minimising this loss function encourages the model to produce a predicted distribution that closely matches the true distribution, allowing for a more comprehensive understanding of the uncertainty and variability in the target variable. In practice, computing the KL divergence can be challenging because the true distribution may be unknown or difficult to estimate. In such cases, one relies on the data to provide an empirical estimate of the true distribution, and the loss function is approximated using samples from the dataset. It can be shown that minimising the KL divergence is equivalent to maximising the logarithmic likelihood of the observed data under the model's predicted distribution, which is a common approach in training probabilistic models; see \Cref{app:ml_kld} for details. One notable case is a discrete target variable, for which this corresponds to minimising the cross-entropy loss, a widely used measure in classification tasks~\cite{cross-entropy}.
 
 \section{Neural Networks}
 \begin{figure}[ht]
-\centering
-\includegraphics[width=0.6\textwidth]{figures/machine-learning/perceptron.pdf}
-\caption{Schematic of a single artificial neuron (perceptron). The     neuron receives multiple input signals, each associated with a     weight, and computes a weighted sum of these inputs; a     so-called bias is added. An activation function is then applied to   this sum to produce the neuron's output.}
-\label{fig:perceptron}
+    \centering
+    \includegraphics[width=0.6\textwidth]{figures/machine-learning/perceptron.pdf}
+    \caption{Schematic of a single artificial neuron (perceptron). The neuron receives multiple input signals, each associated with a weight, and computes a weighted sum of these inputs; a so-called bias is added. An activation function is then applied to this sum to produce the neuron's output.}
+    \label{fig:perceptron}
 \end{figure}
 As elaborated upon before, machine learning models can be viewed as parameterised functions that map input data to output predictions.
 Neural networks are a class of machine learning models that are inspired by the structure and function of biological neural networks in the human brain. They consist of interconnected artificial neurons that process and transform the input data to produce the desired output.
@@ -81,44 +78,46 @@ A DNN consists of an input layer, one or more hidden layers, and an output layer
 \subsection{Transformer Networks}
 \label{sec:transformer}
 \begin{figure}[ht]
-\centering
-\begin{subfigure}[b]{0.3\textwidth}
-\centering
-\includegraphics[scale = 0.71]{figures/machine-learning/dpa.pdf}
-\caption{\centering Scaled \ Dot-Product Attention}
-\label{fig:dpa}
-\end{subfigure}
-\begin{subfigure}[b]{0.35\textwidth}
-\centering
-\includegraphics[scale = 0.71]{figures/machine-learning/mha.pdf}
-\caption{Multi-Head Attention}
-\label{fig:mha}
-\end{subfigure}
-\begin{subfigure}[b]{0.3\textwidth}
-\centering
-\includegraphics[scale =
-0.71]{figures/machine-learning/transformer_layer.pdf}
-\caption{Transformer Layer}
-\label{fig:transformer_layer}
-\end{subfigure}
-\caption{Different components of the transformer architecture from     smallest to largest unit: (a) Scaled Dot-Product Attention, (b)
-Multi-Head Attention, and © Transformer Layer. These structures were first outlined in Reference~\cite{attention_is_all_you_need}.}
-\label{fig:attention}
+    \centering
+    \begin{subfigure}[b]{0.3\textwidth}
+        \centering
+        \includegraphics[scale = 0.71]{figures/machine-learning/dpa.pdf}
+        \caption{\centering Scaled Dot-Product Attention}
+        \label{fig:dpa}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.35\textwidth}
+        \centering
+        \includegraphics[scale = 0.71]{figures/machine-learning/mha.pdf}
+        \caption{Multi-Head Attention}
+        \label{fig:mha}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.3\textwidth}
+        \centering
+        \includegraphics[scale =
+        0.71]{figures/machine-learning/transformer_layer.pdf}
+        \caption{Transformer Layer}
+        \label{fig:transformer_layer}
+    \end{subfigure}
+    \caption{Different components of the transformer architecture from     smallest to largest unit: (a) Scaled Dot-Product Attention, (b)
+    Multi-Head Attention, and © Transformer Layer. These structures were first outlined in Reference~\cite{attention_is_all_you_need}.}
+    \label{fig:attention}
 \end{figure}
 The transformer architecture deals with sequential data using an attention mechanism. This allows transformers to process information in parallel, making them efficient for training on large datasets.
 Additionally, transformers can effectively capture long-range dependencies in the data by relating all elements of the input sequence to one another through attention mechanisms.
 
 The core component of the transformer architecture is the attention mechanism, which allows the model to focus on different parts of the input sequence when making predictions. The most commonly used attention mechanism is the scaled dot-product attention~\cite{attention_is_all_you_need}, illustrated in \Cref{fig:dpa}. In this mechanism, three vectors are computed for each input element: the query ($q$), key ($k$), and value ($v$)
 vectors. The attention scores are calculated by taking the dot product of the query and key vectors, scaling the result by the square root of the key vector dimension, and applying a softmax function to obtain attention weights. These weights are then used to compute a weighted sum of the value vectors, yielding the attention mechanism's output.
+
 Multi-head attention, shown in \Cref{fig:mha}, extends the scaled dot-product attention by allowing the model to attend to different parts of the input sequence simultaneously. This is achieved by using multiple parallel attention heads, each with its own set of learned linear transformations for the query, key, and value vectors. The outputs of all attention heads are concatenated and linearly transformed to produce the final output.
+
 Multi-head attention is embedded in a structure called the transformer layer, as depicted in \Cref{fig:transformer_layer}. This layer combines the attention mechanism with trainable normalisation layers and residual summation of the inputs. Lastly, the outputs pass through a feed-forward layer consisting of a dense layer with ReLU activation that projects into a space of twice the input dimension, followed by a linear projection back to the input dimension. These outputs are once more added to the inputs and finally scaled by a normalisation layer~\cite{attention_is_all_you_need}.
 
 The key, query and value vectors are typically obtained by applying learned linear transformations for the input embeddings. Depending on the type of relational information one wants to capture, one can choose to derive these vectors from different input sources. For example, in the \textit{self-attention mechanism}, all three vectors are derived from the same input sequence ($\hat q_t = \hat k_t=\hat v_t = \hat x_t$), allowing the model to relate different elements within the same sequence. In \textit{cross-attention}, the query vectors are derived from one sequence, while the key and value vectors are derived from another sequence ($\hat q_t = \hat x_{1,t}$, $\hat k_t=\hat v_t = \hat x_{2,t}$), enabling the model to relate information between two different sequences.
 \paragraph{Symmetries}
 In many applications, including particle physics, the input data exhibits certain symmetries that can be exploited to improve model performance.
 
-The attention mechanism has inherent permutation equivariance that can be exploited. Self-attention is permutation equivariant to the input sequence, meaning that permuting the input elements results in a corresponding permutation of the output elements. This property is particularly useful when dealing with sets or unordered data, where the order of the elements does not carry any inherent meaning.
-Cross-attention is permutation-equivariant with respect to permutations of the query inputs and separately to permutations of the key/value inputs.
+The attention mechanism has inherent permutation equivariance that can be exploited. Self-attention is permutation-equivariant to the input sequence, meaning that shuffling the input elements results in a corresponding permutation of the output elements. This property is particularly useful when dealing with sets or unordered data, where the order of the elements does not carry any inherent meaning.
+Cross-attention is also permutation-equivariant with respect to permutations of the query inputs and separately invariant to permutations of the key/value inputs.
 This allows the model to effectively relate information between two different sequences, regardless of their order.
 
 \subsection{Training Neural Networks}

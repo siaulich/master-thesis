@@ -216,25 +216,40 @@
 \begin{figure}[H]
   \begin{subfigure}[c]{1.0\textwidth}
     \centering
-    \includegraphics[width=0.7\textwidth]{plots/compact_reconstructor/binned_performance/truth_ttbar_mass/binned_deviation_ttbar_mass_truth_ttbar_mass.pdf}
-    \caption{Mean Relative Deviation of \mttbar}
-    \label{fig:full_reco:ttbar_mass_binned_deviation_ttbar_mass}
-  \end{subfigure}
-  \begin{subfigure}[c]{1.0\textwidth}
-    \centering
     \includegraphics[width=0.7\textwidth]{plots/compact_reconstructor/binned_performance/truth_ttbar_mass/binned_deviation_c_hel_truth_ttbar_mass.pdf}
     \caption{Mean Deviation of \chel}
     \label{fig:full_reco:ttbar_mass_binned_deviation_c_hel}
   \end{subfigure}
-  \caption{Mean (Relative) Deviation of \mttbar     \subrefb{fig:full_reco:ttbar_mass_binned_reso_ttbar_mass} and \chel     \subrefb{fig:full_reco:ttbar_mass_binned_reso_c_hel} computed in     bins of the parton-level invariant mass of the \ttbar-system. The     different setups for assignment and regression are compared. The     displayed error bars represent the statistical uncertainties of the   dataset obtained using bootstrapping.}
+  \begin{subfigure}[c]{1.0\textwidth}
+    \centering
+    \includegraphics[width=0.7\textwidth]{plots/compact_reconstructor/binned_performance/truth_ttbar_mass/binned_deviation_c_han_truth_ttbar_mass.pdf}
+    \caption{Mean Deviation of \chan}
+    \label{fig:full_reco:ttbar_mass_binned_deviation_c_han}
+  \end{subfigure}
+  \caption{Mean Deviation of \chel \subrefb{fig:full_reco:ttbar_mass_binned_deviation_c_hel} and \chan \subrefb{fig:full_reco:ttbar_mass_binned_deviation_c_han} computed  in bins of the parton-level invariant mass of the \ttbar-system. The different setups for assignment and regression are compared. The displayed error bars represent the statistical uncertainties of the dataset obtained using bootstrapping.}
   \label{fig:full_reco:ttbar_mass_binned_deviation}
 \end{figure}
 \begin{figure}[H]
   \centering
   \includegraphics[width=1.0\textwidth]{plots/gaussian_loss/distributions/ttbar_mass_distributions.pdf}
-  \caption{Comparison of variable distributions at reco- and     truth-level for the different regression settings of the   MultiModalTransformer trained with the Gaussian-loss.}
+  \caption{Comparison of $m(t\bar{t})$ distributions at reco- and truth-level for the different regression settings of the   MultiModalTransformer trained with the Gaussian-loss.}
   \label{fig:gaussian_loss:ttbar_mass_dist}
 \end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1.0\textwidth]{plots/gaussian_loss/distributions/W_mass_distributions.pdf}
+  \caption{Comparison of $m(W)$ distributions at reco- and truth-level for the different regression settings of the   MultiModalTransformer trained with the Gaussian-loss.}
+  \label{fig:gaussian_loss:W_mass}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1.0\textwidth]{plots/gaussian_loss/distributions/top_mass_distributions.pdf}
+  \caption{Comparison of $m(t)$ distributions at reco- and     truth-level for the different regression settings of the   MultiModalTransformer trained with the Gaussian-loss.}
+  \label{fig:gaussian_loss:top_mass}
+\end{figure}
+
 \section{Fit Results}
 \subsection{Asimov-Fit}
 \begin{figure}[H]

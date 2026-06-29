@@ -17,6 +17,29 @@
   url       = {https://doi.org/10.5281/zenodo.18894642}
 }
 
+@article{atlas_higgs_discovery,
+  collaboration = {{ATLAS Collaboration}},
+  title         = {Observation of a new particle in the search for the Standard Model Higgs boson with the ATLAS detector at the LHC},
+  journal       = {Physics Letters B},
+  volume        = {716},
+  number        = {1},
+  pages         = {1-29},
+  year          = {2012},
+  issn          = {0370-2693}
+}
+
+@article{cms_higgs_discovery,
+  collaboration = {{CMS Collaboration}},
+  title         = {Observation of a new particle in the search for the Standard Model Higgs boson with the ATLAS detector at the LHC},
+  journal       = {Physics Letters B},
+  volume        = {716},
+  number        = {1},
+  pages         = {1-29},
+  year          = {2012},
+  issn          = {0370-2693}
+}
+
+
 @software{topcptoolkit,
   author    = {{ATLAS Collaboration}},
   title     = {TopCPToolkit},
@@ -51,15 +74,14 @@
 }
 
 @article{k-folding,
-  author   = {Stone, M.},
-  title    = {Cross-Validatory Choice and Assessment of Statistical Predictions},
-  journal  = {Journal of the Royal Statistical Society: Series B (Methodological)},
-  volume   = {36},
-  number   = {2},
-  pages    = {111-133},
-  year     = {1974},
-  month    = {01},
-  abstract = {A generalized form of the cross-validation criterion is applied to the choice and assessment of prediction using the data-analytic concept of a prescription. The examples used to illustrate the application are drawn from the problem areas of univariate estimation, linear regression and analysis of variance.}
+  author  = {Stone, M.},
+  title   = {Cross-Validatory Choice and Assessment of Statistical Predictions},
+  journal = {Journal of the Royal Statistical Society: Series B (Methodological)},
+  volume  = {36},
+  number  = {2},
+  pages   = {111-133},
+  year    = {1974},
+  month   = {01}
 }
 
 @article{permutation-importance,
@@ -191,7 +213,6 @@
 }
 
 @article{gn2_btagger,
-  abstract      = {Jet flavour tagging enables the identification of jets originating from heavy-flavour quarks in proton--proton collisions at the Large Hadron Collider, playing a critical role in its physics programmes. This paper presents GN2, a transformer-based flavour tagging algorithm deployed by the ATLAS Collaboration that represents a different methodology compared to previous approaches. Designed to classify jets based on the flavour of their constituent particles, GN2 processes low-level tracking information in an end-to-end architecture and incorporates physics-informed auxiliary training objectives to enhance both interpretability and performance. Its performance is validated in both simulation and collision data. The measured c-jet (light-jet) rejection in data is improved by a factor of 3.5 (1.8) for a 70{\%} b-jet tagging efficiency, compared to the previous algorithm. GN2 provides substantial benefits for physics analyses involving heavy-flavour jets, such as measurements of Higgs boson pair production and the couplings of bottom and charm quarks to the Higgs boson, and demonstrates the impact of advanced machine learning methods in experimental particle physics.},
   collaboration = {{ATLAS Collaboration}},
   date          = {2026/01/14},
   journal       = {Nat. Commun.},
@@ -225,16 +246,15 @@
 }
 
 @article{spanet_2,
-  abstract = {Reconstructing unstable heavy particles requires sophisticated techniques to sift through the large number of possible permutations for assignment of detector objects to the underlying partons. An approach based on a generalized attention mechanism, symmetry preserving attention networks (SPA-NET), has been previously applied to top quark pair decays at the Large Hadron Collider which produce only hadronic jets. Here we extend the SPA-NET architecture to consider multiple input object types, such as leptons, as well as global event features, such as the missing transverse momentum. In addition, we provide regression and classification outputs to supplement the parton assignment. We explore the performance of the extended capability of SPA-NET in the context of semi-leptonic decays of top quark pairs as well as top quark pairs produced in association with a Higgs boson. We find significant improvements in the power of three representative studies: a search for {\$}{\$}t{$\backslash$}bar{\{}t{\}}H{\$}{\$}, a measurement of the top quark mass, and a search for a heavy {\$}{\$}{\{}Z{\}}\^{}{\{}{\{}{$\backslash$}prime{\}} {\}}{\$}{\$}decaying to top quark pairs. We present ablation studies to provide insight on what the network has learned in each case.},
-  author   = {Fenton, Michael James and Shmakov, Alexander and Okawa, Hideki and Li, Yuji and Hsiao, Ko-Yang and Hsu, Shih-Chieh and Whiteson, Daniel and Baldi, Pierre},
-  date     = {2024/04/30},
-  isbn     = {2399-3650},
-  journal  = {Commun. Phys.},
-  number   = {1},
-  pages    = {139},
-  title    = {Reconstruction of unstable heavy particles using deep symmetry-preserving attention networks},
-  volume   = {7},
-  year     = {2024}
+  author  = {Fenton, Michael James and Shmakov, Alexander and Okawa, Hideki and Li, Yuji and Hsiao, Ko-Yang and Hsu, Shih-Chieh and Whiteson, Daniel and Baldi, Pierre},
+  date    = {2024/04/30},
+  isbn    = {2399-3650},
+  journal = {Commun. Phys.},
+  number  = {1},
+  pages   = {139},
+  title   = {Reconstruction of unstable heavy particles using deep symmetry-preserving attention networks},
+  volume  = {7},
+  year    = {2024}
 }
 
 @inproceedings{attention_is_all_you_need,
@@ -305,16 +325,15 @@
 }
 
 @article{lstm,
-  author   = {Hochreiter, Sepp and Schmidhuber, Jürgen},
-  title    = {Long Short-Term Memory},
-  journal  = {Neural Comput.},
-  volume   = {9},
-  number   = {8},
-  pages    = {1735-1780},
-  year     = {1997},
-  month    = {11},
-  abstract = {Learning to store information over extended time intervals by recurrent backpropagation takes a very long time, mostly because of insufficient, decaying error backflow. We briefly review Hochreiter's (1991) analysis of this problem, then address it by introducing a novel, efficient, gradient based method called long short-term memory (LSTM). Truncating the gradient where this does not do harm, LSTM can learn to bridge minimal time lags in excess of 1000 discrete-time steps by enforcing constant error flow through constant error carousels within special units. Multiplicative gate units learn to open and close access to the constant error flow. LSTM is local in space and time; its computational complexity per time step and weight is O. 1. Our experiments with artificial data involve local, distributed, real-valued, and noisy pattern representations. In comparisons with real-time recurrent learning, back propagation through time, recurrent cascade correlation, Elman nets, and neural sequence chunking, LSTM leads to many more successful runs, and learns much faster. LSTM also solves complex, artificial long-time-lag tasks that have never been solved by previous recurrent network algorithms.},
-  issn     = {0899-7667}
+  author  = {Hochreiter, Sepp and Schmidhuber, Jürgen},
+  title   = {Long Short-Term Memory},
+  journal = {Neural Comput.},
+  volume  = {9},
+  number  = {8},
+  pages   = {1735-1780},
+  year    = {1997},
+  month   = {11},
+  issn    = {0899-7667}
 }
 
 @article{rnn,
@@ -518,13 +537,13 @@
 } <div></div>
 
 @article{toponium_1,
-  author   = {Sumino, Yukinari and Yokoya, Hiroshi},
-  journal  = {J. High Energy Phys.},
-  number   = {9},
-  pages    = {34},
-  title    = {Bound-state effects on kinematical distributions of top quarks at hadron colliders},
-  volume   = {2010},
-  year     = {2010}
+  author  = {Sumino, Yukinari and Yokoya, Hiroshi},
+  journal = {J. High Energy Phys.},
+  number  = {9},
+  pages   = {34},
+  title   = {Bound-state effects on kinematical distributions of top quarks at hadron colliders},
+  volume  = {2010},
+  year    = {2010}
 }
 
 @article{toponium_2,
@@ -698,6 +717,18 @@
   pages         = {542--547},
   year          = {2024}
 }
+
+@article{cms_entanglement,
+  title         = {Observation of quantum entanglement in top quark pair production in proton--proton collisions at $\sqrt{s}= 13$ TeV},
+  collaboration = {{CMS Collaboration}},
+  journal       = {Reports on Progress in Physics},
+  volume        = {87},
+  number        = {11},
+  pages         = {117801},
+  year          = {2024},
+  publisher     = {IOP Publishing}
+}
+
 
 @article{CMS2025Pseudoscalar,
   collaboration = {{CMS Collaboration}},
@@ -6016,36 +6047,6 @@
   title   = {The $t\bar{t}$ Production in $pp$ Collisions at $\sqrt{s} =14\;\rm TeV$}
 }
 
-@article{leveque_phd,
-  author  = {L{\'e}v{\^e}que, J.},
-  journal = {Ph.D. thesis, Centre de Physique des Particules de Marseille et de l'Universit{\'e} de la Mediterran{\'e}e - Aix-Marseille II, 2003},
-  title   = {Recherche d'un boson de Higgs l{\'e}ger produit en association avec une paire de quarks top dans l'exp{\'e}rience ATLAS}
-}
-
-@article{leveque_phd_1,
-  author  = {L{\'e}v{\^e}que, J. and Kostyukhin, V. and Rozanov, A. and De~Vivie~de~R{\'e}gie, J.~B.},
-  journal = {ATL-PHYS-2002-019, 2002 (unpublished)},
-  title   = {Search for the Standard Model Higgs boson in the $t\bar{t}H^0$, $H^0\rightarrow WW^{(*)}$ channel}
-}
-
-@article{cammin_phd,
-  author  = {Cammin, J.},
-  journal = {Ph.D. thesis, Rheinische Friedrich-Wilhelms-Universit{\"a}t Bonn, 2003},
-  title   = {Study of a Light Standard Model Higgs Boson in the $tbar{t}H^0$ Channel with ATLAS at LHC and Decay-Mode Independent Searches for Neutral Higgs Bosons with OPAL at LEP}
-}
-
-@article{atlas_yukawa,
-  author  = {Cammin, J. and Schumacher, M.},
-  journal = {ATL-PHYS-2003-024, 2003 (unpublished)},
-  title   = {The ATLAS discovery potential for the channel $t\bar{t}H$, $H\rightarrow b\bar{b}$}
-}
-
-@article{cms_yukawa,
-  author  = {Abdullin, S. and others},
-  journal = {CMS Note 2003/033, 2003 (unpublished)},
-  title   = {Summary of the CMS Potential for the Higgs Boson Discovery}
-}
-
 @article{sonnenschein_2000,
   author        = {Sonnenschein, L.},
   collaboration = {CMS},
@@ -6053,13 +6054,6 @@
   title         = {Top Quark Physics at the LHC}
 }
 
-@article{stan_moriond05,
-  author       = {Bentvelsen, S.},
-  eprint       = {hep-ph/0408111},
-  journal      = {Proceedings of the 39th Rencontres de Moriond on QCD and High-Energy Hadronic Interactions, La Thuile, Italy, 2004,},
-  slaccitation = {%%CITATION = HEP-PH 0408111;%%},
-  title        = {Studies of Top Quark Properties at the LHC}
-}
 
 @article{atlas_spin_correlation,
   author  = {Smolek, K. and Simak, V.},
@@ -6067,13 +6061,6 @@
   title   = {Measurement of Spin Correlations of top-antitop pairs}
 }
 
-@article{marina_hcp2004,
-  author       = {Cobal, M.},
-  eprint       = {hep-ex/0412053},
-  journal      = {Proceedings of the 15th Topical Conference in Hadron Collider Physics (HCP2004), Michigan State University, East Lansing, USA, 2004,},
-  slaccitation = {%%CITATION = HEP-EX 0412053;%%},
-  title        = {Expectations from LHC and LC on Top Physics}
-}
 
 @article{nekrasov,
   author       = {Nekrasov, M.~L.},
@@ -6165,6 +6152,15 @@
   pages         = {S08003},
   year          = {2008}
 }
+
+@article{atlas_ibl_tdr,
+    collaboration = {{ATLAS Collaboration}},
+    title = "{ATLAS Insertable B-Layer Technical Design Report}",
+    reportNumber = "CERN-LHCC-2010-013, ATLAS-TDR-19",
+    month = "9",
+    year = "2010"
+}
+
 
 @article{Z_decay_BR,
   year      = 2006,

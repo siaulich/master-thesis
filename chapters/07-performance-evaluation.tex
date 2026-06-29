@@ -1,72 +1,73 @@
 \chapter{Evaluation of the ML-Based Reconstruction}
 \label{chap:performance-evaluation}
-To evaluate the performance of the ML-based reconstruction method, several metrics and analyses are conducted. This chapter presents the results of these evaluations, focusing on the accuracy of particle assignments, the reconstruction of relevant physics variables, and performance across different kinematic regions. The ML-based methods are compared against the baseline reconstruction techniques, both overall and in specific regions of interest, such as near the $t\bar{t}$ production threshold.
-To investigate the effects of cuts on performance and identify key event features contributing to performance drops, different reconstruction aspects are studied for events binned with respect to the variable of interest. These include the invariant mass of the top-quark pair \mttbar, the number of jets $N_{\text{jet}}$, and the boost parameter $\beta$ of the \ttbar-system.
-Furthermore, the impact of the improved reconstruction on the resolution of key observables is assessed, demonstrating the potential benefits for precision measurements and searches in top-quark physics.
+To evaluate the performance of the ML-based reconstruction method, several metrics and analyses are conducted. This Chapter presents the results of these evaluations, focusing on the accuracy of particle assignments, the reconstruction of relevant physics variables, and performance across different kinematic regions. The ML-based methods are compared against the baseline reconstruction techniques, both overall and in specific regions of interest, such as near the $t\bar{t}$ production threshold.
 
 \section{Assignment Accuracy}
 \label{sec:evaluation:assignment}
 \begin{table}[ht]
-  \centering
-  \caption{Comparison of assignment and selection accuracies for     different reconstruction methods. The uncertainties represent the   statistical variations in the evaluation dataset.}
-  \input{plots/compact_assigner/accuracy/reconstruction_accuracies_table}
-  \label{tab:reconstruction-accuracies}
+    \centering
+    \caption{Comparison of assignment and selection accuracies for         different reconstruction methods. The uncertainties represent the     statistical variations in the evaluation dataset.}
+    \input{plots/compact_assigner/accuracy/reconstruction_accuracies_table}
+    \label{tab:reconstruction-accuracies}
 \end{table}
 Assignment accuracy is defined as the fraction of events in which the reconstructed particles are correctly assigned to their parent partons. The selection accuracy, on the other hand, measures the fraction of events where the correct assignment is among the selected candidates. Both metrics are crucial for evaluating the performance of reconstruction methods, as they directly impact the resolution of physics observables and the sensitivity of analyses. Furthermore, some variables, such as the invariant mass of the $t\bar{t}$ system, are sensitive only to the correct selection of candidates, making selection accuracy particularly important for certain analyses. The \Cref{tab:reconstruction-accuracies} summarises the overall assignment performance of the reconstruction methods.
-The ML-based method, represented by the CompactTransformer, shows a significant improvement in the assignment accuracy compared to the $\Delta R(\ell,j)$-Method and the $\chi^2$-Method. Concerning the baseline methods, the $\chi^2$-Method performs roughly $16\%$ more accurately than the $\Delta R(\ell,j)$-Method. The difference between the two baseline methods is even slightly larger than the difference between the CompactTransformer and the $\chi^2$-Method.
-For selection accuracy, both baseline methods yield the same result within uncertainties, as they use the same jet selection criteria. The improvement in the ML-based method's selection accuracy is rather small, which can be attributed to b-tagging. Because baseline methods almost exclusively rely on b-tagging for the selection, and the GN2-tagger is very performant~\cite{gn2_btagger}, the selection accuracy is already very high. Further, the b-tagging of the GN2-tagger already accounts for the full kinematic information of the event, making it difficult for the ML-based method to significantly improve selection accuracy. This is also supported by the model's reliance on the input features, as shown in \Cref{sec:assignment:feature_importance}. The investigation revealed that the selection accuracy mainly depends on the b-tag. It does, however, utilise information from the kinematics of the jets and leptons, giving it an edge over baseline methods that rely only on b-tagging and jet $p_T$.Regarding assignment accuracy, the ML-based method shows a significant improvement, attributable to its ability to learn complex correlations among the kinematic variables of the reconstructed particles. These complex correlations can be much more efficient than the simple criteria used by baseline methods, allowing them to surpass the baseline methods' performance.\begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.7\textwidth]{plots/compact_assigner/binned_performance/N_jets/binned_accuracies_N_jets.pdf}
-  \caption{Assignment accuracy as a function of the number of jets in     the event for different reconstruction methods. The background     histograms show the distribution of events as a function of the     number of jets. The uncertainties represent the statistical   variations in the evaluation dataset.}
-  \label{fig:accuracy_vs_njets}
+The ML-based method, represented by the CompactTransformer, shows a significant improvement in the assignment accuracy compared to the $\Delta R(\ell,j)$-Method and the $\chi^2$-Method. Concerning the baseline methods, the $\chi^2$-Method performs roughly $16\%$ more accurately than the $\Delta R(\ell,j)$-Method. For the selection accuracy, both baseline methods yield the same result within uncertainties, as they use the same jet selection criteria. The improvement in the CPT's selection accuracy is rather small, which can be attributed to b-tagging. Because baseline methods almost exclusively rely on b-tagging for the selection, and the GN2-tagger is very performant~\cite{gn2_btagger}, the selection accuracy is already very high. Further, the b-tagging of the GN2-tagger already accounts for the full kinematic information of the event, making it difficult for the ML-based method to significantly improve selection accuracy. This is also supported by the model's reliance on the input features, as shown in \Cref{sec:assignment:feature_importance}. The investigation revealed that the selection accuracy mainly depends on the b-tag. It does, however, utilise information from the kinematics of the jets and leptons, giving it an edge over baseline methods that rely only on b-tagging and jet $p_T$. Regarding assignment accuracy, the ML-based method shows a significant improvement, attributable to its ability to learn complex correlations among the kinematic variables of the reconstructed particles. These complex correlations can be much more efficient than the simple criteria used by baseline methods, allowing them to surpass the baseline methods' performance.
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.7\textwidth]{plots/compact_assigner/binned_performance/N_jets/binned_accuracies_N_jets.pdf}
+    \caption{Assignment accuracy as a function of the number of jets in         the event for different reconstruction methods. The background         histograms show the distribution of events as a function of the         number of jets. The uncertainties represent the statistical     variations in the evaluation dataset.}
+    \label{fig:accuracy_vs_njets}
 \end{figure}%
 
-The \Cref{fig:accuracy_vs_njets} shows the assignment accuracy for events with different jet multiplicities for each method. The CompactTransformer outperforms the baseline methods across all bins. For all methods, performance drops as the number of jets increases. The performance drop, however, is relatively small, which can be attributed to the b-tagging performance. This is in stark contrast to the methods for the all-hadronic channel, where performance drops sharply for events with many jets in the final state, as seen in Reference \cite{spanet}. This is, of course, a consequence of the much lower number of possible permutations for this decay channel. Even with additional jets, the chance of a jet being falsely b-tagged is quite low~\cite{gn2_btagger}. Thus, the performance of selecting the correct jets degrades much less than in the hadronic channels, where non-tagged jets must also be selected.
-Notably, the CompactTransformer shows the smallest performance drop, and the performance gap widens with higher jet numbers.
-This stems from the improved accuracy of jet selection, as shown previously. In the Appendix, the \Cref{fig:selection_accuracy_vs_n_jets}
+The \Cref{fig:accuracy_vs_njets} shows the assignment accuracy for events with different jet multiplicities for each method. The CompactTransformer outperforms the baseline methods across all bins. For all methods, performance drops as the number of jets increases. The performance drop, however, is relatively small compared to the number of permutations, which increases quadratically. This can be attributed to the b-tagging performance. This is in stark contrast to the methods for the all-hadronic channel, where performance drops sharply for events with many jets in the final state, as seen in Reference \cite{spanet}. This is, of course, a consequence of the much lower number of possible permutations for this decay channel. Even with additional jets, the chance of a jet being falsely b-tagged is quite low~\cite{gn2_btagger}. Thus, the performance of selecting the correct jets degrades much less than in the hadronic channels, where non-tagged jets must also be selected.
+Notably, the CompactTransformer shows the smallest performance drop, and the performance gap widens as jet numbers increase.
+This stems from improved jet selection accuracy, as shown previously. In the Appendix, the \Cref{fig:selection_accuracy_vs_n_jets}
 shows the selection accuracy binned in the same way. It can be seen that the CompactTransformer does a much better job at selecting the correct jets for events with a higher jet multiplicity. It was found that this is the primary cause for differences in assignment accuracy with respect to the jet multiplicity. The efficiency of assigning correctly selected jets appears to be largely independent of jet multiplicity.
+
 \begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.7\textwidth]{plots/compact_assigner/binned_performance/truth_ttbar_mass/binned_accuracies_truth_ttbar_mass.pdf}
-  \caption{This plot shows the assignment accuracy in bins of the   true invariant mass of the top-quark pair.}
-  \label{fig:accuracy_vs_ttbar_mass}
+    \centering
+    \includegraphics[width=0.7\textwidth]{plots/compact_assigner/binned_performance/truth_ttbar_mass/binned_accuracies_truth_ttbar_mass.pdf}
+    \caption{This plot shows the assignment accuracy in bins of the     true invariant mass of the top-quark pair.}
+    \label{fig:accuracy_vs_ttbar_mass}
 \end{figure}
-\Cref{fig:accuracy_vs_ttbar_mass} shows the assignment accuracy as a function of the parton-level \mttbar. All methods show similar behaviour: accuracy drops at low invariant masses and appears to saturate at high invariant masses. For the CompactTransformer, the saturated performance in the high-invariant-mass regime approaches unity, indicating near-perfect reconstruction. At the other end of the spectrum, the performance drops to around 0.6 near the \ttbar production threshold. For these low-mass events, the CompactTransformer and the $\chi^2$-Method appear to be almost on-par. In general, this indicates that the $\chi^2$-Method is the least sensitive to \mttbar, while the $\Delta R(\ell,j)$-Method seems to be most sensitive.
+\Cref{fig:accuracy_vs_ttbar_mass} shows the assignment accuracy as a function of the parton-level \mttbar. All methods show similar behaviour: the accuracy drops at low invariant masses and appears to saturate at high invariant masses. For the CompactTransformer, the saturated performance in the high-invariant-mass regime approaches unity, indicating near-perfect reconstruction. At the other end of the spectrum, the performance drops to around $0.6$ near the \ttbar production threshold. For these low-mass events, the CompactTransformer and the $\chi^2$-Method appear to be almost on-par. In general, this indicates that the $\chi^2$-Method is the least sensitive to \mttbar, while the $\Delta R(\ell,j)$-Method seems to be most sensitive.
+
 As was found earlier, the number of jets can affect accuracy.
 Interestingly, the double-binned distribution of events with respect to the invariant mass \mttbar and number of jets in \Cref{fig:feature_2d_ttbar_mass_njets} shows that events with lower energy have fewer jets on average. Naively, one would expect this to increase the assignment accuracy, which is the opposite of what is observed.
 To decouple the number of jets per event from the selection accuracy, one can consider the conditional probability of making a correct assignment, given that the correct jets were selected. For this, the assignment reduces to a binary problem in the dilepton case, as jets can only be assigned to bottom or antibottom quarks. Thus, the probability of correctly assigning at random is $50\%$.
 According to Bayes' theorem, the conditional probability for each method can be computed by dividing its assignment accuracy by its selection accuracy.
 \begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.7\textwidth]{plots/compact_assigner/binned_performance/truth_ttbar_mass/binned_accuracy_quotients_truth_ttbar_mass.pdf}
-  \caption{Quotient of assignment and selection accuracy computed in   bins of the parton-level \mttbar.}
-  \label{fig:accuracy_quotient_vs_ttbar_mass}
+    \centering
+    \includegraphics[width=0.7\textwidth]{plots/compact_assigner/binned_performance/truth_ttbar_mass/binned_accuracy_quotients_truth_ttbar_mass.pdf}
+    \caption{Quotient of assignment and selection accuracy computed in     bins of the parton-level \mttbar.}
+    \label{fig:accuracy_quotient_vs_ttbar_mass}
 \end{figure}
-The corresponding plot showing this probability for the different methods, binned in parton-level \mttbar, is displayed in \Cref{fig:accuracy_quotient_vs_ttbar_mass}. This investigation allows us to separate the process of actually assigning the selected jets. One thing to note is that the $\Delta R(\ell,j)$-Method has a performance below $0.5$ for the lowest bin, meaning that it performs worse than a random assignment in this bin. This suggests that the particle topology in this region disfavours assigning jets based on proximity. \Cref{fig:deltaR_pairing} in the Appendix clearly shows the difference in angular distance distributions for correct and incorrect jet-lepton pairing between the inclusive sample and the near-threshold region. This explains the significant performance drop-off in this region.
+The corresponding plot showing this probability for the different methods, binned in parton-level \mttbar, is displayed in \Cref{fig:accuracy_quotient_vs_ttbar_mass}. One thing to note is that the $\Delta R(\ell,j)$-Method has a performance below $0.5$ for the lowest bin, meaning that it performs worse than a random assignment in this bin. This suggests that the particle topology in this region disfavours assigning jets based on proximity. \Cref{fig:deltaR_pairing} in the Appendix clearly shows the difference in angular distance distributions for correct and incorrect jet-lepton pairing between the inclusive sample and the near-threshold region. This explains the significant performance drop-off in this region.
 Going further, this behaviour can be directly linked to the underlying physics:
 At the production threshold, the top quarks carry very little energy.
 Thus, the decay products of the top quarks, i.e., the jets, the $W$-boson, and subsequently the lepton, are less collimated. This is because the bottom quark and $W$-boson are back-to-back in the top quark's rest frame and get collimated by the Lorentz boost of the top quark with respect to the lab frame. The strength of this boost is directly proportional to the top quark's energy, which itself is approximately proportional to the \mttbar. Note that this picture gets more complicated if one takes the chiral nature of the decays into account, which can affect the angular distributions.
-As the energy increases, decay objects become increasingly collimated. While this explains why performance drops, it does not explain how performance can be worse than with random assignment of jets. To explain this effect more thoroughly, investigations into the angular structure of the events in this region would be necessary.
+As the energy increases, decay objects become increasingly collimated. While this explains why the performance drops, it does not explain how performance can be worse than with random assignment of jets. To explain this effect more thoroughly, investigations into the angular structure of the events in this region would be necessary.
 Another observation is that in the lowest bin, the CompactTransformer and $\chi^2$-Method are completely on par for this metric. Performance losses of the $chi^2$-Method can be explained by the \Cref{fig:invariant_mass_pairing} in the Appendix, which shows the different distributions of the reconstructed top-mass for the correct and incorrect assignment of the jets. For comparison, the distributions for the near-threshold and inclusive samples are shown. The correct pairing shows the typical Breit-Wigner mass peak, as expected, whereas the incorrect pairs show a washed-out distribution. For the low-energy events, the difference between the two distributions is smaller but still very pronounced. One reason is that the top quarks tend to be more off-shell, and faulty assignments do not change the kinematics as dramatically. But generally, the assignment based on the invariant mass seems relatively robust.
-For machine-learning methods, it is difficult to assess which specific features lead to performance degradation. The leading feature, i.e. the b-tag, is not found to have a varying performance in this range of invariant mass \mttbar - as seen in \Cref{fig:b_tag_performance_ttbar_mass}. For the other features, it is not easy to assess how their distributions across the different regimes affect assignment performance.
-One way is to examine whether certain features of near-threshold events affect performance.
+For machine-learning methods, it is difficult to assess which specific features lead to performance degradation. The leading feature, i.e. the b-tag, is not found to have a varying performance in this range of invariant mass \mttbar -- as seen in \Cref{fig:b_tag_performance_ttbar_mass}. For the other features, assessing their effect across different regimes is non-trivial.
+One way is to examine whether certain features correlated with near-threshold events affect performance.
 A particular example for this is the angular separation $\Delta(\ell_1,\ell_2)$ of the leptons. The property of having less energy - and thus less boosted top-quarks, also significantly impacts the angular separation of the leptons themselves. While decays of high-energy top-quark pairs lead to back-to-back leptons, the opposite is true for low-energy top-quark pairs.
-The double-binned distribution of events in \Cref{fig:feature_2d_ttbar_mass_dR_l1l2} shows that events with lower \mttbar tend to have more collimated leptons, whereas they are more separated for more energetic events. This confirms the expectation that events at the threshold have closer leptons.
+The double-binned distribution of events in \Cref{fig:feature_2d_ttbar_mass_dR_l1l2} in the Appendix shows that events with lower \mttbar tend to have more collimated leptons, whereas they are more separated for more energetic events.
 Since the angular separation of the leptons is suspected to degrade event performance, its impact on the individual methods is investigated.
 \begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.7\textwidth]{plots/compact_assigner/binned_performance/dR_l1l2/binned_accuracies_dR_l1l2.pdf}
-  \caption{Assignment accuracy binned in the angular distance between   the two leptons of the events $\Delta R(\ell_1,\ell_2)$.}
-  \label{fig:accuracy_vs_dr_l1l2}
+    \centering
+    \includegraphics[width=0.7\textwidth]{plots/compact_assigner/binned_performance/dR_l1l2/binned_accuracies_dR_l1l2.pdf}
+    \caption{Assignment accuracy binned in the angular distance between the two leptons of the events $\Delta R(\ell_1,\ell_2)$.}
+    \label{fig:accuracy_vs_dr_l1l2}
 \end{figure}
 As before, \Cref{fig:accuracy_vs_dr_l1l2} shows the assignment accuracy in bins of the angular distance $\Delta R(\ell_1,\ell_2)$
-between the two leptons. All methods suffer performance losses for events with close leptons. Interestingly, however, for the smallest\footnote{Due to the overlap-removal, which removes   overlapping objects from the (simulated) events, there is a cut-off   at $\Delta R<0.3$. This technique accounts for the fact that in a detector, objects that coincide cannot be separated.} angular separation, the performance is still above that of near-threshold events. This implies that the decreased performance due to the reduced angular separation in the near-threshold region is one contributing factor, but not the only one.
-A combined comparison of both variables' impact is shown in \Cref{fig:accuracy_2d_ttbar_mass_dR_l1l2} in the Appendix. This distribution provides a more comprehensive picture, as it can separate the effects of both variables. Also, it allows us to isolate the effects of each by varying one variable while holding the other constant. The double-binned accuracy reveals that the invariant mass \mttbar has a much stronger impact on performance than the angular separation alone. Expectedly, the $\Delta(R,j)$ Method is the most sensitive to the angular separation.
+between the two leptons. All methods suffer performance losses for events with close leptons. Interestingly, however, for the smallest\footnote{Due to the overlap-removal, which removes overlapping objects from the (simulated) events, there is a cut-off at $\Delta R<0.3$. This technique accounts for the fact that in a detector, objects that coincide cannot be separated.} angular separation, the performance is still above that of near-threshold events. This implies that the decreased performance due to the reduced angular separation in the near-threshold region is one contributing factor, but not the only one.
+A combined comparison of both variables' impact is shown in \Cref{fig:accuracy_2d_ttbar_mass_dR_l1l2} in the Appendix. This distribution provides a more comprehensive picture by separating the effects of both variables. Also, it allows us to isolate the effects of each by varying one variable while holding the other constant. The double-binned accuracy reveals that the invariant mass \mttbar has a much stronger impact on performance than the angular separation alone. Expectedly, the $\Delta(R,j)$ Method is the most sensitive to the angular separation.
 For the lowest bins in $\Delta R(\ell_1,\ell_2)$, the performance breaks down significantly and is nearly constant for varied \mttbar.
 The other methods' performances reduce much more in the rows of varied \mttbar, than they do in the columns of varied $\Delta R(\ell_1,\ell_2)$. This observation holds for all bins of energies and angular separations considered here.
 From this, it follows that the near-threshold region poses special challenges for jet assignment. For the traditional methods, explanations are quite clear, but even the transformer, which can leverage very complex correlations between variables, performs only slightly better than the baseline methods.
 While some impact factors could be identified, i.e. angular separation of the leptons and off-shell tops, the complete picture of why this region is particularly challenging remains elusive. Due to increased efforts to study quantum effects or quasi-bound-state effects at the production threshold, this remains a highly relevant question for future investigations.
-While it was found that other kinematic variables have regimes with quite different performance on assignment accuracy, none had an impact as severe as that of the invariant mass \mttbar. One to mention here is the transverse momenta of the top-quark pair system. This variable is highly sensitive to initial-state radiation. Thus, a high $p_T$ is often accompanied by an increased number of jets, as seen in \Cref{fig:feature_2d_ttbar_pt_njets}. However, it was found that $p_T(t\bar{t})$ has no impact on the accuracy of the ML-based assignment, while it degrades both baseline methods. The corresponding binned accuracy evaluation is shown in \Cref{fig:accuracy_vs_ttbar_pt} in the Appendix. This shows that the transformer seems to be particularly insensitive to initial-state radiation compared to the other methods. Another object of study was the aforementioned spin-sensitive variables. As these have been used in recent analyses, it is interesting to study whether particular regions are more or less sensitive to misassignments. To mimic the definition of signal regions used in~\cite{atlas_toponium}, a double-binned plot, resembling the different signal regions in  \chel and  \chan, shows the assignment accuracy in \Cref{fig:accuracy_2d_c_hel_c_han}. While all methods are slightly sensitive to these variables, no major differences are found in these bins. What can be seen, however, is that the methods show slightly varying dependencies on the variables. All methods improve in performance at higher values of \chel, but for \chan the $\Delta R(\ell,j)$-Method becomes more accurate at higher values, whereas the opposite is true for the other methods. For other event variables, such as the boost parameter $\beta(t\bar{t})$, that were investigated in this thesis, no major impact on the methods' performance was found.
+While it was found that other kinematic variables have regimes with quite different performance on assignment accuracy, none had an impact as severe as that of the invariant mass \mttbar. One to mention here is the transverse momenta of the top-quark pair system. This variable is highly sensitive to initial-state radiation. Thus, a high $p_T$ is often accompanied by an increased number of jets, as seen in \Cref{fig:feature_2d_ttbar_pt_njets}. However, it was found that $p_T(t\bar{t})$ has no impact on the accuracy of the ML-based assignment, while it degrades both baseline methods. The corresponding binned accuracy evaluation is shown in \Cref{fig:accuracy_vs_ttbar_pt} in the Appendix. This shows that the transformer seems to be particularly insensitive to initial-state radiation compared to the other methods. Another object of study was the aforementioned spin-sensitive variables. As these have been used in recent analyses, it is interesting to study whether particular regions are more or less sensitive to misassignments. To mimic the definition of signal regions used in~\cite{atlas_toponium}, a double-binned plot, resembling the different signal regions in \chel and \chan, shows the assignment accuracy in \Cref{fig:accuracy_2d_c_hel_c_han} in the Appendix.
+
 \section{Neutrino Regression}
 \label{sec:evaluation:regression}
 This Section analyses and compares the neutrino regression of the MultiModalTransformer against existing baseline methods.
@@ -75,238 +76,245 @@ Due to the $\nu$-Weighter's non-unity efficiency of about $\epsilon=94.0\%$, the
 Various metrics are used to assess the method's quality. It should also be noted that evaluating the quality of the regression is much more nuanced compared to the assignment. As demonstrated below, ranking the performance of one method against the other is highly dependent on the metric one employs. This is because the reconstructed object is essentially six-dimensional, and its deviation must be projected in some way. But even quantifying a one-dimensional error comes with some degeneracy; different powers, for example, might put emphasis on larger or smaller deviations. Also, whether a relative or absolute deviation is considered can make a huge difference.
 To account for this, different metrics are used and compared.
 \begin{table}[ht]
-  \centering
-  \caption{Summary of the mean absolute error (MAE) of the different     neutrino regression methods for the Cartesian coordinates of the     neutrinos in the lab frame. For the MultiModalTransformer, the loss function used during training is shown in brackets. The uncertainties represent the statistical variation in the dataset.}
-  \input{plots/compare_losses_nu_weighter/neutrino_deviations/regression_neutrino_mae.tex}
-  \label{tab:mae:cartesian}
+    \centering
+    \caption{Summary of the mean absolute error (MAE) of the different neutrino regression methods for the Cartesian coordinates of the neutrinos in the lab frame. For the MultiModalTransformer, the loss function used during training is shown in brackets. The uncertainties represent the statistical variation in the dataset.}
+    \input{plots/compare_losses_nu_weighter/neutrino_deviations/regression_neutrino_mae.tex}
+    \label{tab:mae:cartesian}
 \end{table}
 
 The \Cref{tab:mae:cartesian} shows the mean-absolute error of the neutrino momentum components for the different methods.
 Each MMT model, regardless of the loss function, achieves a smaller mean absolute error for each of the three components than the two baseline methods. Some impact of the loss functions used here can be identified. Notably, the Cartesian-Loss provides the lowest MAE for the transverse components.
-However, the performance is nearly on par with that of the model trained with the PtEtaPhi-loss. Interestingly, the model trained with the MagDir-loss achieves the smallest error for the longitudinal component. Even though this might seem counterintuitive, it can be attributed to the model with Cartesian loss being trained on squared error, which might disfavour larger errors more strongly than an absolute error would. This already highlights that very subtle changes in evaluation metrics might lead to very different conclusions about the model's performance.
-Another noteworthy observation is that the difference $\nu^2$-Flows and $\nu$-Weighter is much larger than the difference between the former and the MMT-architecture. As the only regression method that does not rely on machine learning, the $\nu$-Weighter is found to perform significantly worse than all ML-based methods. The MultiModalTransformer is found to reduce the mean absolute error by a factor of $2$, a significant reduction.
+However, the performance is nearly on par with that of the model trained with the PtEtaPhi-loss. Interestingly, the model trained with the MagDir-loss achieves the smallest error for the longitudinal component. Even though this might seem counterintuitive, it can be attributed to the model with Cartesian loss being trained on squared error, which might disfavour larger errors more strongly than an absolute error would. This already highlights that very subtle changes in evaluation metrics might lead to different conclusions about the model's performance.
+Another noteworthy observation is that the difference between $\nu^2$-Flows and $\nu$-Weighter is much larger than the difference between the former and the MMT-architecture. As the only regression method that does not rely on machine learning, the $\nu$-Weighter is found to perform significantly worse than all ML-based methods. The MultiModalTransformer is found to reduce the mean absolute error by a factor of $2$, a significant improvement.
 This becomes even more impressive when one considers the lower computational cost of ML-based methods.
 Another trivial remark is that all methods show the same performance for the two transverse components $x$ and $y$, as expected, since the detector and physics are rotation-invariant with respect to the beam direction.\\
 \begin{table}[ht]
-  \centering
-  \caption{Summary of the mean absolute error of the neutrinos'
-    $p_T$, $\eta$, $\phi$, and $E$, evaluated for the different     methods. Note that the computation of the error in $\phi$ was   performed periodically.}
-  \input{plots/compare_losses_nu_weighter/neutrino_deviations/regression_neutrino_PtEtaPhiE_mae.tex}
-  \label{tab:mae:PtEtaPhiE}
+    \centering
+    \caption{Summary of the mean absolute error of the neutrinos'
+        $p_T$, $\eta$, $\phi$, and $E$, evaluated for the different         methods. Note that the computation of the error in $\phi$ was     performed periodically.}
+    \input{plots/compare_losses_nu_weighter/neutrino_deviations/regression_neutrino_PtEtaPhiE_mae.tex}
+    \label{tab:mae:PtEtaPhiE}
 \end{table}%
 To highlight the performance variance between different metrics, \Cref{tab:mae:PtEtaPhiE} shows the mean absolute error for the $p_T$, $\eta$, $\phi$, and $E$ of the neutrinos.
-As for the neutrino momentum components, models based on the MMt, trained with different loss functions, outperform both baseline methods across all metrics. Further, for this set of variables, the $\nu$-Weighter has the largest errors across all variables. However, for the pseudorapidity, it is on par with $\nu$-Flows. For the differently trained models, variations in the performance can be found among all variables. The PtEtaPhi-loss provides the smallest error among $p_T$,$\eta$, and $\phi$, which is, of course, consistent with those being its target for optimisation.
+As for the neutrino momentum components, models based on the MMT, trained with different loss functions, outperform both baseline methods across all metrics. Further, for this set of variables, the $\nu$-Weighter has the largest errors across all variables. However, for the pseudorapidity, it is on par with $\nu^2$-Flows. For the differently trained models, variations in the performance can be found among all variables. The PtEtaPhi-loss provides the smallest error among $p_T$,$\eta$, and $\phi$, which is, of course, consistent with those being its target for optimisation.
 Similarly, the model trained with the MagDir-loss has the smallest error in neutrino energy, which is equivalent to their magnitude since they are massless. Both the PtEtaPhi- and MagDir-loss reduce the error in $\eta$ about $20\%$ with respect to the Cartesian-loss. To sum up, this reveals a strong dependence on the choice of loss function, despite using the same architecture. As different loss functions can reduce errors for some variables while increasing them for others, choosing the most appropriate loss function depends on the variable of interest in the analysis.\\
 To avoid showing each loss function for every one of the following analyses, the main loss function considered here is the Cartesian loss. Unless stated otherwise, the MMT is always trained with the Cartesian loss.
 \begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.7\textwidth]{plots/compact_reconstructor_nu_weighter/binned_performance/N_jets/binned_dev_relative_l2_N_jets.pdf}
-  \caption{
-    Relative $L^2$ distance of the neutrino vectors binned with     respect to the number of jets. The background histogram shows the distribution of events as a function of the number of jets.
-    The uncertainties represent the statistical variations in the evaluation dataset.  }
-  \label{fig:l2_dev_njets}
-\end{figure}%
-The \Cref{fig:l2_dev_njets} shows the norm of the deviation of true and predicted neutrino vector binned with respect to the number of jets. Here it can be seen that the $\nu$-Weighter seems to provide a very decent performance with respect to this metric. It outperforms the $\nu^2$-Flows in all bins and the MMT in the most populated bins.
-Another interesting observation is that both baseline methods exhibit increasing relative errors as the number of jets increases. The MMT, on the other hand, improves its performance for a higher number of jets and for more than $3$ jets outperforms the $\nu$-Weighter. This might suggest that the additional context provided by the assignment tasks could be beneficial for events where jet selection is non-trivial. However, the change in the relative error with the number is about $10\%$, which is rather small. Generally, the methods are largely insensitive to the number of jets in the event, which might again be attributed to b-tagging. Of course, the chance of misidentifying a jet rises with more jets in an event, which would lead to a degradation of the derived neutrino momenta. However, the b-tagging performance limits this increase.\\
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.7\textwidth]{plots/compact_reconstructor_nu_weighter/binned_performance/truth_ttbar_mass/binned_dev_angle_truth_ttbar_mass.pdf}
-  \caption{Mean angle between the true and predicted neutrino vectors     binned with respect to the parton-level invariant mass of the   top-quark pair system.}
-  \label{fig:dev_angle_ttbar_mass}
+    \centering
+    \includegraphics[width=0.7\textwidth]{plots/compact_reconstructor_nu_weighter/binned_performance/truth_ttbar_mass/binned_dev_angle_truth_ttbar_mass.pdf}
+    \caption{Mean angle between the true and predicted neutrino vectors         binned with respect to the parton-level invariant mass of the top-quark pair system.}
+    \label{fig:dev_angle_ttbar_mass}
 \end{figure}%
 The \Cref{fig:dev_angle_ttbar_mass} shows the angle between the true and predicted vectors of the neutrinos. This metric was chosen for comparisons across different energy regimes because it is scale-free and independent of the neutrino masses involved. As the energy of the neutrinos involved is strongly correlated with the invariant mass of the \ttbar-system, choosing a solid metric for this comparison was particularly difficult. The first observation is that the MMT consistently outperforms the other methods in providing, on average, a smaller directional deviation of the predicted neutrinos.
 Notably, this difference is substantial across the entire spectrum and much larger than the difference between the two baseline methods. Another notable feature is that all methods show a nearly linear dependence on the invariant mass \mttbar as the angular distance increases at lower masses. While this trend appears to be very similar across all methods, the slope of the $\nu$-Weighter seems to increase further in the lowest-mass bins, leading to a growing difference between the two baseline methods. One major impact factor for this behaviour is the decay angle $\theta(\ell,\nu)$
 between lepton and neutrino.
 \Cref{fig:feature_2d_ttbar_mass_angle_nu_lep} in the Appendix shows the double-binned distribution of neutrinos with respect to the event's invariant mass \mttbar and the angle between lepton and neutrino at parton level. It is clear that the distribution of angles between the lepton and neutrino is broader and peaks at a higher value in the low invariant-mass regime. This can, as before, be attributed to the lower energy of top quarks and W bosons in this region, which leads to decreased collimation of W-boson decay products.
 \begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.7\textwidth]{plots/compact_reconstructor_nu_weighter/binned_performance/truth_lepton_nu_angle_mean/binned_dev_angle_truth_lepton_nu_angle_mean.pdf}
-  \caption{Mean angle between the true and predicted neutrino vectors     binned with respect to the parton-level angle $\theta(\ell,\nu)$
-  between lepton and neutrino.}
-  \label{fig:dev_angle_angle_nu_lep}
+    \centering
+    \includegraphics[width=0.7\textwidth]{plots/compact_reconstructor_nu_weighter/binned_performance/truth_lepton_nu_angle_mean/binned_dev_angle_truth_lepton_nu_angle_mean.pdf}
+    \caption{Mean angle between the true and predicted neutrino vectors         binned with respect to the parton-level angle $\theta(\ell,\nu)$
+    between lepton and neutrino.}
+    \label{fig:dev_angle_angle_nu_lep}
 \end{figure}%
-To investigate the methods' dependences on the angle between lepton and neutrino, \Cref{fig:dev_angle_angle_nu_lep} shows the binned evaluation of the angle between truth and reconstruction. All methods show a significant increase in the angle between truth and reconstruction as the angle between the lepton and neutrino increases. The range covered by this variation is far larger than the variation seen for different invariant masses \mttbar.
-It can further be noted that the MultiModalTransformer appears to be most sensitive to the angle $\theta(\ell,\nu)$, since it exhibits the largest difference in performance between the largest and smallest bin of the variable.hile for the bins corresponding to collinear leptons and neutrinos, the MMT can provide the best performance in terms of angular deviation between truth and prediction, $\nu^2$-Flows provides the best performance for events for large angle $\theta(\ell,\nu)$.
+To investigate the methods' dependences on the angle between lepton and neutrino, \Cref{fig:dev_angle_angle_nu_lep} shows the binned evaluation of the angular discrepancy. All methods show a significant increase in the angle between truth and reconstruction as the angle between the lepton and neutrino increases. The range covered by this variation is far larger than the variation seen for different invariant masses \mttbar.
+It can further be noted that the MultiModalTransformer appears to be most sensitive to the angle $\theta(\ell,\nu)$, since it exhibits the largest difference in performance between the largest and smallest bin of the variable. While for the bins corresponding to collinear leptons and neutrinos, the MMT can provide the best performance in terms of angular deviation between truth and prediction, $\nu^2$-Flows provides the best performance for events for large angle $\theta(\ell,\nu)$.
+
 \Cref{fig:dev_angle_ttbar_mass_angle_nu_lep} in the Appendix provides a combined investigation of the impact of both variables. The double-binned evaluation of the angle between true and prediction shows that the impact of the angle between lepton and neutrino dominates significantly compared to the invariant mass of the top-quark pair system. All methods, but the $\nu$-Weighter in particular, seem to be largely independent of the \mttbar for fixed bins of $\theta(\ell,\nu)$. Thus, the difference observed in \Cref{fig:dev_angle_ttbar_mass} seems to be largely explained by the correlated variable $\theta(\ell,\nu)$.
 \begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.7\textwidth]{plots/compact_reconstructor_nu_weighter/binned_performance/truth_lepton_nu_angle_mean/binned_dev_mag_truth_lepton_nu_angle_mean.pdf}
-  \caption{Relative deviation of the neutrinos' energies (magnitudes)
-    binned with respect to the decay angle between lepton and neutrino   $\theta(\ell,\nu)$ at parton level.}
-  \label{fig:dev_magnitude_angle_nu_lep}
+    \centering
+    \includegraphics[width=0.7\textwidth]{plots/compact_reconstructor_nu_weighter/binned_performance/truth_lepton_nu_angle_mean/binned_dev_mag_truth_lepton_nu_angle_mean.pdf}
+    \caption{Relative deviation of the neutrinos' energies (magnitudes)
+        binned with respect to the decay angle between lepton and neutrino     $\theta(\ell,\nu)$ at parton level.}
+    \label{fig:dev_magnitude_angle_nu_lep}
 \end{figure}%
-To investigate also the impact of the $\theta(\ell,\nu)$ on the magnitude and scaling of the neutrinos, \Cref{fig:dev_magnitude_angle_nu_lep} shows the relative deviation of the neutrinos' magnitudes binned for bins of the decay angle $\theta(\ell,\nu)$. Interestingly, while the performance on the angle between truth and prediction improved for all methods as the leptons and neutrinos became more collinear, the behaviour of the relative deviation in the reconstructed neutrino magnitudes shows the opposite trend. Generally, for all methods, the deviation tends to increase for collinear leptons and neutrinos. But among the different methods, there are significant differences in their sensitivity. While for $\nu$-Flows the increase in relative deviation between the lowest and highest bins exceeds a factor of $7$, it is only around $2$ for the MultiModalTransformer. Both baseline methods show a much stronger drop in performance than the MMT model. While no detailed explanation for this behaviour can be given at this point, it is suspected to originate from differences in the computational structures underlying the methods. But further investigation is necessary to qualify this. One observation to be added here is that the MMT-model trained with the MagDir-loss showed the same dependence on the decay angle of lepton and neutrino as, for example, the $\nu^2$-Flows method - highlighting once more the strong impact of the chosen loss-function for the model's behaviour.\begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.7\textwidth]{plots/compact_reconstructor_nu_weighter/binned_performance/truth_tt_boost_parameter/binned_dev_relative_l2_truth_tt_boost_parameter.pdf}
-  \caption{
-    Relative $L^2$ distance of the neutrino vectors binned with     respect to boost parameter $\beta(t\bar{t})$ of the \ttbar-system.
-  }
-  \label{fig:l2_dev_ttbar_beta}
-\end{figure}%
-One variable and its impact, to be mentioned for the sake of completeness, is the boost parameter $\beta(t\bar{t})$ of the \ttbar-system.
-Its impact on the relative $L^2$-difference between true and regressed neutrino vectors is depicted in \Cref{fig:l2_dev_ttbar_beta}. While the baseline methods show a very strong increase at about a factor of $2$ in the relative deviation of their reconstructed vectors, the opposite is true for the MMT-model, whose performance increases by about a factor of $2$. Due to inherent correlations, this is likely partly related to the correlation between the boost parameter and the decay angles of neutrinos and leptons. As this variable is commonly investigated for the use in analyses to access certain kinematic regions, its impact on the performance of the methods is worth mentioning. Notably, this was also the only variable for which major differences in reconstruction performance across the spectrum were observed among the neutrinos' Cartesian components. While the transverse momentum components are largely insensitive to the boost parameter, the deviation of the $z$ increases strongly for large boost parameters.
-The corresponding plots can be found in \Cref{fig:px_dev_ttbar_beta,fig:pz_dev_ttbar_beta} in the Appendix.
 
-For other event variables investigated in this thesis, no major sensitivities were identified.
+The impact of $\theta(\ell,\nu)$ on the magnitude and scaling of neutrinos was examined by analysing the relative deviation of neutrino magnitudes, as shown in \Cref{fig:dev_magnitude_angle_nu_lep}, binned according to the decay angle $\theta(\ell,\nu)$. Although the performance regarding the angle between truth and prediction improved for all methods as leptons and neutrinos became more collinear, the relative deviation in reconstructed neutrino magnitudes exhibited the opposite trend. For all methods, deviation increased as leptons and neutrinos became more collinear. However, significant differences in sensitivity were observed among the methods. For $\nu^2$-Flows, the increase in relative deviation between the lowest and highest bins exceeded a factor of $7$, whereas for the MultiModalTransformer, it was approximately $2$. Both baseline methods demonstrated a much stronger decline in performance compared to the MMT model. While a detailed explanation for this behaviour cannot be provided at present, it is suspected to result from differences in the computational structures underlying the methods. Further investigation is required to substantiate this hypothesis. Notably, the MMT model trained with the MagDir loss exhibited the same dependence on the decay angle of lepton and neutrino as the $\nu^2$-Flows method, underscoring the substantial influence of the chosen loss function on model behaviour.
+
+No significant sensitivities were identified for other event variables examined in this thesis.
+
+
 
 \section{Variable Reconstruction}
 \label{sec:evaluation:variable-reconstruction}
 The primary interest in providing jet-assignment and neutrino regression lies in the subsequent reconstruction of event variables.
-Therefore, studying the impact of the proposed methods on the quality of event reconstruction is critical for assessment. To evaluate this, various variables of interest commonly used in analysis settings are examined. The variables investigated are primarily the invariant mass \mttbar and the spin-sensitive markers \chel and \chan. As these were the main variables used in recent \atlas analyses. Since the neutrino reconstruction of the $\nu$-Weighter was found to offer the poorest resolution here, it was dropped to evaluate the variable reconstruction. Further, it is the only method that yields non-unity efficiencies; thus, the other variables can be evaluated without any subsampling, allowing a less biased evaluation.
+Therefore, studying the impact of the proposed methods on the quality of event reconstruction is a critical assessment. To evaluate this, various variables of interest commonly used in analysis settings are examined. The variables investigated are primarily the invariant mass \mttbar and the spin-sensitive markers \chel and \chan. As these were the main variables used in recent \atlas analyses. Since the neutrino reconstruction of the $\nu$-Weighter was found to offer the poorest resolution here, it was dropped to evaluate the variable reconstruction. Further, it is the only method that yields non-unity efficiencies; thus, the other variables can be evaluated without any subsampling, allowing a less biased evaluation.
+
 The reconstruction performance is mostly evaluated in terms of the 
 \begin{align}
-  \text{Mean Deviation} &=\mu\left(x^{\text{reco}} - x^{\text{true}}\right),\\
-  \text{Relative Deviation} &=\mu\left(\frac{x^{\text{reco}} -
-  x^{\text{true}}}{x^{\text{true}}}\right)
+    \text{Mean Deviation} &=\mu\left(x^{\text{reco}} - x^{\text{true}}\right),\\
+    \text{Relative Deviation} &=\mu\left(\frac{x^{\text{reco}} -
+    x^{\text{true}}}{x^{\text{true}}}\right)
 \end{align}
 and 
 \begin{align}
-  \text{Resolution}&=\sigma\left(x{\text{reco}} - x^{\text{true}}\right)\\
-  \text{Relative Resolution}&=\sigma\left(\frac{x^{\text{reco}} -
-  x^{\text{true}}}{x^{\text{true}}}\right)
+    \text{Resolution}&=\sigma\left(x{\text{reco}} - x^{\text{true}}\right)\\
+    \text{Relative Resolution}&=\sigma\left(\frac{x^{\text{reco}} -
+    x^{\text{true}}}{x^{\text{true}}}\right)
 \end{align}
 where $x_{\text{reco}}$ and $x_{\text{true}}$ denote the reconstructed and true value of the variable; the operators $\mu$ and $\sigma$ are the mean and standard deviation computed over the sample of events, respectively.
 Unless stated otherwise, the true value of a variable is always computed at the parton level and after final state radiation.
 While the mean (relative) deviation is a measure of any biases and skew in the reconstructed distributions, the (relative) resolution is a measure of the spread of the reconstructed variable around the true value. Both of these are crucial to assess the quality of the reconstruction. For fits, however, resolution tends to be more important, as non-zero deviations and skew are corrected by the fit, provided they are consistent in both data and simulation. A distinction is made between the difference attributed to the jet-assignment and the neutrino regression. Therefore, improvements due to increased assignment performance are studied first.
 To isolate the effect the assignment has, all methods are evaluated in conjunction with $\nu^2$-Flows. The first variable to be investigated is the invariant mass \mttbar.
 \begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.7\textwidth]{plots/compact_assigner/deviations/ttbar_mass_deviation_distributions_combined.pdf}
-  \caption{Plot showing the relative deviation of the invariant mass     reconstruction. The legend includes the obtained mean and standard deviation, which correspond to the resolution, for each method.}
-  \label{fig:assignment:ttbar_mass_deviation}
+    \centering
+    \includegraphics[width=0.7\textwidth]{plots/compact_assigner/deviations/ttbar_mass_deviation_distributions_combined.pdf}
+    \caption{Plot showing the relative deviation of the invariant mass         reconstruction. The legend includes the obtained mean and standard deviation, which correspond to the resolution, for each method.}
+    \label{fig:assignment:ttbar_mass_deviation}
 \end{figure}
 The \Cref{fig:assignment:ttbar_mass_deviation} summarises relative deviation and relative resolution of the invariant mass \mttbar.
 Note that the invariant mass is only sensitive to the selection of the jets, and not their assignment, as the computation is permutation invariant to the jet-ordering. As expected, both baseline methods achieve the same performance within the statistical uncertainties.
 While the mean relative deviation is positive and close to zero for the baseline methods, the CompactTransformer yields a much larger negative mean relative deviation. This means that the reconstruction with the CompactTransformer is biased towards smaller invariant masses. For the resolution, on the other hand, one can see that the CPT achieves a resolution, smaller by around $17\%$. The \Cref{tab:assignment:ttbar_mass_reconstruction} in the Appendix summarises the mean deviation and resolution achieved for this variable and compares them to the values for a perfect assignment of the jets in conjunction with $\nu^2$-Flows. It clearly shows that the bias in the reconstructed \mttbar induced by the CPT's assignment is very close to the one with the true assignment of the jets. Thus, it can be assumed this is an effect from other parts of the reconstruction, which is cancelled out by the other methods, rather than a shortcoming of the Transformer. Furthermore, the true assignment does not show an improvement exceeding the statistical uncertainties. While this is hardly surprising, given the transformer's selection accuracy of about $96.6\%$, it implies that no measurable improvement in the resolution of the \mttbar is expected from further optimisation of the jet selection.
 \begin{table}[ht]
-  \centering
-  \caption{Summary of the reconstruction metrics for \chel for the   different jet-assignments methods in conjunction with $\nu^2$-Flows.}
-  \input{plots/true_assignment/deviations/c_hel_reconstruction_metrics_table.tex}
-  \label{tab:assignment:chel_reco}
-  \centering
-  \caption{Summary of the reconstruction metrics for \chan for the different jet-assignments methods in conjunction with $\nu^2$-Flows.}
-  \input{plots/true_assignment/deviations/c_han_reconstruction_metrics_table.tex}
-  \label{tab:assignment:chan_reco}
+    \centering
+    \caption{Summary of the reconstruction metrics for \chel for the     different jet-assignments methods in conjunction with $\nu^2$-Flows.}
+    \input{plots/true_assignment/deviations/c_hel_reconstruction_metrics_table.tex}
+    \label{tab:assignment:chel_reco}
+    \centering
+    \caption{Summary of the reconstruction metrics for \chan for the different jet-assignments methods in conjunction with $\nu^2$-Flows.}
+    \input{plots/true_assignment/deviations/c_han_reconstruction_metrics_table.tex}
+    \label{tab:assignment:chan_reco}
 \end{table}%
-The mean deviation and resolution for the two spin-sensitive marker \chel and \chan are summarised in \Cref{tab:assignment:chel_reco,tab:assignment:chel_reco}
-respectively. As before, the $\chi^2$-Method attains the lowest mean deviation for both variables, indicating that it again provides the least biased reconstruction. Previously, it provided the same unbiased reconstruction; however, for this variable, the $\Delta R$-Method exhibits the highest bias, with the mean deviation for the \chan being roughly four times that of the next-largest variable. As this variable largely depends on the angular relation between the leptons and the jets, it is expected to be substantially more biased for a Method that enforces the proximity of jets and leptons. The CPTs show significantly larger biases than the $\chi^2$-Method for both variables. However, the same is true for the reconstruction with the true assignment interfaced with $\nu^2$-Flows. As before, this implies that inherent biases in other aspects of reconstruction (such as $\nu^2$-Flows itself) give rise to deviations at the parton level that are cancelled by the $\chi^2$-Method.
+The mean deviation and resolution for the two spin-sensitive marker \chel and \chan are summarised in the \Cref{tab:assignment:chel_reco,tab:assignment:chel_reco},
+respectively. As before, the $\chi^2$-Method attains the lowest mean deviation for both variables, indicating that it again provides the least biased reconstruction. Previously, it provided the same unbiased reconstruction; however, for this variable, the $\Delta R$-Method exhibits the highest bias, with the mean deviation for the \chan being roughly four times that of the next-largest method, which notably is the combination of true assignment with $\nu^2$-Flows. As this variable largely depends on the angular relation between the leptons and the jets, it is expected to be substantially more biased for a Method that enforces the proximity of jets and leptons. The CPTs show significantly larger biases than the $\chi^2$-Method for both variables. However, the same is true for the reconstruction with the true assignment interfaced with $\nu^2$-Flows. As before, this implies that inherent biases in other aspects of reconstruction (such as $\nu^2$-Flows itself) give rise to deviations at the parton level that are cancelled by the $\chi^2$-Method.
 
 Regarding the resolution, it is worth noting that it is generally much poorer than that of the invariant mass. Further, both variables yield the same results across methods, with the CompactTransformer achieving the highest resolution. The $\chi^2$-Method comes in second, and its difference in resolution is about the same towards both methods for the two variables. While no significant improvement in resolution was observed for the reconstruction of the \mttbar with the true assignment, this is substantially different for these variables. This highlights their strong dependence on the assignment in contrast to the invariant mass. For both variables, the difference between the perfect assignment and CompactTransformer is larger than its advantage over the $\chi^2$-Method. Thus, for these variables, significant increases are expected as jet assignment improves, motivating future research in this area.
-\begin{figure}[H]
-  \begin{subfigure}[c]{1.0\textwidth}
-    \centering
-    \includegraphics[width=0.7\textwidth]{plots/true_assignment/binned_performance/truth_ttbar_mass/binned_resolution_ttbar_mass_truth_ttbar_mass.pdf}
-    \caption{Relative Resolution of \mttbar}
-    \label{fig:assignment:ttbar_mass_binned_reso_ttbar_mass}
-  \end{subfigure}
-  \begin{subfigure}[c]{1.0\textwidth}
-    \centering
-    \includegraphics[width=0.7\textwidth]{plots/true_assignment/binned_performance/truth_ttbar_mass/binned_resolution_c_hel_truth_ttbar_mass.pdf}
-    \caption{Resolution of \chel}
-    \label{fig:assignment:ttbar_mass_binned_reso_c_hel}
-  \end{subfigure}
-  \caption{(Relative) Resolution of \mttbar     \subrefb{fig:assignment:ttbar_mass_binned_reso_ttbar_mass} and     \chel \subrefb{fig:assignment:ttbar_mass_binned_reso_c_hel}
-    computed in bins of the parton-level invariant mass of the     \ttbar-system. The different methods, as well as the expected resolution with perfect efficiency for the assignment, are compared.
-    The displayed error bars represent the statistical uncertainties of the dataset obtained via bootstrapping.}  \label{fig:assignment:ttbar_mass_binned_reso}
-\end{figure}%
-As before, the resolution of the reconstructed variables was examined across different event variables. For most of the considered event features here, the behaviour of the resolution followed closely that of the (selection) accuracy discussed in \Cref{sec:evaluation:assignment}. One notable exception is the invariant mass of the \ttbar-system, for which the binned resolution plots for the variable itself and \chel are shown \Cref{fig:assignment:ttbar_mass_binned_reso}. For the resolution of the reconstructed \mttbar, the plot clearly shows that, across all methods, resolution degrades at low invariant mass. Notably, this increase is much more pronounced for the baseline methods, despite the selection accuracy being constant across the invariant mass spectrum for all methods. So this difference cannot be explained by a simple dependence on the jet selection, but reflects systematic effects in the misassignments across the different methods. As before, the resolution achieved by the CompactTransformer is on par with the perfect assignment across the full spectrum of invariant masses considered here. Thus, the drop-off in performance for the CompactTransformer can be attributed to other aspects of the reconstruction. Most notable is the error of the neutrino-regression as provided by $\nu^2$-Flows, which was shown in \Cref{sec:evaluation:regression} to be larger for lower invariant masses.
 
+As before, the resolution of the reconstructed variables was examined across different event variables. For most of the considered event features here, the behaviour of the resolution followed closely that of the (selection) accuracy discussed in \Cref{sec:evaluation:assignment}. One notable exception is the invariant mass of the \ttbar-system, for which the binned resolution plots for the variable itself and \chel are shown \Cref{fig:assignment:ttbar_mass_binned_reso}. For the resolution of the reconstructed \mttbar, the plot clearly shows that, across all methods, resolution degrades at low invariant mass. Notably, this increase is much more pronounced for the baseline methods, despite the selection accuracy being constant across the invariant mass spectrum for all methods. So this difference cannot be explained by a simple dependence on the jet selection, but reflects systematic effects in the misassignments across the different methods. As before, the resolution achieved by the CompactTransformer is on par with the perfect assignment across the full spectrum of invariant masses considered here. Thus, the drop-off in performance for the CompactTransformer can be attributed to other aspects of the reconstruction. Most notable is the error of the neutrino-regression as provided by $\nu^2$-Flows, which was shown in \Cref{sec:evaluation:regression} to be larger for lower invariant masses.
 For the resolution of the second variable, \chel, a different picture emerges from \Cref{fig:assignment:ttbar_mass_binned_reso}. The resolution achieved by the perfect assignment shows a steady improvement towards lower masses, indicating that the error of the neutrino regression is less important in this region. This finding already contrasts with the observation for the invariant mass \mttbar. For the assignment methods investigated here, the resolution is most stable at higher invariant masses; it shows the worst performance across all methods at the bulk of the distribution around $m(t\bar{t})\sim 450$ GeV. Towards the lowest mass bin, all methods show again an increase in performance, which is most pronounced for the $\chi^2$-Method. In this single bin, it outperforms the resolution achieved by the CompactTransformer. This improvement in resolution is inconsistent with the steadily decreasing assignment accuracy shown in \Cref{fig:accuracy_vs_ttbar_mass}. Therefore, the effect seems to stem from a combination of improved performance in neutrino regression and reduced assignment accuracy. However, the significantly larger improvement of the $\chi^2$-Method remains elusive. This underscores that not only the quantity of missassignments of the different methods but also their structure is decisive for the resolution of a variable.
 \begin{figure}[H]
-  \centering
-  \includegraphics[width=.7\textwidth]{plots/compact_reconstructor/deviations/ttbar_mass_deviation_distributions_combined.pdf}
-  \caption{Relative deviation of the invariant mass of the     \ttbar-system, \mttbar, compared to the parton-level. The legend     shows the mean relative deviation and the relative resolution for   all methods.}
-  \label{fig:compact_reconstructor:ttbar_mass_deviation}
+    \begin{subfigure}[c]{1.0\textwidth}
+        \centering
+        \includegraphics[width=0.7\textwidth]{plots/true_assignment/binned_performance/truth_ttbar_mass/binned_resolution_ttbar_mass_truth_ttbar_mass.pdf}
+        \caption{Relative Resolution of \mttbar}
+        \label{fig:assignment:ttbar_mass_binned_reso_ttbar_mass}
+    \end{subfigure}
+    \begin{subfigure}[c]{1.0\textwidth}
+        \centering
+        \includegraphics[width=0.7\textwidth]{plots/true_assignment/binned_performance/truth_ttbar_mass/binned_resolution_c_hel_truth_ttbar_mass.pdf}
+        \caption{Resolution of \chel}
+        \label{fig:assignment:ttbar_mass_binned_reso_c_hel}
+    \end{subfigure}
+    \caption{(Relative) Resolution of \mttbar         \subrefb{fig:assignment:ttbar_mass_binned_reso_ttbar_mass} and         \chel \subrefb{fig:assignment:ttbar_mass_binned_reso_c_hel}
+        computed in bins of the parton-level invariant mass of the         \ttbar-system. The different methods, as well as the expected resolution with perfect efficiency for the assignment, are compared.
+        The displayed error bars represent the statistical uncertainties of the dataset obtained via bootstrapping.}    \label{fig:assignment:ttbar_mass_binned_reso}
 \end{figure}
-To keep the investigated combinations of analysis setups feasible, the $\Delta R$-Method is omitted from further investigations.
-The \Cref{fig:compact_reconstructor:ttbar_mass_deviation} shows the relative deviation of the invariant mass as before, including the reconstruction using the MultiModalTransformer. The first observation is that the MMT deviations show a very large negative shift—meaning the reconstructed mass is smaller than the true mass. This can also be seen in the relative mean deviation for the MMT, which is substantially more negative at about $-0.133$
-cocompared to the CPT with $\nu^2$-Flows at $-0.02$. For the relative resolution, on the other hand, a clear improvement over the reconstruction with $\nu^2$-Flows is evident. With a reduction of about $40\%$ compared to the CPT with $\nu^2$-Flows, this yields an improvement by a factor of $2$ over the baseline $\chi^2$-Method.
+
 \begin{figure}[H]
-  \centering
-  \includegraphics[width=1.\textwidth]{plots/compare_losses/distributions/ttbar_mass_distributions.pdf}
-  \caption{Comparison of distributions of reconstructed and true     \mttbar for different reconstruction methods. Note that true refers to the parton level.}  \label{fig:losses:ttbar_mass_distribution}
+    \centering
+    \includegraphics[width=.7\textwidth]{plots/compact_reconstructor/deviations/ttbar_mass_deviation_distributions_combined.pdf}
+    \caption{Relative deviation of the invariant mass of the         \ttbar-system, \mttbar, compared to the parton-level. The legend         shows the mean relative deviation and the relative resolution for     all methods.}
+    \label{fig:compact_reconstructor:ttbar_mass_deviation}
 \end{figure}
-To examine the impact the bias, described before, has on the distribution of the invariant mass, \Cref{fig:losses:ttbar_mass_distribution} compares the distributions at parton- and reconstruction-level for the different methods. The Figure compares the different losses used with the CPT interfaced with $\nu^2$-Flows. The last reconstruction setup produces a reasonable distribution at the reco-level that matches the parton-level feature, with the most notable discrepancy in the low-mass region. Two of the losses investigated, Cartesian- and PtEtaPhi-loss, show strong deviations in the shape of the distribution, which is also in good agreement with the observation of the bias for the relative deviation. Both reconstructions show a significant shift in the distribution's peak. Further, the bins below the production threshold of $m(t\bar{t})\sim 2\cdot m_t$ are strongly populated.
+
+To keep the investigated combinations of analysis setups feasible, the $\Delta R$-Method is omitted from further investigations.
+The \Cref{fig:compact_reconstructor:ttbar_mass_deviation} shows the relative deviation of the invariant mass as before, including the reconstruction using the MultiModalTransformer. The first observation is that the MMT deviations show a very large negative shift-—meaning the reconstructed mass is smaller than the true mass. This can also be seen in the mean relative deviation for the MMT, which is substantially more negative at about $-0.133$ compared to the CPT with $\nu^2$-Flows at $-0.02$. For the relative resolution, on the other hand, a clear improvement over the reconstruction with $\nu^2$-Flows is evident. With a reduction of about $40\%$ compared to the CPT with $\nu^2$-Flows, this yields an improvement by a factor of $2$ over the baseline $\chi^2$-Method.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.\textwidth]{plots/compare_losses/distributions/ttbar_mass_distributions.pdf}
+    \caption{Comparison of distributions of reconstructed and true         \mttbar for different reconstruction methods. Note that true refers to the parton level.}    \label{fig:losses:ttbar_mass_distribution}
+\end{figure}
+To examine the biases' impact on the shape of the distributions of the invariant mass, \Cref{fig:losses:ttbar_mass_distribution} compares the distributions at parton- and reconstruction-level for the different methods. The Figure compares the different losses used with the CPT interfaced with $\nu^2$-Flows. The last reconstruction setup produces a reasonable distribution at the reco-level that matches the parton-level features, with the most notable discrepancy in the low-mass region. Two of the losses investigated, Cartesian- and PtEtaPhi-loss, show strong deviations in the shape of the distribution, which is also in good agreement with the observation of the bias for the relative deviation. Both reconstructions show a significant shift in the distribution's peak. Further, the bins below the production threshold of $m(t\bar{t})\sim 2\cdot m_t$ are strongly populated.
 The distribution of the model trained with the MagDir-loss shows a closer resemblance to the distribution, but displays stronger deviations in the shape compared to the reconstruction based on $\nu^2$-Flows. \Cref{tab:losses:ttbar_mass_reconstruction} summarises the overall performance of the different tools for the invariant mass \mttbar. It shows that the MagDir-loss achieves the best resolution among all methods and has the lowest bias among all MMT-models, which is about a factor of $2$ smaller than that of the other models. Thus, it is consistent with the distributions in \Cref{fig:losses:ttbar_mass_distribution}.
 \begin{table}[ht]
-  \centering
-  \caption{Summary of the reconstruction metrics for \chel for MMt     models with different models, compared to a reconstruction based on $\nu^2$-Flows}
-  \input{plots/compare_losses/deviations/c_hel_reconstruction_metrics_table.tex}
-  \label{tab:losses:chel_reco}
-  \centering
-  \caption{Summary of the reconstruction metrics for \chan for MMT models with different models, compared to a reconstruction based on   $\nu^2$-Flows}
-  \input{plots/compare_losses/deviations/c_han_reconstruction_metrics_table.tex}
-  \label{tab:losses:chan_reco}
+    \centering
+    \caption{Summary of the reconstruction metrics for \chel for MMT         models with different models, compared to a reconstruction based on $\nu^2$-Flows}
+    \input{plots/compare_losses/deviations/c_hel_reconstruction_metrics_table.tex}
+    \label{tab:losses:chel_reco}
+    \centering
+    \caption{Summary of the reconstruction metrics for \chan for MMT models with different models, compared to a reconstruction based on     $\nu^2$-Flows}
+    \input{plots/compare_losses/deviations/c_han_reconstruction_metrics_table.tex}
+    \label{tab:losses:chan_reco}
 \end{table}%
 
 The \Cref{tab:losses:chel_reco,tab:losses:chan_reco} summarise the comparison of the different MMT models with $\nu^2$-Flows for \chel and \chan, respectively, by showing mean deviation and resolution.
-Despite small differences in the mean deviation and resolution of the variables, the overall pattern remains the same: the MMT-based reconstruction provides the lowest resolution but incurs larger biases. This observation is valid across all losses. While the MagDir-loss could unambiguously provide the best performance for the invariant mass of the \ ttbar-system, this is not the case for the spin-sensitive variables. For these, no clear pattern emerges, making one loss preferable; for \chel all loses show a very similar resolution and small differences in the mean deviation, and for \chan the Cartesian-loss has the best performance for the resolution, but also comes with the largest mean deviation. As mentioned earlier, the optimal loss function depends on the variables of interest.
+Despite small differences in the mean deviation and resolution of the variables, the overall pattern remains the same: the MMT-based reconstruction provides the lowest resolution but incurs larger biases. This observation is valid across all losses. While the MagDir-loss could unambiguously provide the best performance for the invariant mass of the \ttbar-system, this is not the case for the spin-sensitive variables. For these, no clear pattern emerges, making one loss preferable; for \chel all loses show a very similar resolution and small differences in the mean deviation, and for \chan the Cartesian-loss has the best performance for the resolution, but also comes with the largest mean deviation.
 Generally, the Transformer's regression structure employed here yields results that are competitive with the baseline methods. In particular, the resolution of the variables investigated here could be reduced significantly. However, it was found that the regression, which does not provide any probabilistic modelling, unlike $\nu^2$-Flows, incurs much larger biases that also lead to skewness in the distributions.
 \begin{figure}[H]
-  \begin{subfigure}[c]{1.0\textwidth}
-    \centering
-    \includegraphics[width=0.7\textwidth]{plots/compact_reconstructor/binned_performance/truth_ttbar_mass/binned_resolution_ttbar_mass_truth_ttbar_mass.pdf}
-    \caption{Relative Resolution of \mttbar}
-    \label{fig:full_reco:ttbar_mass_binned_reso_ttbar_mass}
-  \end{subfigure}
-  \begin{subfigure}[c]{1.0\textwidth}
-    \centering
-    \includegraphics[width=0.7\textwidth]{plots/compact_reconstructor/binned_performance/truth_ttbar_mass/binned_resolution_c_hel_truth_ttbar_mass.pdf}
-    \caption{Resolution of \chel}
-    \label{fig:full_reco:ttbar_mass_binned_reso_c_hel}
-  \end{subfigure}
-  \caption{(Relative) Resolution of \mttbar     \subrefb{fig:full_reco:ttbar_mass_binned_reso_ttbar_mass} and \chel     \subrefb{fig:full_reco:ttbar_mass_binned_reso_c_hel} computed in     bins of the parton-level invariant mass of the \ttbar-system.
-  Different setups for assignment and regression are compared. }
-  \label{fig:full_reco:ttbar_mass_binned_reso}
+    \begin{subfigure}[c]{1.0\textwidth}
+        \centering
+        \includegraphics[width=0.7\textwidth]{plots/compact_reconstructor/binned_performance/truth_ttbar_mass/binned_resolution_ttbar_mass_truth_ttbar_mass.pdf}
+        \caption{Relative Resolution of \mttbar}
+        \label{fig:full_reco:ttbar_mass_binned_reso_ttbar_mass}
+    \end{subfigure}
+    \begin{subfigure}[c]{1.0\textwidth}
+        \centering
+        \includegraphics[width=0.7\textwidth]{plots/compact_reconstructor/binned_performance/truth_ttbar_mass/binned_resolution_c_hel_truth_ttbar_mass.pdf}
+        \caption{Resolution of \chel}
+        \label{fig:full_reco:ttbar_mass_binned_reso_c_hel}
+    \end{subfigure}
+    \caption{(Relative) Resolution of \mttbar         \subrefb{fig:full_reco:ttbar_mass_binned_reso_ttbar_mass} and \chel         \subrefb{fig:full_reco:ttbar_mass_binned_reso_c_hel} computed in         bins of the parton-level invariant mass of the \ttbar-system.
+    Different setups for assignment and regression are compared. }
+    \label{fig:full_reco:ttbar_mass_binned_reso}
 \end{figure}%
 
-As before, some kinematic regions are of particular interest and have been shown to be challenging in previous analyses; the effects of certain event variables are to be investigated. The plots in \Cref{fig:full_reco:ttbar_mass_binned_reso} show the resolution for the reconstruction using the MultiModalTransformer across different \ttbar-mass bins. For the resolution of the \mttbar itself, an interesting pattern emerges; whereas before the resolution decreased towards lower invariant masses, the opposite is true with the MMT-model. Its performance is mostly constant, with a slight improvement towards low masses. Therefore, the gain in resolution in the lowest-mass bin, which is of interest in many analyses, is approximately a factor of $3$ over the baseline method. This is expected to significantly improve the sensitivity of analyses in this region. Since the mean deviation is also crucial for recovering the shape of a distribution, its behaviour binned with respect to \mttbar can be found in \Cref{fig:full_reco:ttbar_mass_binned_deviation_ttbar_mass} in the Appendix. While it was discussed earlier that the MMT has a strong bias towards lower invariant masses, the plot reveals that the bias's behaviour across the mass range differs markedly between the methods. The reconstruction based on $\nu^2$-Flows yields a mean relative deviation ranging from $-0.1$ to $+0.1$, depending on the mass regime. For the MultiModalTransformer, however, it remains very consistently at around $-0.13$. Thus, it might be possible to correct for the bias in the distribution at the reco-level for the MMT.
+As before, some kinematic regions are of particular interest and have been shown to be challenging in previous analyses; the effects of certain event variables are to be investigated. The plots in \Cref{fig:full_reco:ttbar_mass_binned_reso} show the resolution for the reconstruction using the MultiModalTransformer across different \ttbar-mass bins. For the resolution of the \mttbar itself, an interesting pattern emerges; whereas before the resolution decreased towards lower invariant masses, the opposite is true with the MMT-model. Its performance is mostly constant, with a slight improvement towards low masses. Therefore, the gain in resolution in the lowest-mass bin, which is of interest in many analyses, is approximately a factor of $3$ over the baseline method. This is expected to significantly improve the sensitivity of analyses in this region. For the spin-sensitive variables, \chel in particular, such a strong dependence on the mass of the \ttbar-system can not be observed.
+Here, the improvement in resolution offered by the MMT architecture appears to be very consistent. All methods seem to have the lowest performance around $400~\GeV$, which marks also the peak of the \ttbar-distribution.
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.7\textwidth]{plots/compact_reconstructor/binned_performance/truth_ttbar_mass/binned_deviation_ttbar_mass_truth_ttbar_mass.pdf}
+    \caption{Mean Relative Deviation of \mttbar}
+    \label{fig:full_reco:ttbar_mass_binned_deviation_ttbar_mass}
+\end{figure}
 
-For the spin-sensitive variables, \chel in particular, such a strong dependence on the mass of the \ttbar-system can not be observed.
-Here, the improvement in resolution offered by the MMT architecture appears to be very consistent. The same can be said for the mean deviation of \chel as shown in \Cref{fig:full_reco:ttbar_mass_binned_deviation_c_hel}. The bias is consistently enhanced across the mass range and, notably, peaks at low masses for all methods.
+Since the mean deviation is also crucial for recovering the shape of a distribution, its behaviour for the invariant mass $m(t\bar{t})$ binned with respect to \mttbar can be found in \Cref{fig:full_reco:ttbar_mass_binned_deviation_ttbar_mass}. While it was discussed earlier that the MMT has a strong bias towards lower invariant masses, the plot reveals that the bias's behaviour across the mass range differs markedly between the methods. The reconstruction based on $\nu^2$-Flows yields a mean relative deviation ranging from $-0.1$ to $+0.1$, depending on the mass regime. While its modulus is smaller in all bins, this shows that the difference in the bias is much smaller than observed before, when averaging over the whole spectrum. Thus, it can be said that the methods using $\nu^2$-Flows are also strongly biased in certain regimes, but these biases cancels out when considering the full invariant mass spectrum. For the MultiModalTransformer, on the other hand, the mean relative deviation remains very consistently at around $-0.13$. Thus, it might be possible to correct for the bias in the distribution at the reco-level for the MMT. 
 
-Lastly, the effect of the Gaussian loss on the variable reconstruction, and their distributions in particular, has to be discussed. As pointed out before, no significant difference between using the mean of the Gaussian-loss-trained MMT and the nominal MMt was found. Therefore, this section compares the Gaussian loss for reconstructing neutrinos using the mean and random sampling. For the deviation of the neutrinos' momenta, it was found that the Gaussian-sampling consistently leads to larger errors. A similar observation can be made for its impact on the resolution of reconstructed variables.
+The mean deviations of \chel and \chan, as depicted in \Cref{fig:full_reco:ttbar_mass_binned_deviation}, show a different picture. It peaks at low masses for all methods. But the different methods have a very consistent difference in their bias across the different $m(t\bar{t})$-regimes.
+
+Lastly, the effect of the Gaussian loss on the variable reconstruction, and their distributions in particular, has to be discussed. As pointed out before, no significant difference between using the mean of the Gaussian-loss-trained MMT and the nominal MMT was found. Therefore, this section compares the Gaussian loss for reconstructing neutrinos using the mean and random sampling. For the deviation of the neutrinos' momenta, it was found that the Gaussian-sampling consistently leads to larger errors. A similar observation can be made for its impact on the resolution of reconstructed variables.
 \begin{table}[ht]
-  \centering
-  \caption{Summary of mean relative deviation and relative resolution     for the reconstructed mass of the \ttbar-system for the MMT trained   with the Gaussian-loss with Mean and Gaussian-sampling}
-  \input{plots/gaussian_loss/deviations/ttbar_mass_reconstruction_metrics_table.tex}
-  \label{tab:gaussian_loss:ttbar_mass_reso}
-  \caption{Summary of \chel-reconstruction performance}
-  \input{plots/gaussian_loss/deviations/c_hel_reconstruction_metrics_table.tex}
-  \label{tab:gaussian_loss:c_hel_reso}
-  \caption{Summary of \chan-reconstruction performance}
-  \input{plots/gaussian_loss/deviations/c_han_reconstruction_metrics_table.tex}
-  \label{tab:gaussian_loss:c_han_reso}
+    \centering
+    \caption{Summary of mean relative deviation and relative resolution for the reconstructed mass of the \ttbar-system for the MMT trained with the Gaussian-loss with Mean and Gaussian-sampling.}
+    \input{plots/gaussian_loss/deviations/ttbar_mass_reconstruction_metrics_table.tex}
+    \label{tab:gaussian_loss:ttbar_mass_reso}
+    \caption{Summary of \chel-reconstruction performance}
+    \input{plots/gaussian_loss/deviations/c_hel_reconstruction_metrics_table.tex}
+    \label{tab:gaussian_loss:c_hel_reso}
+    \caption{Summary of \chan-reconstruction performance}
+    \input{plots/gaussian_loss/deviations/c_han_reconstruction_metrics_table.tex}
+    \label{tab:gaussian_loss:c_han_reso}
 \end{table}
 
 The \Cref{tab:gaussian_loss:ttbar_mass_reso,tab:gaussian_loss:c_hel_reso,tab:gaussian_loss:c_han_reso} provide a summary of the three reconstruction variables considered here. An overall pattern across all the variables can be identified: introducing the Gaussian-sampling leads to a decrease in the mean (relative) deviation for all variables, i.e. reduces biases. On the other hand, the (relative) resolution decreases compared with mean-based regression. This loss of resolution varies across variables: while for \mttbar it still exceeds that of the reconstruction with $\nu^2$-Flows, the resolution of the spin-sensitive variables degrades significantly, falling below the performance of $\nu^2$-Flows. The reduction of the bias for the \mttbar is quite substantial with a factor of about $10^{3}$, making the bias smaller than that of $\nu^2$-Flows. For the other variables, such a strong reduction could not be observed, with the reduction being around a factor $2$, and the bias still larger than for reconstruction with $\nu^2$-Flows.
-While these metrics summarise the behaviour of the Gaussian loss on the reconstruction, its impact on their distributions can also be studied. Considering the skew and distortions in the shape discussed earlier, this is one of the main points the Gaussian loss seeks to address. For the mass of the \ttbar-system, plots comparing the distributions at the reco- and truth-levels are shown in \Cref{fig:gaussian_loss:ttbar_mass_dist} in the Appendix. The change in the distributions reflects a less biased reconstruction, which eliminates the previously observed shifted peak in MMT. It should be noted that while the peak position seems to align better with the truth, its truth level is substantially reduced.
+While these metrics summarise the behaviour of the Gaussian loss on the reconstruction, its impact on their distributions can also be studied. Considering the skew and distortions in the shape discussed earlier, this is one of the main points the Gaussian loss seeks to address. For the mass of the \ttbar-system, plots comparing the distributions at the reco- and truth-levels are shown in \Cref{fig:gaussian_loss:ttbar_mass_dist} in the Appendix. The change in the distributions reflects a less biased reconstruction, which eliminates the previously observed shifted peak in MMT. It should be noted that while the peak position seems to align better with the truth, its height with respect to the truth level is substantially reduced.
+\begin{figure}[ht]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=1.0\textwidth]{plots/gaussian_loss/distributions/c_hel_distribution_ratios.pdf}
+        \subcaption{\chel}
+        \label{fig:gaussian_loss:c_hel_dist}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=1.0\textwidth]{plots/gaussian_loss/distributions/c_han_distribution_ratios.pdf}
+        \subcaption{\chan}
+        \label{fig:gaussian_loss:c_han_dist}
+    \end{subfigure}
+    \caption{Distributions and density ratio between reco-level and parton-level for the MultiModalTransformer with Gaussian-loss for \chel and \chan in \subrefb{fig:gaussian_loss:c_hel_dist} and \subrefb{fig:gaussian_loss:c_han_dist}, respectively.}
+    \label{fig:gaussian_loss:spin_variables_dist}
+\end{figure}
+
 Comparisons of the distributions of the spin-sensitive variables are shown in \Cref{fig:gaussian_loss:spin_variables_dist}, which presents the different reconstruction setups, the truth-level, and the ratios of the corresponding histograms. For both variables, the same behaviour of the reconstruction methods is observed: while the reconstruction with $\nu^2$-Flows provides the most faithful distribution, the MMT provides strong deviations in the tails of the distributions at $\pm1$. These effects are partly mitigated by the Gaussian-sampling, which provides a much shallower ratio and a match to the truth-level that is comparable with what is obtained by $\nu^2$-Flows.
-To investigate what drives this behaviour, several variables related to the angles between the reconstructed objects were examined to identify the cause of the strong deviations and the shape produced by the MMT regression. While the underlying structure remains largely elusive, the recovery of the shape by Gaussian sampling indicates that a major factor is that the reconstructed variables are often highly non-linear with respect to the neutrinos' momenta. Therefore, their computation does not commute with taking the mean of the variable over the possible neutrino momenta configurations, i.e.
+
+
+
+To investigate what drives the distortion of the distributions, several variables related to the angles between the reconstructed objects were examined to identify the cause of the strong deviations and the shape produced by the MMT regression. While the underlying structure remains largely elusive, the recovery of the shape by Gaussian sampling indicates that a major factor is that the reconstructed variables are often highly non-linear with respect to the neutrinos' momenta. Therefore, their computation does not commute with taking the mean of the variable over the possible neutrino momenta configurations, i.e.
 \begin{align}
-  \langle m(\ell^-\ell^+ b\bar{b}\nu\bar{\nu})\rangle_{\nu\bar{\nu}}\neq m(\ell^-\ell^+b\bar{b}\langle\nu\bar{\nu}\rangle)\,.
+    \langle m(\ell^-\ell^+ b\bar{b}\nu\bar{\nu})\rangle_{\nu\bar{\nu}}\neq m(\ell^-\ell^+b\bar{b}\langle\nu\bar{\nu}\rangle)\,.
 \end{align}
 Note that in this notation, the particles denote their four-momenta.
 The same holds for the computation of the spin-sensitive variables. This can lead to significant biases in the distribution by collapsing the neutrino momenta to the mean. Especially if the distribution has inherent multimodality, which, given the quadratic form of the mass-constraint (see \Cref{sec:kinematic_constraints}), is expected, a collapse of the distribution to the mean can lead to significant deviations. Note that a possible multi-modality in the conditional probability cannot be properly recovered by the Gaussian-sampling here, as it lacks the expressivity to model such a distribution.
-Plots showing the impact of propagating the posterior for the case of the Gaussian conditional probability density for the neutrino momenta are shown in the Appendix under \Cref{app:neutrino_probs} for the variables discussed here. Due to the inaccessibility of the probability density of $\nu^2$-Flow, a comparison of the methods' probabilities was not possible. It was found that by propagating the obtained conditional probability distribution to the reconstructed variables and averaging over the variable's distribution, one can obtain much lower biases and improved resolution. This can be seen in the \Cref{fig:gaussian_loss:mttbar_posterior_deviation,fig:gaussian_loss:c_hel_posterior_deviation,fig:gaussian_loss:c_han_posterior_deviation}.
-While this provides a promising approach to enhancing neutrino regression performance, it was not further investigated in this work.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{plots/gaussian_loss_plots/gaussian_loss_mttbar_posterior_deviation.pdf}
+    \caption{Relative deviation between the reconstructed and true $m(t\bar{t})$ of the MMT trained with a Gaussian-Loss. The different curves show, whether the invariant mass was computed using the mean momentum or by propagating the     neutrino probabilities and averaging of the obtained masses.}
+    \label{fig:gaussian_loss:mttbar_posterior_deviation}
+\end{figure}
+Plots showing the impact of propagating the posterior for the case of the Gaussian conditional probability density for the neutrino momenta are shown in the Appendix under \Cref{app:neutrino_probs} for the variables discussed here. Due to the inaccessibility of the probability density of $\nu^2$-Flow, a comparison of the methods' probabilities was not possible. It was found that by propagating the obtained conditional probability distribution to the reconstructed variables and averaging over the variable's distribution, one can obtain much lower biases and improved resolution. This can be seen in the \Cref{fig:gaussian_loss:mttbar_posterior_deviation}. While random sampling reduces bias at the expense of resolution, this was not observed in this reconstruction strategy. Instead, both metrics improve when the probability distribution is propagated to the reconstructed variable. 
+
+Similar plots for the spin-sensitive variables can be found in \Cref{fig:gaussian_loss:c_hel_posterior_deviation,fig:gaussian_loss:c_han_posterior_deviation} in the Appendix. While this provides a promising approach to enhancing neutrino regression performance, it was not investigated further in this work due to time constraints.
+
 In conclusion, the methods presented in this thesis can provide significant improvements in the reconstruction of variables critical to analyses. Generally, the evaluation depends very strongly on the variable and metrics one employs. Therefore, performance assessment is highly degenerate and warrants further investigation in future analyses. This Section also outlined mitigations for the emerging problems of the newly introduced methods.
 
-\begin{figure}[ht]
-  \centering
-  \begin{subfigure}{0.49\textwidth}
-    \includegraphics[width=1.0\textwidth]{plots/gaussian_loss/distributions/c_hel_distribution_ratios.pdf}
-    \subcaption{\chel}
-    \label{fig:gaussian_loss:c_hel_dist}
-  \end{subfigure}
-  \begin{subfigure}{0.49\textwidth}
-    \includegraphics[width=1.0\textwidth]{plots/gaussian_loss/distributions/c_han_distribution_ratios.pdf}
-    \subcaption{\chan}
-    \label{fig:gaussian_loss:c_han_dist}
-  \end{subfigure}
-  \caption{Distributions and density ratio between reco-level and     parton-level for the MultiModalTransformer with Gaussian-loss for     \chel and \chan in \subrefb{fig:gaussian_loss:c_hel_dist} and   \subrefb{fig:gaussian_loss:c_han_dist}, respectively.}
-  \label{fig:gaussian_loss:spin_variables_dist}
-\end{figure}
+
 
 %\section{Region Specific Performance}
 %\label{sec:region-specific-performance}

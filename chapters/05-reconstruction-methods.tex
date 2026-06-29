@@ -6,15 +6,17 @@
 This section provides a brief overview of the modelling and reconstruction of top-quark pair events. The simulated sample of \ttbar-events is generated using a Monte-Carlo event generation as described in \Cref{sec:mc_colliders}.
 
 While a complete analysis requires a detailed investigation of background processes contributing to the signal regions, the following Chapters focus on developing and evaluating machine-learning methods applied to \ttbar events.
-Therefore, only the signal process of \ttbar production with dileptonic decays is described here. The background processes and their simulation are discussed in the following \Cref{chap:physics-analysis}, which investigates the tool's performance in a physics analysis.
+Therefore, only the process of \ttbar production with dileptonic decays is described here. The background processes and their simulation are discussed in the following \Cref{chap:physics-analysis}, which investigates the tool's performance in a physics analysis.
+
+All the samples used here are from the \atlas MC simulation campaign. Thus, all plots and results are obtained with the courtesy of the \atlas collaboration.
 
 \subsection{Simulation of Dileptonic Top-Quark Pair Events}
 \label{sec:nominal_ttbar}
-The signal process of \ttbar production with dileptonic decays is simulated using \powheg~\cite{powheg} the next-to-leading order (NLO)
+The process of \ttbar production with dileptonic decays is simulated using \powheg~\cite{powheg} the next-to-leading order (NLO)
 in perturbative quantum chromodynamics (QCD). The \powheg generator is interfaced with \pythia~\cite{pythia} for parton showering, hadronisation, and underlying event modelling. A more detailed description can be found in the Reference~\cite{atlas_toponium}. The samples used here are created with the hvq-model.
 
-To link the reco-level particles to the parton-level objects, a parton matching is performed. The parton-level objects are defined as top quarks and their decay products, including those from final-state radiation, before hadronisation. The matching is performed by iteratively associating reconstructed jets with partons based on angular-distance criteria. The decay products of the top quarks are matched within a cone of $\Delta R \leq 0.3$ and $\Delta R\leq 0.1$ for jets and leptons ($e$,$\mu$)
-respectively. If multiple reconstructed objects are found within this cone, the one with the smallest $\Delta R$ is chosen.
+To link the reco-level particles to the parton-level objects, a parton matching is performed. The parton-level objects are defined as top quarks and their decay products, after final-state radiation, before hadronisation. The matching is performed by iteratively associating reconstructed jets with partons based on angular-distance criteria. The decay products of the top quarks are matched within a cone of $\Delta R \leq 0.3$ and $\Delta R\leq 0.1$ for jets and leptons ($e$,$\mu$)
+respectively. If multiple reconstructed objects are found within this cone, the one with the smallest $\Delta R$ is chosen. In case no reconstructed object matches the criteria, the parton is considered unmatched.
 
 \subsection{Object Definition}
 \label{sec:object-definition}
@@ -35,8 +37,7 @@ algorithm~\cite{gn2_btagger} to identify jets originating from $b$-quarks.
 \label{sec:event-selection}
 Events are selected to contain exactly two oppositely charged leptons (electrons or muons). One of the leptons must have \pt $>
 25~\unit{\giga\electronvolt}$, while the other must have \pt $>
-5~\unit{\giga\electronvolt}$. At least two jets are required, with at least one $b$-tagged at the $ 85\%$ working point (WP).
-Additional selection criteria are applied to suppress background contributions, which are outlined in the later \Cref{chap:physics-analysis}.
+5~\unit{\giga\electronvolt}$. At least two jets are required, with at least one $b$-tagged at the $85\%$ working point (WP).
 
 For training and evaluation of the reconstruction methods, only events that meet the selection criteria and have successful parton matching are considered. Fully parton-matched events account for about $ 65\%$ of the total sample. Jets or leptons from the \ttbar decay that end up outside the detector acceptance are the main cause of an event being unmatched. Thus, training only on parton-matched events might introduce a bias towards certain event topologies if they are disfavoured by parton matching.
 
@@ -44,7 +45,7 @@ For training and evaluation of the reconstruction methods, only events that meet
 \label{sec:reconstruction-methods}
 Reconstructing the kinematics of dileptonic \ttbar events requires an assignment of reconstructed objects to the parton-level decay products. This section describes the different reconstruction methods developed and evaluated in this thesis.
 
-While the leptons are directly identified from the reconstructed objects, the assignment of jets to the $b$-quarks from the top quark decays is ambiguous due to the presence of multiple jets in the event. Additionally, the two neutrinos from $W$ boson decays are not directly detected, resulting in missing information in the event reconstruction.
+While the leptons are directly identified from the reconstructed objects based on their charge, the assignment of jets to the $b$-quarks from the top quark decays is ambiguous due to the presence of multiple jets in the event. Additionally, the two neutrinos from $W$ boson decays are not directly detected, resulting in missing information in the event reconstruction.
 Based on this, the reconstruction breaks down into two main tasks:
 \paragraph{Jet Assignment} Assigning the reconstructed jets to the $b$-quarks from the top quark decays.
 \paragraph{Neutrino Regression} Estimating the momenta of the two neutrinos using the measured \met and other event kinematics.
@@ -55,8 +56,8 @@ The identification of $b$-jets is crucial for the reconstruction of \ttbar event
 
 \subsection{Jet Assignment Methods}
 \label{sec:jet_assignment}
-This thesis explores several methods for jet assignment, ranging from traditional algorithms to machine learning approaches. While the leptons can be assigned to the $W$ bosons based on their charge, the assignment of jets to the $b$-quarks is not straightforward due to the presence of multiple jets in the event. All the methods presented here utilise kinematic relationships to group jets and leptons stemming from the same top quark decay.
-From recent publications, e.g.~\cite{atlas_entanglement}, two conventional methods have been implemented as baselines:
+This thesis evaluates several methods for jet assignment, ranging from traditional algorithms to machine learning approaches. While the leptons can be assigned to the $W$ bosons based on their charge, the assignment of jets to the $b$-quarks is not straightforward due to the presence of multiple jets in the event. All the methods presented here utilise kinematic relationships to group jets and leptons stemming from the same top quark decay.
+From recent publications, e.g.~\cite{atlas_entanglement,atlas_toponium}, two conventional methods have been implemented as baselines:
 
 \paragraph{Jet-Selection}
 Both methods start by selecting the two $b$-jet candidates in the event using $b$-tagging at the $ 77\%$ WP. If more than two $b$-tagged jets are present, the two with the highest \pt are chosen.
@@ -115,9 +116,10 @@ The Ellipse method~\cite{ellipse_method} is a kinematic reconstruction technique
 
 \subsubsection{Neutrino-Weighter}
 \label{sec:nu_weighter}
-The Neutrino-Weighter ($\nu$-Weighter), first described in \cite{neutrino_weighting_method}, is a method that assigns weights to different possible neutrino momentum configurations based on how well they satisfy the kinematic structure of the event. The method uses the measured \met and the momenta of the leptons and jets to compute a weight for each possible neutrino momentum configuration. For each configuration, this weight is computed based on loose kinematic constraints associated with \ttbar events - this includes on-shell requirements for the $W$ bosons and top quarks. The configuration with the highest weight is then selected as the reconstructed neutrino momenta. This method is computationally intensive because it requires scanning through numerous possible neutrino momentum configurations. The computation of the reconstructed masses for the tops and W-bosons requires identification of the jets with a lepton.
+The Neutrino-Weighter ($\nu$-Weighter), first described in \cite{neutrino_weighting_method}, is a method that assigns weights to different possible neutrino momentum configurations based on how well they satisfy the kinematic structure of the event. The method uses the measured \met and the momenta of the leptons and jets to compute a weight for each possible neutrino momentum configuration. For each configuration, this weight is computed based on loose kinematic constraints associated with \ttbar events -- including on-shell requirements for the $W$ bosons and top quarks. The configuration with the highest weight is then selected as the reconstructed neutrino momenta. This method is computationally intensive because it requires scanning through numerous possible neutrino momentum configurations. The computation of the reconstructed masses for the top quarks and W-bosons requires identification of the jets with a lepton.
 In principle, this might be done by a sophisticated method such as the ones presented here.
-However, the implementation used here selects the jets based on b-tagging at the $85\%$ working point and the leading $p_T$ if the number of b-tagged jets deviates from two. While this still leaves a twofold degeneracy in the assignment, both scenarios were evaluated, weighted, and considered to maximise the likelihood. Due to runtime limitations, the $\nu$-Weighter was run with fewer iterations.
+However, the implementation used here selects the jets based on b-tagging at the $85\%$ working point and the leading $p_T$ if the number of b-tagged jets deviates from two. While this still leaves a twofold degeneracy in the assignment, both scenarios are evaluated, weighted, and considered to maximise the likelihood. 
+Due to runtime limitations, the $\nu$-Weighter was run with a reduced number of iterations.
 
 \subsubsection{$\nu^2$-Flows}
 \label{sec:nu_flows}
