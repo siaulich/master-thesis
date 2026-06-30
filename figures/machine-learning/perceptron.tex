@@ -3,20 +3,21 @@
     \usetikzlibrary{positioning}
 
 \tikzset{basic/.style={draw,fill=blue!20,text width=1em,text badly centered}}
-\tikzset{input/.style={basic,circle,fill=red!30}}
+\tikzset{activation/.style={basic,circle,fill=cyan!20}}
+\tikzset{input/.style={basic,circle,fill=green!20}}
 \tikzset{weights/.style={basic,rectangle}}
-\tikzset{sum/.style={basic,circle,fill=green!30}}
+\tikzset{sum/.style={basic,circle,fill=orange!20}}
 \tikzset{functions/.style={basic,circle,fill=blue!30}}
-
+\tikzset{output/.style={basic,circle,fill=red!20}}
 
 \begin{document}
     \begin{tikzpicture}
-        \node[functions] (center) {};
+        \node[activation] (center) {};
         \node[below of=center,font=\scriptsize,text width=4em] {Activation function};
         \draw[thick] (0.5em,0.5em) -- (0,0.5em) -- (0,-0.5em) -- (-0.5em,-0.5em);
         \draw (0em,0.75em) -- (0em,-0.75em);
         \draw (0.75em,0em) -- (-0.75em,0em);
-        \node[right of=center] (right) {};
+        \node[output, right = of center] (right) {$\hat a$};
             \path[draw,thick,->] (center) -- (right);
         \node[sum,left=3em of center] (left) {$\sum$};
             \path[draw,thick,->] (left) -- (center);
@@ -35,5 +36,6 @@
             \path[draw,thick,->] (0) -- (left);
         \node[below of=ln,font=\scriptsize] {inputs};
         \node[below of=n,font=\scriptsize] {weights};
+        \node[below of=right, font=\scriptsize] {output};
     \end{tikzpicture}
 \end{document}

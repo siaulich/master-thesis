@@ -51,6 +51,10 @@
   bookmarksopen=true,
 bookmarksnumbered=true}
 \usepackage{cleveref}
+\crefname{figure}{figure}{figures}
+\crefname{chapter}{chapter}{chapters}
+\crefname{table}{table}{tables}
+\crefname{equation}{equation}{equations}
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\argmax}{arg\,max}
 
@@ -75,9 +79,9 @@ Learning}{}%{Verbesserung der Rekonstruktion von Top-Quark-Paaren in
 \maketitle
 \cleardoublepage
 \begin{abstract}
-  \noindent Recent advances in particle physics research have focused on top-quark physics. These advances include stringent tests of spin correlations and quantum effects in top-quark pairs ($t\bar{t}$), as well as the observation of a possible quasi-bound-state resonance in the $t\bar{t}$ invariant mass spectrum. The latter presents a very exciting opportunity to advance the current understanding of non-relativistic Quantum Chromodynamics. Both phenomena are predominantly investigated in the dilepton decay channel of top-quark pairs near the $t\bar{t}$ production threshold.
+  \noindent Recent advances in particle physics research have focused on top-quark physics. These advances include stringent tests of spin correlations and quantum effects in top-quark pairs ($t\bar{t}$), as well as the observation of a possible quasi-bound-state resonance in the $t\bar{t}$ invariant mass spectrum. The latter presents an exciting opportunity to advance the current understanding of non-relativistic Quantum Chromodynamics. Both phenomena are predominantly investigated in the dilepton decay channel of top-quark pairs near the $t\bar{t}$ production threshold.
 
-  The dilepton final state consists of two neutrinos, two charged leptons, and two $b$-quark jets. Accurate analysis of this system requires precise reconstruction of the top quarks, a task complicated by the presence of two neutrinos. Previous reconstruction strategies have primarily focused on inferring neutrino momenta, while the challenge of correctly assigning $b$-jets to their parent top quarks has received less attention. Nevertheless, many sensitive variables used in $t\bar{t}$ precision measurements depend critically on the correct assignment of jets.
+  The dilepton final state consists of two neutrinos, two charged leptons, and two $b$-quark jets. Accurate analysis of this system requires precise reconstruction of the top quarks, a task complicated by the presence of two neutrinos. Previous reconstruction strategies have primarily focused on inferring neutrino momenta, while the challenge of correctly assigning $b$-jets to their parent top quarks has received less attention. Nevertheless, many sensitive variables used in $t\bar{t}$ precision measurements depend critically on the correct assignment of jets. Therefore, this work aims to close this gap in the research.
 
   Building on the success of machine learning architectures in addressing assignment challenges in hadronic decay channels and neutrino regression in the dilepton channel, this study demonstrates that both tasks can be accomplished by a single model. Various models and configurations are implemented and evaluated. The discussion covers machine learning aspects of the different architectures, followed by an in-depth analysis of the method's strengths and advantages. Using a simplified analysis setup, the model's ability to improve the measurement sensitivity is demonstrated. Comparison of distributions from \atlas event data and simulated events indicates the model's readiness for application in a full analysis context. The method presented is the first machine learning tool to provide full reconstruction of the dileptonic decay channel available in the \atlas Collabartion's official software repository. Application of these tools to current and future analyses is expected to substantially enhance the sensitivity and precision of searches and measurements.
   \bigskip\par

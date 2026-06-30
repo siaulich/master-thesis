@@ -1,79 +1,83 @@
 \chapter{Machine Learning in Particle Physics}
 \label{chap:machine-learning}
-Since this work focuses on improving the event reconstruction of dileptonic \ttbar decays using machine learning techniques, this Chapter provides an overview of the fundamental concepts and methodologies employed in machine learning.
+Since this work uses supervised machine learning to improve the event reconstruction of dileptonic \ttbar decays, this chapter provides an overview of the fundamental concepts and methodologies employed in machine learning.
 
-From a computational perspective, machine learning can be viewed as the optimisation of a function $f:\mathbb{R}^n \rightarrow \mathbb{R}^m$ that maps input data points $\mathbf{x} \in \mathbb{R}^n$ to output predictions $\mathbf{y} \in \mathbb{R}^m$.
-The function $f$ is parameterised by a set of learnable parameters $\theta$, which are adjusted during the training process to minimise a predefined \textit{loss function} $L(\mathbf{y}, f(\mathbf{x};
-\theta))$. The loss function quantifies the discrepancy between the predicted outputs and the true target values, guiding the optimisation process.
+From a computational perspective, machine learning can be viewed as the optimisation of a function, $f_{\boldsymbol{\theta}}:\mathbb{R}^n \rightarrow \mathbb{R}^m$, that maps input data points, $\mathbf{x} \in \mathbb{R}^n$, to output predictions $f_{\boldsymbol{\theta}}(x) \in \mathbb{R}^m$.
+The function $f_{\boldsymbol{\theta}}$ is parameterised by a set of learnable parameters ${\boldsymbol{\theta}}$, which are adjusted during the training process to minimise a predefined \textit{loss function} $L(\mathbf{y}, f_{\boldsymbol{\theta}}(\mathbf{x}))$. The loss function quantifies the discrepancy between the outputs and the target values (labels), guiding the optimisation process.
+Note, that bold letters and symbol, e.g. $\mathbf{y}$, $\boldsymbol{\theta}$, or $\mathbf{x}$ represent potentially multidimensional objects.
+
 
 \section{Supervised Learning}
-Machine learning can be broadly categorised into supervised and unsupervised learning. This thesis focuses on the former of the two: in supervised learning, the model is trained on a labelled dataset, where each input data point is associated with a corresponding target output. The goal of the model is to learn a mapping from inputs to outputs, enabling it to make accurate predictions on unseen data.
+Machine learning can be broadly categorised into supervised and unsupervised learning. This thesis focuses on the former of the two. In supervised learning, the model is trained on a labelled dataset, where each input data point is associated with a corresponding label. The goal of the model is to learn a mapping from inputs to outputs, enabling it to make accurate predictions on unseen data.
 
-\subsection{Monte Carlo Training Data}
-As mentioned before, supervised training requires labels associated with the input data. While this can be a major bottleneck for many machine learning applications, this limitation is largely absent in particle physics. In \Cref{sec:mc_colliders}, it was elaborated on how fundamental physics is simulated at colliders. Events are sampled from the underlying probability distributions of the produced particles and then further processed to match the observed detector-level structure. Thus, the necessary labels that the model seeks to predict are readily available for simulated events.
+\subsection{Training with Monte Carlo Simulations}
+As mentioned before, supervised training requires labels associated with the input data. While this can be a major bottleneck for many machine learning applications, this limitation is largely absent in particle physics. In \cref{sec:mc_colliders}, it was elaborated on how fundamental physics is simulated at colliders. Events are sampled from the underlying probability distributions of the produced particles and then further processed to match the observed detector-level structure. Thus, the necessary labels that are required for supervised training of the model are readily available for simulated events.
 
-\subsection{Training}
-During the training phase, the model is presented with a set of input features derived from the reco-level event variables, along with their corresponding target outputs, which are typically derived from the parton-level event variables. The model learns to map the input features to the target outputs by minimising a loss function that quantifies the difference between the predicted and true values.
-Common loss functions include mean squared error (MSE) for regression tasks and cross-entropy loss~\cite{cross-entropy} for classification tasks.
-The training process involves iteratively updating the model's parameters (each step is called an \textit{epoch}) using an optimisation algorithm to minimise the loss function.
+During the training phase, the model is presented with a set of input features derived from the reco-level event variables, along with their corresponding label values, which are typically derived from the parton-level event variables.
+The training process involves iteratively updating the model's parameters (each step is called an \textit{epoch}) using an optimisation algorithm to minimise the loss function. Since the structure of the simulated events closely resembles the data, the model is expected to smoothly generalise from simulation to data.
 
 \subsection{Validation and Testing}
-To evaluate the performance of the trained model, it is essential to validate and test it on independent datasets that were not used during training. This helps to assess the model's generalisation capabilities and ensures that it can make accurate predictions on unseen data. A common practice is to split the available data into training, validation, and test sets. The validation set is used to tune hyperparameters and monitor the model's performance during training, while the test set is reserved for the final evaluation.
+To evaluate the performance of the trained model, it is essential to validate and test it on independent datasets that were not used during training. This helps to assess the model's generalisation capabilities and ensures that it can make accurate predictions on unseen data. A common practice is to split the total available data into training, validation, and test sets. The validation set is used to tune hyperparameters and monitor the model's performance during training, while the test set is reserved for the final evaluation.
 
-Since in particle physics simulated data is often used for training and background modelling, one typically employs a k-fold strategy \cite{k-folding}, in which the data is divided into k subsets. The model is trained k times, each time using a different subset as the validation set and the remaining subsets for training. This approach helps to use the available data more efficiently.
+In particle physics simulated data is often used for training and background modelling. Therefore, one typically employs a k-fold strategy \cite{k-folding}, in which the data for training and validation is divided into k subsets. The model is trained k times, each time using a different subset as the validation set and the remaining subsets for training. The test set, on the other hand, is disjunct from all trainings and validation sets.
+
 
 \section{Regression and Conditional Density Learning}
 \label{sec:regression_vs_conditional_density}
-To highlight important distinctions among machine learning tasks, it is useful to briefly discuss regression and conditional density learning.
-\subsection{Supervised Learning as Risk Minimisation}
-In supervised learning, the goal is to learn a parametrised function $f_\theta$ that maps input data $\mathbf{x}$ to output predictions $\mathbf{y}$. This can be formalised as a risk minimisation problem, in which the objective is to minimise the expected loss under the joint distribution of inputs and outputs. The expected risk can be expressed as:
-\begin{equation}
-    R(f) = \mathbb{E}_{\mathbf{x}, \mathbf{y}}[L(\mathbf{y},   f\theta(\mathbf{x}))]
-\end{equation}
-where $L$ is the loss function that quantifies the discrepancy between the true output $\mathbf{y}$ and the predicted output $f_\theta(\mathbf{x})$. The goal of training is to find the parameters $\theta$ that minimise this expected risk, which is typically approximated using empirical risk minimisation on the training dataset.
+While the mapping of inputs to outputs is frequently viewed as a one-to-one correspondence, the outputs and labels themselves are often random variables. That is, instead of a deterministic mapping, the outputs follow a conditional probability distribution $p(\mathbf{y}|\mathbf{x})$. This distinction is particularly relevant in reconstruction tasks, such as neutrino regression. 
+Because only two of the six unknown neutrino components are constrained by the missing transverse energy, multiple distinct parton-level neutrino momenta can produce the exact same detector-level event. Consequently, any mapping from detector-level observables to parton-level kinematics is inherently ambiguous.
+In practice, because of high dimensionality and finite datasets, the probability of observing two identical detector-level events is virtually zero. However, this underlying phase-space ambiguity fundamentally alters the learning process and the behaviour of the loss functions.
+This section explores the underlying foundation of this.
+
+
 \subsection{Regression}
-\label{sec:regression}
-In regression tasks, the output $\mathbf{y}$ is a continuous variable, and the model is trained to predict a specific value for each input $\mathbf{x}$. The loss function commonly used for regression is the mean squared error (MSE), which measures the average squared difference between the predicted values and the true values:
+For regression tasks the output $\mathbf{y}$ is a continuous variable, and the model is trained to predict a \textit{point estimate}, that is, a specific value of $y_{\text{pred.}}=f_{\boldsymbol{\theta}}(\mathbf{x})$ for each input $(\mathbf{x})$.
+In the framework of a stochastic output variable, the supervised learning of such a model can be formalised as a risk minimisation problem. The objective is to minimise the expected loss under the joint distribution of inputs and outputs. The expected risk can be expressed as:
 \begin{equation}
-    L_{\text{MSE}}(\mathbf{y}, f(\mathbf{x})) = \frac{1}{N}\sum_{i=1}^{N} (y_i - f_\theta(\mathbf{x}i))^2
+    R(f_{\boldsymbol{\theta}}) = \mathbb{E}_{\mathbf{x}, \mathbf{y}}[L(\mathbf{y},f_{\boldsymbol{\theta}}(\mathbf{x}))]
 \end{equation}
-where $N$ is the number of samples in the dataset. The model learns to minimise this loss function. If the labels are not deterministic, meaning that there is inherent uncertainty in the target values, one can describe the labels using a conditional probability distribution $p(\mathbf{y}|\mathbf{x})$. In this case, minimising the MSE corresponds to learning the conditional mean of the distribution (see \Cref{app:mse_mean} for a proof):
+where $L$ is the loss function--quantifying divergence of outputs and labels-- and $\mathbb{E}_{\mathbf{x}, \mathbf{y}}$ denotes the average over distributions of the random variables $\mathbf{x}$, $\mathbf{y}$\footnote{In the case of a deterministic mapping between inputs and labels this joint average over both inputs and labels reduces to an average over the inputs only.}. The goal of the training procedure is to find the parameters ${\boldsymbol{\theta}}$ that minimise this expected risk.
+The loss function commonly used for regression is the mean squared error (MSE), which measures the average squared difference between the predicted values and the true values:
 \begin{equation}
-    f\theta(\mathbf{x}) = \mathbb{E}[\mathbf{y}|\mathbf{x}] = \int   \mathbf{y} p(\mathbf{y}|\mathbf{x}) d\mathbf{y},.
+    L_{\text{MSE}}(f_{\boldsymbol{\theta}}|\{(\mathbf{y}_i,\mathbf{x}_i)\}) = \frac{1}{N}\sum_{i=1}^{N} (\mathbf{y}_i - f_{\boldsymbol{\theta}}(\mathbf{x}_i))^2\,,
 \end{equation}
-Depending on the loss function used, the model can learn different statistics of the conditional distribution. For example, using the mean absolute error (MAE) loss function would cause the model to learn the conditional median rather than the mean.
+where $N$ is the number of events in the dataset. The model learns to minimise this loss function. If the labels are, however, not deterministic, meaning that there is inherent uncertainty in the target values, one can describe the labels using a conditional probability distribution $p(\mathbf{y}|\mathbf{x})$. In this case, minimising the MSE corresponds to learning the conditional mean of the distribution (see \cref{app:mse_mean} for a proof):
+\begin{equation}
+    f_{\boldsymbol{\theta}}(\mathbf{x}) = \mathbb{E}_{\mathbf{y}|\mathbf{x}}[\mathbf{y}] = \int   \mathbf{y} p(\mathbf{y}|\mathbf{x}) d\mathbf{y},.
+\end{equation}
+Using different loss functions implies that the model will learn different statistics of the conditional distribution. For example, using the mean absolute error (MAE) loss function instead of the MSE loss function would cause the model to learn the conditional median rather than the conditional mean.
 
 \subsection{Conditional Density Learning}
 \label{sec:conditional_density}
 In contrast to regression, conditional density learning aims to learn the entire conditional probability distribution $p(\mathbf{y}|\mathbf{x})$ rather than just a point estimate. This is particularly useful when the target variable has inherent uncertainty or when multiple outcomes are possible for a given input. To quantify the difference between the true conditional distribution and the model's predicted distribution, the Kullback-Leibler (KL) divergence is often used as a loss function~\cite{kl_divergence}
 \begin{equation}
-    L_{\text{KL}}(p, q) = \int p(\mathbf{y}|\mathbf{x}) \log \left(\frac{p(\mathbf{y}|\mathbf{x})}{q_\theta(\mathbf{y}|\mathbf{x})}\right) d\mathbf{y}
+    L_{\text{KL}}(p, q_{\boldsymbol{\theta}}) = \int p(\mathbf{y}|\mathbf{x}) \log \left(\frac{p(\mathbf{y}|\mathbf{x})}{q_{\boldsymbol{\theta}}(\mathbf{y}|\mathbf{x})}\right) d\mathbf{y}\,,
 \end{equation}
-where $p(\mathbf{y}|\mathbf{x})$ is the true conditional distribution and $q_\theta(\mathbf{y}|\mathbf{x})$ is the model's predicted distribution. Minimising this loss function encourages the model to produce a predicted distribution that closely matches the true distribution, allowing for a more comprehensive understanding of the uncertainty and variability in the target variable. In practice, computing the KL divergence can be challenging because the true distribution may be unknown or difficult to estimate. In such cases, one relies on the data to provide an empirical estimate of the true distribution, and the loss function is approximated using samples from the dataset. It can be shown that minimising the KL divergence is equivalent to maximising the logarithmic likelihood of the observed data under the model's predicted distribution, which is a common approach in training probabilistic models; see \Cref{app:ml_kld} for details. One notable case is a discrete target variable, for which this corresponds to minimising the cross-entropy loss, a widely used measure in classification tasks~\cite{cross-entropy}.
+where $p(\mathbf{y}|\mathbf{x})$ is the true conditional distribution and $q_{\boldsymbol{\theta}}(\mathbf{y}|\mathbf{x})$ is the model's predicted distribution. Minimising this loss function encourages the model to produce a predicted distribution that closely matches the true distribution, allowing for a more comprehensive understanding of the uncertainty and variability in the target variable. In practice, computing the KL divergence can be challenging because the true distribution may be unknown or difficult to estimate. In such cases, one relies on the data to provide an empirical estimate of the true distribution, and the loss function is approximated using events from the dataset. It can be shown that minimising the KL divergence is equivalent to maximising the logarithmic likelihood of the observed data under the model's predicted distribution, which is a common approach in training probabilistic models; see \cref{app:ml_kld} for details. One notable case is a discrete target variable, for which this corresponds to minimising the cross-entropy loss, a widely used measure in classification tasks~\cite{cross-entropy}.
 
 \section{Neural Networks}
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.6\textwidth]{figures/machine-learning/perceptron.pdf}
-    \caption{Schematic of a single artificial neuron (perceptron). The neuron receives multiple input signals, each associated with a weight, and computes a weighted sum of these inputs; a so-called bias is added. An activation function is then applied to this sum to produce the neuron's output.}
+    \caption{Schematic of a single artificial neuron. The neuron receives multiple input signals, each associated with a weight, and computes a weighted sum of these inputs; a so-called bias is added. An activation function is then applied to this sum to produce the neuron's output.}
     \label{fig:perceptron}
 \end{figure}
 As elaborated upon before, machine learning models can be viewed as parameterised functions that map input data to output predictions.
 Neural networks are a class of machine learning models that are inspired by the structure and function of biological neural networks in the human brain. They consist of interconnected artificial neurons that process and transform the input data to produce the desired output.
-The simplest unit of a neural network is the artificial neuron, also known as a perceptron~\cite{perceptron}. A perceptron takes multiple input signals, each associated with a weight, and computes a weighted sum of these inputs. An activation function is then applied to this sum to produce the neuron's output. This structure is illustrated in \Cref{fig:perceptron}. The general structure of a perceptron is inspired by biological neurons. The activation function introduces non-linearity into the model, allowing it to learn complex patterns in the data. Common activation functions include the sigmoid function, hyperbolic tangent (tanh), and rectified linear unit (ReLU)
+The simplest unit of a neural network is the artificial neuron, also known as a perceptron~\cite{perceptron}. An artificial neuron takes multiple input signals, each associated with a weight, computes a weighted sum of these inputs, and potentially adds a so-called bias. An activation function is then applied to this sum to produce the neuron's output. This structure is illustrated in \cref{fig:perceptron}. The general structure of an artificial neuron is inspired by biological neurons. The activation function introduces non-linearity into the model, allowing it to learn complex patterns in the data. Common activation functions include the sigmoid function, hyperbolic tangent (tanh), and rectified linear unit (ReLU)
 \cite{relu}. For this work, the ReLU activation function is used, which is defined as $f(x) = \max(0, x)$, meaning that it outputs the input directly if it is positive, and zero otherwise. This activation function has been shown to be effective in training deep neural networks by mitigating the vanishing gradient problem~\cite{relu}.
 
 \subsection{Dense Neural Network}
 \begin{figure}[ht]
-\centering
-\includegraphics[width=0.5\textwidth]{figures/machine-learning/dnn.pdf}
-\caption{Schematic of a dense neural network with multiple layers.
-Each layer consists of multiple neurons, and each neuron in one   layer is connected to every neuron in the subsequent layer.}
-\label{fig:dnn}
+    \centering
+    \includegraphics[width=0.5\textwidth]{figures/machine-learning/dnn.pdf}
+    \caption{Schematic of a dense neural network with multiple layers.
+    Each layer consists of multiple neurons, and each neuron in one layer is connected to every neuron in the subsequent layer.}
+    \label{fig:dnn}
 \end{figure}
-A dense neural network (DNN), also known as a fully connected neural network~\cite{backpropagation}, is an artificial neural network in which each neuron in one layer is connected to every neuron in the subsequent layer. This architecture enables learning of complex relationships between input features and output targets. A schematic of a dense neural network is shown in \Cref{fig:dnn}.
+A dense neural network (DNN), also known as a fully connected neural network~\cite{backpropagation}, is an artificial neural network in which each neuron in one layer is connected to every neuron in the subsequent layer. This architecture enables learning of complex relationships between input features and output targets. A schematic of a dense neural network is shown in \cref{fig:dnn}.
 
-A DNN consists of an input layer, one or more hidden layers, and an output layer. The input layer receives the input features, while the hidden layers perform a series of transformations on the data using the weights and biases associated with each neuron. The output layer produces the final predictions. Each layer applies an activation function to the weighted sum of inputs from the previous layer, enabling the network to learn non-linear mappings. The depth (number of layers) and width (number of neurons per layer) of the network can be adjusted.
+A DNN consists of an input layer, one or more hidden layers, and an output layer. The input layer receives the input features, while the hidden layers perform a series of transformations on the data using the weights and biases associated with each neuron. The output layer produces the final predictions. Each layer applies an activation function to the weighted sum of inputs from the previous layer, enabling the network to learn non-linear mappings. The depth (number of layers) and width (number of neurons per layer) of the network can be adjusted and therefore optimised.
 
 \subsection{Transformer Networks}
 \label{sec:transformer}
@@ -98,29 +102,28 @@ A DNN consists of an input layer, one or more hidden layers, and an output layer
         \caption{Transformer Layer}
         \label{fig:transformer_layer}
     \end{subfigure}
-    \caption{Different components of the transformer architecture from     smallest to largest unit: (a) Scaled Dot-Product Attention, (b)
-    Multi-Head Attention, and © Transformer Layer. These structures were first outlined in Reference~\cite{attention_is_all_you_need}.}
+    \caption{Different components of the transformer architecture from smallest to largest unit: \subrefb{fig:dpa} Scaled Dot-Product Attention, \subrefb{fig:mha} Multi-Head Attention, and \subrefb{fig:transformer_layer} Transformer Layer. These structures were first outlined in reference~\cite{attention_is_all_you_need}.}
     \label{fig:attention}
 \end{figure}
-The transformer architecture deals with sequential data using an attention mechanism. This allows transformers to process information in parallel, making them efficient for training on large datasets.
+The transformer architecture deals with sequential data. The core component of the transformer architecture is the attention mechanism, which allows the model to focus on different parts of the input sequence when making predictions. This structure allows transformers to process information in parallel, making them efficient for training on large datasets.
 Additionally, transformers can effectively capture long-range dependencies in the data by relating all elements of the input sequence to one another through attention mechanisms.
 
-The core component of the transformer architecture is the attention mechanism, which allows the model to focus on different parts of the input sequence when making predictions. The most commonly used attention mechanism is the scaled dot-product attention~\cite{attention_is_all_you_need}, illustrated in \Cref{fig:dpa}. In this mechanism, three vectors are computed for each input element: the query ($q$), key ($k$), and value ($v$)
+The most commonly used attention mechanism is the \textit{scaled dot-product attention}~\cite{attention_is_all_you_need}, illustrated in \cref{fig:dpa}. In this mechanism, three vectors are computed for each input element: the query ($q$), key ($k$), and value ($v$)
 vectors. The attention scores are calculated by taking the dot product of the query and key vectors, scaling the result by the square root of the key vector dimension, and applying a softmax function to obtain attention weights. These weights are then used to compute a weighted sum of the value vectors, yielding the attention mechanism's output.
 
-Multi-head attention, shown in \Cref{fig:mha}, extends the scaled dot-product attention by allowing the model to attend to different parts of the input sequence simultaneously. This is achieved by using multiple parallel attention heads, each with its own set of learned linear transformations for the query, key, and value vectors. The outputs of all attention heads are concatenated and linearly transformed to produce the final output.
+\textit{Multi-head attention}, shown in \cref{fig:mha}, extends the scaled dot-product attention by allowing the model to attend to different parts of the input sequence simultaneously. This is achieved by using multiple parallel attention heads, each with its own set of learned linear transformations for the query, key, and value vectors. The outputs of all attention heads are concatenated and linearly transformed to produce the final output.
 
-Multi-head attention is embedded in a structure called the transformer layer, as depicted in \Cref{fig:transformer_layer}. This layer combines the attention mechanism with trainable normalisation layers and residual summation of the inputs. Lastly, the outputs pass through a feed-forward layer consisting of a dense layer with ReLU activation that projects into a space of twice the input dimension, followed by a linear projection back to the input dimension. These outputs are once more added to the inputs and finally scaled by a normalisation layer~\cite{attention_is_all_you_need}.
+Multi-head attention is embedded in a structure called the \textit{transformer layer}, as depicted in \cref{fig:transformer_layer}. This layer combines the attention mechanism with trainable normalisation layers and residual summation of the inputs. Lastly, the outputs pass through a feed-forward layer consisting of a dense layer with ReLU activation that projects into a space of twice the input dimension, followed by a linear projection back to the input dimension. These outputs are once more added to the inputs and finally scaled by a normalisation layer~\cite{attention_is_all_you_need}.
 
 The key, query and value vectors are typically obtained by applying learned linear transformations for the input embeddings. Depending on the type of relational information one wants to capture, one can choose to derive these vectors from different input sources. For example, in the \textit{self-attention mechanism}, all three vectors are derived from the same input sequence ($\hat q_t = \hat k_t=\hat v_t = \hat x_t$), allowing the model to relate different elements within the same sequence. In \textit{cross-attention}, the query vectors are derived from one sequence, while the key and value vectors are derived from another sequence ($\hat q_t = \hat x_{1,t}$, $\hat k_t=\hat v_t = \hat x_{2,t}$), enabling the model to relate information between two different sequences.
 \paragraph{Symmetries}
 In many applications, including particle physics, the input data exhibits certain symmetries that can be exploited to improve model performance.
 
-The attention mechanism has inherent permutation equivariance that can be exploited. Self-attention is permutation-equivariant to the input sequence, meaning that shuffling the input elements results in a corresponding permutation of the output elements. This property is particularly useful when dealing with sets or unordered data, where the order of the elements does not carry any inherent meaning.
+The attention mechanism has inherent permutation equivariance that can be exploited. Self-attention is permutation-equivariant to the input sequence, meaning that shuffling the input elements results in a corresponding permutation of the output elements. This property is particularly useful when dealing with sets of unordered data, where the order of the elements does not carry any inherent meaning.
 Cross-attention is also permutation-equivariant with respect to permutations of the query inputs and separately invariant to permutations of the key/value inputs.
 This allows the model to effectively relate information between two different sequences, regardless of their order.
 
 \subsection{Training Neural Networks}
 Training neural networks involves optimising the model's parameters (weights and biases) to minimise the loss function. The number of parameters in a neural network can rise rapidly, especially in deep architectures, making the optimisation process computationally intensive. The most commonly used optimisation algorithm for training neural networks is stochastic gradient descent (SGD)~\cite{sgd}, which iteratively updates the model's parameters based on the gradients of the loss function with respect to the parameters. Modern variants of SGD, such as Adam~\cite{adam}, incorporate adaptive learning rates and momentum to improve convergence.
-The backpropagation algorithm~\cite{backpropagation} is used to efficiently compute the gradients of the loss function with respect to the model's parameters. It involves propagating the error signal backwards through the network, allowing for the calculation of gradients at each layer. These gradients are then used by the optimisation algorithm to update the parameters. The algorithm relies on the chain rule and the neural network's nested structure to compute gradients efficiently.
-Regularisation techniques, such as dropout~\cite{dropout} and weight decay, are often employed during training to prevent overfitting and improve the model's generalisation capabilities. Dropout randomly deactivates a fraction of the neurons during training, forcing the network to learn more robust features. Weight decay~\cite{adamW} adds a penalty term to the loss function based on the magnitude of the weights, discouraging overly complex models and promoting generalisation.
+The backpropagation algorithm~\cite{backpropagation} is used to efficiently compute the gradients of the loss function with respect to the model's parameters. It involves propagating the error signal backwards through the network, allowing for the calculation of gradients at each layer. Based on the gradients, the optimisation algorithm updates the parameters to optimise the loss function. 
+Regularisation techniques, such as dropout~\cite{dropout} and weight decay~\cite{adamW}, are often employed during training to prevent overfitting and improve the model's generalisation capabilities. Dropout randomly deactivates a fraction of the neurons during training, forcing the network to learn more robust features. Weight decay adds a penalty term to the loss function based on the magnitude of the weights, discouraging overly complex models and promoting generalisation.
