@@ -141,8 +141,7 @@
   \begin{tabular}[t]{p{0.175\textwidth}p{0.825\textwidth-4\tabcolsep}}
     \bfseries\large Erkl\"arung&nach
     \if@bachelor\S13(9)%
-    \else\S17(9)\fi{}  der Pr{\"u}fungsordnung f{\"u}r den 
-    Bachelor-Studiengang Physik und den Master-Studiengang Physik 
+    \else\S12(9)\fi{}  der Pr{\"u}fungsordnung f{\"u}r den Master-Studiengang Physik 
     an der Universit{\"a}t G{\"o}ttingen:\\[1em]
     &Hiermit erkl{\"a}re ich, dass ich diese Abschlussarbeit
     selbst{\"a}ndig verfasst habe, keine anderen als die
@@ -153,7 +152,8 @@
     Dar{\"u}berhinaus erkl{\"a}re ich, dass diese Abschlussarbeit nicht, auch nicht
     auszugsweise, im Rahmen einer nichtbestandenen Pr{\"u}fung an dieser oder
     einer anderen Hochschule eingereicht wurde.\\[1em]
-    &\begin{center}G{\"o}ttingen, den \today\end{center}\\[1.5cm]
+    &\begin{center}G{\"o}ttingen, den \today\end{center}\\[1.0cm]
+    &\begin{center}\includegraphics[width=0.2\textwidth]{../Unterschrift_no_bkg.png}\end{center}\\[-0.8cm]
     &\begin{center}(\@ThesisAuthor)\end{center}
     %\begin{minipage}[t]{0.76\textwidth-4\tabcolsep}
     %  \@author\end{minipage}
