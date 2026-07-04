@@ -52,9 +52,7 @@
 bookmarksnumbered=true}
 \usepackage{cleveref}
 \crefname{figure}{figure}{figures}
-\crefname{chapter}{chapter}{chapters}
-\crefname{table}{table}{tables}
-\crefname{equation}{equation}{equations}
+\crefname{appsec}{appendix}{appendices}
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\argmax}{arg\,max}
 
@@ -83,7 +81,7 @@ Learning}{}%{Verbesserung der Rekonstruktion von Top-Quark-Paaren in
 
   The dilepton final state consists of two neutrinos, two charged leptons, and two $b$-quark jets. Accurate analysis of this system requires precise reconstruction of the top quarks, a task complicated by the presence of two neutrinos. Previous reconstruction strategies have primarily focused on inferring neutrino momenta, while the challenge of correctly assigning $b$-jets to their parent top quarks has received less attention. Nevertheless, many sensitive variables used in $t\bar{t}$ precision measurements depend critically on the correct assignment of jets. Therefore, this work aims to close this gap in the research.
 
-  Building on the success of machine learning architectures in addressing assignment challenges in hadronic decay channels and neutrino regression in the dilepton channel, this study demonstrates that both tasks can be accomplished by a single model. Various models and configurations are implemented and evaluated. The discussion covers machine learning aspects of the different architectures, followed by an in-depth analysis of the method's strengths and advantages. Using a simplified analysis setup, the model's ability to improve the measurement sensitivity is demonstrated. Comparison of distributions from \atlas event data and simulated events indicates the model's readiness for application in a full analysis context. The method presented is the first machine learning tool to provide full reconstruction of the dileptonic decay channel available in the \atlas Collaboration's official software repository. Application of these tools to current and future analyses is expected to substantially enhance the sensitivity and precision of searches and measurements.
+  Building on the success of machine learning architectures in addressing assignment challenges in hadronic decay channels and neutrino regression in the dilepton channel, this study demonstrates that both tasks can be accomplished by a single model. Various models and configurations are implemented and evaluated. The discussion covers machine learning aspects of the different architectures, followed by an in-depth analysis of the method's strengths and weaknesses. Using a simplified analysis setup, the model's ability to improve the measurement sensitivity is demonstrated. Comparison of distributions from \atlas event data and simulated events indicates the model's readiness for application in a full analysis context. The method presented is the first machine learning tool to provide complete reconstruction of the dileptonic decay channel available in the \atlas Collaboration's official software repository. Application of these tools to current and future analyses is expected to substantially enhance the sensitivity and precision of searches and measurements.
   \bigskip\par
   \textbf{Keywords:} Top Quark, Dileptonic Decay, Event
   Reconstruction, Machine Learning, Transformer Networks
@@ -122,7 +120,7 @@ Furthermore, I want to express my gratitude to all members of Katharina Behr's r
 
 Another round of thanks go out to the whole ATLAS group at DESY. I meet so many incredible people here and always had funny lunch or coffee breaks! Honourable mention belongs to the ATLAS ITk module production crew at DESY, who always entertained me and made my return to an experimental lab (after swearing to never do so after my Bachelor's) surprisingly pleasant.
 
-At the very end, I want to thank all my friends from the Glaskasten in Göttingen that supported me all the time and literally gave me a place to feel at home.
+At the very end, I want to thank all my friends from the Glaskasten in Göttingen that supported me all the time and (often literally) felt like home.
 Huge thanks go out to Moritz and Niklas for proofreading my thesis and Hannah for always helping me with many tough decisions. I love you all very much and cannot thank you enough for being there for me!
 
 

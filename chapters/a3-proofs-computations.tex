@@ -1,8 +1,8 @@
 \chapter{Supplementary Material}
-\label{chap:supplementary_computations_and_proofs}
+\label[appsec]{chap:supplementary_computations_and_proofs}
 \section{Mathematical Foundation of Machine Learning}
 \subsection{Mean Squared Error Loss and Conditional Expectation}
-\label{app:mse_mean}
+\label[appsec]{app:mse_mean}
 When performing a minimisation of the mean squared error (MSE) loss function in a supervised learning setting, one can show that the optimal predictor corresponds to the conditional expectation of the target variable given the input features.
 The MSE loss function can be written as:
 \begin{equation}
@@ -19,7 +19,7 @@ Using a simple calculus argument, one can show that the function $f_\theta$ that
 \end{align}
 
 \subsection{Equivalence of Maximum Likelihood and KL-Divergence Minimisation}
-\label{app:ml_kld}
+\label[appsec]{app:ml_kld}
 Let $p_{\text{data}}(x)$ denote the true data distribution and $p_\theta(x)$ a parametric model. The KL-divergence between them is defined as \begin{equation}
   D_{\text{KL}}(p_{\text{data}} \| p_\theta)
   = \mathbb{E}_{x \sim p_{\text{data}}} \left[ \log
@@ -39,9 +39,10 @@ Approximating the expectation over $p_{\text{data}}$ by the empirical mean over 
 which is precisely the maximum likelihood estimator. Note that this simply generalises to the case of a conditional probability.
 
 \subsection{Gaussian-Loss as Minimisation of the KL-divergence}
-\label{app:gaussian_loss}
-Assume the conditional parametric model to have the form of a (multidimensional) Gaussian distribution \begin{equation}
-  p_\theta(\vec   x|y)=\prod_i\frac{1}{\sqrt{2\pi\sigma_{i,\theta}^2(y)}}\exp\left(-\frac{(x_i-\mu_{i,\theta}^2(y))^2}{2\sigma_{i,\theta}^2(y)}\right)\,.
+\label[appsec]{app:gaussian_loss}
+Assume the conditional parametric model to have the form of a (multidimensional) Gaussian distribution
+\begin{equation}
+  p_\theta(\vec   x|y)=\prod_i\frac{1}{\sqrt{2\pi\sigma_{i,\theta}^2(y)}}\exp\left(-\frac{(x_i-\mu_{i,\theta}^2(y))^2}{2\sigma_{i,\theta}^2(y)}\right)~.
 \end{equation}
 For this, one can now consider the negative log-likelihood (NLL) of a dataset of $\{x_j\}_{j=1}^{N}$ of $N$ independent observations:
 \begin{align}
@@ -50,16 +51,16 @@ For this, one can now consider the negative log-likelihood (NLL) of a dataset of
 \end{align}
 The constant term $\log(2\pi)$ can be dropped for the minimisation, which results in \begin{align}
   \hat\theta&=\argmin_\theta \text{NLL}(p_\theta)\\
-  &=\argmin_\theta   \frac{1}{N}\sum_{j=1}^N\sum_{i=1}^N\left(\log(\sigma_{i,\theta}^2(y))+\frac{(x_i-\mu_{i,\theta}^2(y))^2}{\sigma_{i,\theta}^2(y)}\right)
+  &=\argmin_\theta \frac{1}{N}\sum_{j=1}^N\sum_{i=1}^N\left(\log(\sigma_{i,\theta}^2(y))+\frac{(x_i-\mu_{i,\theta}^2(y))^2}{\sigma_{i,\theta}^2(y)}\right)
 \end{align}
 
 \section{Neutrino Momenta Posterior Distributions}
-\label{app:neutrino_probs}
+\label[appsec]{app:neutrino_probs}
 \subsection{Invariant Mass of Top-Quark Pair}
 \begin{figure}[H]
   \centering
   \includegraphics[width=1.0\textwidth]{plots/gaussian_loss_plots/gaussian_loss_sample_mttbar_plots.pdf}
-  \caption{Plots showing the probability distribution of the neutrino     momentum component $p_x$ and the reconstructed invariant mass     $m(t\bar{t})$ based on the mean and standard deviation predicted by   the MMT-model trained with a Gaussian-loss for a random event.}
+  \caption{Plots showing the probability distribution of the neutrino momentum component $p_x$ and the reconstructed invariant mass $m(t\bar{t})$ based on the mean and standard deviation predicted by the MMT-model trained with a Gaussian-loss for a random event.}
   \label{fig:gaussian_loss:mttbar_posterior_sample}
 \end{figure}
 
@@ -68,13 +69,13 @@ The constant term $\log(2\pi)$ can be dropped for the minimisation, which result
 \begin{figure}[H]
   \centering
   \includegraphics[width=1.0\textwidth]{plots/gaussian_loss_plots/gaussian_loss_sample_c_hel_plots.pdf}
-  \caption{Plots showing the probability distribution of the neutrino     momentum component $p_x$ and the reconstructed \chel based on the     mean and standard deviation predicted by the MMT-model trained with   a Gaussian-loss for a random event. Indicated are the mean and true values.}
+  \caption{Plots showing the probability distribution of the neutrino momentum component $p_x$ and the reconstructed \chel based on the mean and standard deviation predicted by the MMT-model trained with a Gaussian-loss for a random event. Indicated are the mean and true values.}
   \label{fig:gaussian_loss:c_hel_posterior_sample}
 \end{figure}
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.7\textwidth]{plots/gaussian_loss_plots/gaussian_loss_c_hel_posterior_deviation.pdf}
-  \caption{Deviation between the reconstructed and true \chel. The     different curves show, whether the invariant mass was computed     using the mean momentum or by propagating the neutrino   probabilities and averaging of the obtained spin-variable.}
+  \caption{Deviation between the reconstructed and true \chel. The different curves show, whether the invariant mass was computed using the mean momentum or by propagating the neutrino probabilities and averaging of the obtained spin-variable.}
   \label{fig:gaussian_loss:c_hel_posterior_deviation}
 \end{figure}
 
@@ -82,12 +83,12 @@ The constant term $\log(2\pi)$ can be dropped for the minimisation, which result
 \begin{figure}[H]
   \centering
   \includegraphics[width=1.0\textwidth]{plots/gaussian_loss_plots/gaussian_loss_sample_c_han_plots.pdf}
-  \caption{Plots showing the probability distribution of the neutrino     momentum component $p_x$ and the reconstructed \chan based on the     mean and standard deviation predicted by the MMT-model trained with   a Gaussian-loss for a random event. Indicated are the mean and true values.}
+  \caption{Plots showing the probability distribution of the neutrino momentum component $p_x$ and the reconstructed \chan based on the mean and standard deviation predicted by the MMT-model trained with a Gaussian-loss for a random event. Indicated are the mean and true values.}
   \label{fig:gaussian_loss:c_han_posterior_sample}
 \end{figure}
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.7\textwidth]{plots/gaussian_loss_plots/gaussian_loss_c_han_posterior_deviation.pdf}
-  \caption{Deviation between the reconstructed and true \chan. The     different curves show, whether the invariant mass was computed     using the mean momentum or by propagating the neutrino   probabilities and averaging of the obtained spin-variable.}
+  \caption{Deviation between the reconstructed and true \chan. The different curves show, whether the invariant mass was computed using the mean momentum or by propagating the neutrino probabilities and averaging of the obtained spin-variable.}
   \label{fig:gaussian_loss:c_han_posterior_deviation}
 \end{figure}

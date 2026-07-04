@@ -32,18 +32,18 @@ This section explores the underlying foundation of this.
 
 \subsection{Regression}
 For regression tasks the output $\mathbf{y}$ is a continuous variable, and the model is trained to predict a \textit{point estimate}, that is, a specific value of $\hat y_{\text{pred.}}=f_{\boldsymbol{\theta}}(\mathbf{x})$ for each input $(\mathbf{x})$.
-In the framework of a stochastic output variable, the supervised learning of such a model can be formalised as a risk minimisation problem. The objective is to minimise the expected loss under the joint distribution of inputs and outputs. The expected risk can be expressed as:
+In the framework of a stochastic output variable, the supervised learning of such a model can be formalised as a risk minimisation problem. The objective is to minimise the expected batch loss under the joint distribution of inputs and outputs. The expected risk can be expressed as:
 \begin{equation}
     R[f_{\boldsymbol{\theta}}] = \mathbb{E}_{\mathbf{x}, \mathbf{y}}[L(\mathbf{y},f_{\boldsymbol{\theta}}(\mathbf{x}))]
 \end{equation}
-where $L$ is the loss function--quantifying divergence of outputs and labels-- and $\mathbb{E}_{\mathbf{x}, \mathbf{y}}$ denotes the average over distributions of the random variables $\mathbf{x}$, $\mathbf{y}$ \footnote{In the case of a deterministic mapping between inputs and labels this joint average over both inputs and labels reduces to an average over the inputs only.}. The goal of the training procedure is to find the parameters ${\boldsymbol{\theta}}$ that minimise this expected risk.
+where $L$ is the loss function, quantifying divergence of outputs and labels, and $\mathbb{E}_{\mathbf{x}, \mathbf{y}}$ denotes the average over distributions of the random variables $\mathbf{x}$, $\mathbf{y}$ \footnote{In the case of a deterministic mapping between inputs and labels this joint average over both inputs and labels reduces to an average over the inputs only.}. The goal of the training procedure is to find the parameters ${\boldsymbol{\theta}}$ that minimise this expected risk.
 The loss function commonly used for regression is the mean squared error (MSE), which measures the average squared difference between the predicted values and the true values:
 \begin{equation}
     \mathcal{L}_{\text{MSE}}[f_{\boldsymbol{\theta}}] = \frac{1}{N}\sum_{i=1}^{N} (\mathbf{y}_i - f_{\boldsymbol{\theta}}(\mathbf{x}_i))^2\,,
 \end{equation}
-where $N$ is the number of events in the dataset. The model learns to minimise this batch loss. If the labels are, however, not deterministic, meaning that there is inherent uncertainty in the target values, one can describe the labels using a conditional probability distribution $p(\mathbf{y}|\mathbf{x})$. In this case, minimising the batch loss with respect to the MSE corresponds to learning the conditional mean of the distribution (see \cref{app:mse_mean} for a proof):
+where $N$ is the number of events in the dataset. The model learns to minimise this batch loss. If the regression targets are, however, not deterministic, meaning that there is inherent uncertainty in their values, one can describe the regression targets using a conditional probability distribution $p(\mathbf{y}|\mathbf{x})$. In this case, minimising the batch loss with respect to the MSE corresponds to learning the conditional mean of the distribution (see \cref{app:mse_mean} for a proof):
 \begin{equation}
-    f_{\boldsymbol{\theta}}(\mathbf{x}) = \mathbb{E}_{\mathbf{y}|\mathbf{x}}[\mathbf{y}] = \int   \mathbf{y} p(\mathbf{y}|\mathbf{x}) d\mathbf{y},.
+    f_{\boldsymbol{\theta}}(\mathbf{x}) = \mathbb{E}_{\mathbf{y}|\mathbf{x}}[\mathbf{y}] = \int   \mathbf{y} p(\mathbf{y}|\mathbf{x}) d\mathbf{y}~.
 \end{equation}
 Using different loss functions implies that the model will learn different statistics of the conditional distribution. For example, using the mean absolute error (MAE) loss function instead of the MSE loss function would cause the model to learn the conditional median rather than the conditional mean.
 
@@ -51,6 +51,7 @@ Using different loss functions implies that the model will learn different stati
 \label{sec:conditional_density}
 In contrast to regression, conditional density learning aims to learn the entire conditional probability distribution $p(\mathbf{y}|\mathbf{x})$ rather than just a point estimate. This is particularly useful when the target variable has inherent uncertainty or when multiple outcomes are possible for a given input. To quantify the difference between the true conditional distribution and the model's predicted distribution, the Kullback-Leibler (KL) divergence is often used as a loss function~\cite{kl_divergence}
 \begin{equation}
+    \label{eq:kl_divergence}
     L_{\text{KL}}(p, q_{\boldsymbol{\theta}}) = \int p(\mathbf{y}|\mathbf{x}) \log \left(\frac{p(\mathbf{y}|\mathbf{x})}{q_{\boldsymbol{\theta}}(\mathbf{y}|\mathbf{x})}\right) d\mathbf{y}\,,
 \end{equation}
 where $p(\mathbf{y}|\mathbf{x})$ is the true conditional distribution and $q_{\boldsymbol{\theta}}(\mathbf{y}|\mathbf{x})$ is the model's predicted distribution. Minimising with respect to this loss function encourages the model to produce a predicted distribution that closely matches the true distribution, allowing for a more comprehensive understanding of the uncertainty and variability in the target variable. In practice, computing the KL divergence can be challenging because the true distribution may be unknown or difficult to estimate. In such cases, one relies on the data to provide an empirical estimate of the true distribution, and the loss function is approximated using events from the dataset. It can be shown that minimising the KL divergence is equivalent to maximising the logarithmic likelihood of the observed data under the model's predicted distribution, which is a common approach in training probabilistic models; see \cref{app:ml_kld} for details. One notable case is a discrete target variable, for which this corresponds to minimising the cross-entropy loss, a widely used measure in classification tasks~\cite{cross-entropy}.

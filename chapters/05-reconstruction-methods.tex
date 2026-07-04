@@ -12,11 +12,11 @@ All the samples used here are from the \atlas MC simulation campaign. Thus, all 
 
 \subsection{Simulation of Dileptonic Top-Quark Pair Events}
 \label{sec:nominal_ttbar}
-The process of \ttbar production with dileptonic decays is simulated using \powheg~\cite{powheg} at next-to-leading order (NLO)
-in perturbative quantum chromodynamics (QCD). The \powheg generator is interfaced with \pythia~\cite{pythia} for parton showering, hadronisation, and underlying event modelling. A more detailed description can be found in the reference~\cite{atlas_toponium}.
+The process of \ttbar production with dileptonic decays is simulated using \powheg~\cite{powheg} at next-to-leading order (NLO) in perturbative quantum chromodynamics (QCD). The \powheg generator is interfaced with \pythia~\cite{pythia} for parton showering, hadronisation, and underlying event modelling. A more detailed description can be found in the reference~\cite{atlas_toponium}.
 
-To link the reco-level particles to the parton-level objects, a parton matching is performed. The parton-level objects are defined as top quarks and their decay products, after final-state radiation, before hadronisation. The matching is performed by iteratively associating reconstructed jets with partons based on angular-distance criteria. The decay products of the top quarks at parton-level are matched to the reco-level particles within a cone of $\Delta R \leq 0.3$ and $\Delta R\leq 0.1$ for jets and leptons ($e$,$\mu$)
-respectively. If multiple reconstructed objects are found within this cone, the one with the smallest $\Delta R$ is chosen. In case no reconstructed object matches the criteria, the parton is considered unmatched.
+Additionally, quasi-bound-state effects can modify the cross-section relative to the pQCD calculation. These are modelled using non-relativistic QCD (NRQCD). For this analysis, these contributions are modelled as described in reference~\cite{NRQCD_toponium_2}. The implementation details for event generation and the samples used here can be found in reference~\cite{atlas_toponium}.
+
+To link the reco-level particles to the parton-level objects, a parton matching is performed. The parton-level objects are defined as top quarks and their decay products, after final-state radiation, before hadronisation. The $b$-quarks and $W$ bosons from the top-quark decays at parton-level are matched to the reco-level particles within a cone of $\Delta R \leq 0.3$ and $\Delta R\leq 0.1$ for jets and leptons ($e$,$\mu$) respectively. If multiple reconstructed objects are found within this cone, the one with the smallest $\Delta R$ is chosen. In case no reconstructed object matches the criteria, the parton is considered unmatched.
 
 \subsection{Object Definition}
 \label{sec:object-definition}
@@ -39,20 +39,19 @@ Events are selected to contain exactly two oppositely charged leptons (electrons
 25~\unit{\giga\electronvolt}$, while the other must have \pt $>
 5~\unit{\giga\electronvolt}$. At least two jets are required, with at least one $b$-tagged at the $85\%$ working point (WP).
 
-For training and evaluation of the reconstruction methods, only events that meet the selection criteria and have successful parton matching are considered. Fully parton-matched events account for about $ 65\%$ of the total sample. Jets or leptons from the \ttbar decay that end up outside the detector acceptance are the main cause of an event being unmatched. Thus, training only on parton-matched events might introduce a bias towards certain event topologies if they are disfavoured by parton matching.
+For training and evaluation of the reconstruction methods, only events that meet the selection criteria and have successful parton matching are considered. Fully parton-matched events account for about $ 65\%$ of the total sample. Jets or leptons from the \ttbar decay that end up outside the detector acceptance are the main cause of an event being unmatched. Thus, training only on parton-matched events might introduce a bias towards certain event topologies if they are disfavoured by parton matching. Investigation of variables such as $p_T(t), \eta(t), m(t\bar{t})$, however, yielded no major difference in the distribution for matched and unmatched events.
 
 \section{Reconstruction of Top-Quark Pairs}
 \label{sec:reconstruction-methods}
 Reconstructing the kinematics of dileptonic \ttbar events requires an assignment of reconstructed objects to the decay products of the \ttbar-system. This section describes the different reconstruction methods developed and evaluated in this thesis.
 
-While the leptons are directly identified from the reconstructed objects based on their charge, the assignment of jets to the $b$-jets from the top quark decays is ambiguous due to the presence of multiple jets in the event. Additionally, the two neutrinos from $W$ boson decays are not directly detected, resulting in missing information in the event reconstruction.
-Based on this, the reconstruction breaks down into two main tasks:
-\paragraph{Jet Assignment} Identifying the correct reconstructed jets as the jets originating from $b$-quark decays
-\paragraph{Neutrino Regression} Estimating the momenta of the two neutrinos using the measured \met and other event kinematics.
+While the leptons are directly identified from the reconstructed objects based on their charge, the assignment of jets to the $b$-jets from the top quark decays is ambiguous due to the presence of multiple jets in the event. Additionally, the two neutrinos from $W$ boson decays are not directly detected, resulting in missing information in the event reconstruction. Based on this, the reconstruction breaks down into two main tasks:
+\paragraph{Jet Assignment:} Identifying the correct reconstructed jets as the jets originating from $b$-quark decays
+\paragraph{Neutrino Regression:} Estimating the momenta of the two neutrinos using the measured \met and other event kinematics.
 
 \subsection{B-Tagging}
 \label{sec:b_tagging}
-The identification of $b$-jets is crucial for the reconstruction of \ttbar events. Due to the long lifetime of $B$-hadrons, they travel a measurable distance from the primary vertex before decaying, leading to displaced vertices and tracks that do not point back directly to the primary vertex. This displacement is quantified by the impact parameter, defined as the distance of closest approach between a track and the primary vertex (in the transverse plane, $d_0$, and along the beam axis, $z_0$); tracks originating from $B$-hadron decays are thus characterised by large impact parameters relative to those from the primary vertex. The GN2 algorithm~\cite{gn2_btagger} is used for $b$-tagging in this analysis, which combines various discriminating variables, including track impact parameters and reconstructed secondary vertices, using a deep (graph) neural network to achieve high efficiency and purity in identifying $b$-jets. The performance of the $b$-tagging algorithm is characterised by its efficiency (the probability of correctly identifying a $b$-jet) and its misidentification rate (the probability of incorrectly tagging a non-$b$-jet as a $b$-jet).
+The identification of $b$-jets is crucial for the reconstruction of \ttbar events. Due to the long lifetime of $B$ hadrons, they travel a measurable distance from the primary vertex before decaying, leading to displaced vertices and tracks that do not point back directly to the primary vertex. This displacement is quantified by the impact parameter, defined as the distance of closest approach between a track and the primary vertex (in the transverse plane, $d_0$, and along the beam axis, $z_0$); tracks originating from $B$-hadron decays are thus characterised by large impact parameters relative to those from the primary vertex. The GN2 algorithm~\cite{gn2_btagger} is used for $b$-tagging in this analysis, which combines various discriminating variables, including track impact parameters and reconstructed secondary vertices, using a deep (graph) neural network to achieve high efficiency and purity in identifying $b$-jets. The performance of the $b$-tagging algorithm is characterised by its efficiency (the probability of correctly identifying a $b$-jet) and its misidentification rate (the probability of incorrectly tagging a non-$b$-jet as a $b$-jet).
 
 \subsection{Jet Assignment Methods}
 \label{sec:jet_assignment}
@@ -65,7 +64,7 @@ If only one $b$-tagged jet is found, the non-tagged jet with the highest $b$-tag
 \begin{figure}[H]
 \centering
 \begin{minipage}[t]{0.48\textwidth}
-    \textbf{$\chi^2$-Method}\\[0.5em]
+    \textbf{$\chi^2$ method}\\[0.5em]
     For both possible assignments of the two $b$-jets to the parent top quarks, the invariant masses of the reconstructed top quarks are computed,
     \begin{equation}
         \label{eq:chi_square}
@@ -76,7 +75,7 @@ If only one $b$-tagged jet is found, the non-tagged jet with the highest $b$-tag
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.48\textwidth}
-    \textbf{$\Delta R$-Method}\\[0.5em]
+    \textbf{$\Delta R$ method}\\[0.5em]
     This method assigns the $b$-jet candidates based on their angular distance to the leptons.
     \begin{equation}
         \Delta R = \sqrt{(\Delta\phi)^2 + (\Delta\eta)^2}
@@ -84,42 +83,41 @@ If only one $b$-tagged jet is found, the non-tagged jet with the highest $b$-tag
     The jet and the lepton that form the pair with the smallest dR are assigned to each other. The remaining jet is assigned to the other lepton.
     \end{minipage}
 \end{figure}
-Note that the $\chi^2$-Method relies on the reconstructed neutrino momenta to compute the invariant masses of the top quarks. Therefore, it is inherently linked to the neutrino regression method used. In contrast, the $\Delta R$-Method is independent of the neutrino momenta.
+Note that the $\chi^2$ method relies on the reconstructed neutrino momenta to compute the invariant masses of the top quarks. Therefore, it is inherently linked to the neutrino regression method used. In contrast, the $\Delta R$ method is independent of the neutrino momenta.
 
 Empiric evidence for the validity of both can be found in \cref{fig:jet_lepton_pairing}, which shows the distributions of the reconstructed invariant mass of the top quark and the $\Delta R$
 between the jet and lepton for correct and incorrect jet-lepton pairs. The correct pairs show a clear peak around the top quark mass in the invariant mass distribution and a smaller $\Delta R$ compared to incorrect pairs, which supports the use of these variables for jet assignment.
 
-The $\Delta R$-Method was used in previous \atlas analyses \cite{atlas_entanglement,atlas_toponium} for events that failed the kinematic reconstruction required for the $\chi^2$-Method. However, in this thesis, both methods are evaluated on the full dataset for comparison.
+The $\Delta R$ method was used in previous \atlas analyses \cite{atlas_entanglement,atlas_toponium} for events that failed the kinematic reconstruction required for the $\chi^2$ method. However, in this thesis, both methods are evaluated on the full dataset for comparison.
 
 \begin{figure}
-\centering
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\textwidth]{plots/feature_plots/relational_jet_lepton_full_inv_mass_distribution.pdf}
-\caption{$\chi^2$-Method}
-\label{subfig:chi_square_method}
-\end{subfigure}
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\textwidth]{plots/feature_plots/relational_jet_lepton_deltaR_distribution.pdf}
-\caption{$\Delta R$-Method}
-\label{subfig:delta_R_method}
-\end{subfigure}
-\caption{Distributions for pairing up correct and incorrect jet-lepton pairs for the reconstructed invariant mass of the top quark (a) and the $\Delta R$ between the jet and lepton (b). The correct pairs are shown in blue, while the incorrect pairs are shown in red. The distributions are normalised to unit area. Note that the reconstructed invariant mass for the $\chi^2$-Method includes the neutrino prediction from $\nu^2$-Flows.}
-\label{fig:jet_lepton_pairing}
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{plots/feature_plots/relational_jet_lepton_full_inv_mass_distribution.pdf}
+        \caption{$\chi^2$ method}
+        \label{subfig:chi_square_method}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{plots/feature_plots/relational_jet_lepton_deltaR_distribution.pdf}
+        \caption{$\Delta R$ method}
+        \label{subfig:delta_R_method}
+    \end{subfigure}
+    \caption{Distributions for pairing up correct and incorrect jet-lepton pairs for the reconstructed invariant mass of the top quark \subrefb{subfig:chi_square_method} used for the $\chi^2$ method and the $\Delta R$ between the jet and lepton \subrefb{subfig:delta_R_method} used for the $\Delta R$ method. The distributions are normalised to unit area. Note that the reconstructed invariant mass for the $\chi^2$ method includes the neutrino prediction from $\nu^2$-Flows.}
+    \label{fig:jet_lepton_pairing}
 \end{figure}
 
 \subsection{Neutrino Regression Methods}
 \label{sec:neutrino_regression}
-Due to the limited availability of kinematic reconstruction methods in the \atlas software framework, two methods for neutrino regression are implemented and evaluated in this thesis. In previous \atlas analyses, the Ellipse method, which solves the kinematics constraints as introduced in \cref{sec:kinematic_constraints} was used. This method, however, is not evaluated here, due to the aforementioned software availability.
+Due to the limited availability of kinematic reconstruction methods in the \atlas software framework, two methods for neutrino regression are implemented and evaluated in this thesis. In previous \atlas analyses, the Ellipse method, which solves the kinematics constraints as introduced in \cref{sec:kinematic_constraints}, was used. This method, however, is not evaluated here, due to the aforementioned software availability.
 
 
 \subsubsection{Neutrino-Weighter}
 \label{sec:nu_weighter}
 The Neutrino-Weighter ($\nu$-Weighter), first described in \cite{neutrino_weighting_method}, is a method that assigns weights to different possible neutrino momentum configurations based on how well they satisfy the kinematic structure of the event using the measured \met and the momenta of the leptons and jets to. These momentum configurations are obtained by sampling the neutrinos' pseudorapidities from a Gaussian distribution and computing the full 3-vector of the neutrinos by solving the system of equations derived from the constraints in \cref{sec:kinematic_constraints}. The masses of the top quarks and $W$ bosons are smeared around their nominal values, i.e. different values are considered and evaluated.
-For each configuration, a weight (called likelihood) is computed based on loose kinematic constraints associated with \ttbar events -- including on-shell requirements for the $W$ bosons and top quarks. The configuration with the highest weight is then selected as the reconstructed neutrino momenta. This method is computationally intensive because it requires scanning through numerous possible neutrino momentum configurations. Also, the computation of the reconstructed masses for the top quarks and W-bosons requires identification of the jets with a lepton. In principle, this might be done by a sophisticated method such as the one to be developed in this thesis. However, the implementation used here selects the jets based on $b$-tagging at the $85\%$ working point and the leading $p_T$ if the number of $b$-tagged jets deviates from two. While this still leaves a twofold degeneracy in the assignment, both scenarios are evaluated, weighted, and considered to maximise the likelihood.
+For each configuration, a weight (called likelihood) is computed based on loose kinematic constraints associated with \ttbar events— including on-shell requirements for the $W$ bosons and top quarks. The configuration with the highest weight is then selected as the reconstructed neutrino momenta. This method is computationally intensive because it requires scanning through numerous possible neutrino momentum configurations. Also, the computation of the reconstructed masses for the top quarks and W-bosons requires identification of the jets with a lepton. In principle, this might be done by a sophisticated method such as the one to be developed in this thesis. However, the implementation used here selects the jets based on $b$-tagging at the $85\%$ working point and the leading $p_T$ if the number of $b$-tagged jets deviates from two. While this still leaves a twofold degeneracy in the assignment, both scenarios are evaluated, weighted, and considered for the likelihood maximisation.
 
 
 \subsubsection{$\nu^2$-Flows}
 \label{sec:nu_flows}
-The method $\nu^2$-Flows~\cite{nu_square_flows} uses normalising flows to model the conditional probability distribution of the neutrino momenta given the observed event kinematics. The model is trained on simulated dileptonic \ttbar events, in which the true neutrino momenta are known from parton-level information. The trained model can then be used to sample possible neutrino momenta for unseen events, enabling probabilistic reconstruction of the event kinematics. For each event, multiple samples of neutrino momenta are drawn from the model, and the one with the highest probability density is selected as the reconstructed neutrino momenta. A detailed outline of the $\nu^2$-Flows method and its implementation can be found in the reference~\cite{nu_square_flows}. For this thesis, this method serves to establish a baseline for neutrino regression to evaluate the impact of improved jet assignment methods. Note, however, that this method has not yet been used in \atlas analyses. Due to software compatibility issues, it was one of the few viable options to use as a baseline for this work. Since $\nu^2$-Flows processes the full event information to predict the neutrino momenta, it does not require a jet-assignment. Therefore, it can be used in conjunction with both the $\chi^2$-Method and the $\Delta R$-Method for jet assignment%, allowing for a direct comparison of the impact of the jet assignment on the overall reconstruction performance.
-
-For this analysis, the regression from $\nu^2$-Flows was found to deliver much better performance for the assignment. Thus, the $\chi^2$-Method was ultimately used in conjunction with the prediction of $\nu^2$-Flows, rather than the $\nu$-Weighter, to provide a reasonable baseline.
+The method $\nu^2$-Flows~\cite{nu_square_flows} uses normalising flows to model the conditional probability distribution of the neutrino momenta given the observed event kinematics. The model is trained on simulated dileptonic \ttbar events, in which the true neutrino momenta are known from parton-level information. The trained model can then be used to sample possible neutrino momenta for unseen events, enabling probabilistic reconstruction of the event kinematics. For each event, multiple samples of neutrino momenta are drawn from the model, and the one with the highest probability density is selected as the reconstructed neutrino momenta. A detailed outline of the $\nu^2$-Flows method and its implementation can be found in the reference~\cite{nu_square_flows}. For this thesis, this method serves to establish a baseline for neutrino regression to evaluate the impact of improved jet assignment methods. Note, however, that this method has not yet been used in \atlas analyses. Due to software compatibility issues, it was one of the few viable options to use as a baseline for this work. Since $\nu^2$-Flows processes the full event information to predict the neutrino momenta, it does not require a jet-assignment. Therefore, it can be used in conjunction with both the $\chi^2$ method and the $\Delta R$ method for jet assignment%, allowing for a direct comparison of the impact of the jet assignment on the overall reconstruction performance.
+For this analysis, the regression from $\nu^2$-Flows was found to deliver much better performance for the assignment. Thus, the $\chi^2$ method was ultimately used in conjunction with the prediction of $\nu^2$-Flows, rather than the $\nu$-Weighter, to provide a reasonable baseline.
