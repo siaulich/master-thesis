@@ -153,7 +153,7 @@
     auszugsweise, im Rahmen einer nichtbestandenen Pr{\"u}fung an dieser oder
     einer anderen Hochschule eingereicht wurde.\\[1em]
     &\begin{center}G{\"o}ttingen, den \today\end{center}\\[1.0cm]
-    &\begin{center}\includegraphics[width=0.2\textwidth]{../Unterschrift_no_bkg.png}\end{center}\\[-0.8cm]
+    %&\begin{center}\includegraphics[width=0.2\textwidth]{../Unterschrift_no_bkg.png}\end{center}\\[-0.8cm]
     &\begin{center}(\@ThesisAuthor)\end{center}
     %\begin{minipage}[t]{0.76\textwidth-4\tabcolsep}
     %  \@author\end{minipage}
@@ -240,7 +240,7 @@
       prepared by\\[3mm]
       \textbf{\large \@author}\\[3mm]
       from \@WhereFrom\\[3mm]
-      at the \@Institute\\ [5mm]
+      at \@Institute\\ [5mm]
       %
     \end{center}
     \vfill\null
