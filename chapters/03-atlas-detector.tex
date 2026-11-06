@@ -1,28 +1,29 @@
 \chapter{Experimental Setup}
 \label{chap:experiment_setup}
 \section{The LHC}
-The Large Hadron Collider (\lhc) at \cern is a synchrotron designed to accelerate protons and lead nuclei. With a circumference of $\qty{27}{\kilo\metre}$ at a depth of $\qty{100}{\metre}$, it passes through France and Switzerland. Its main operational goal was the discovery of the Higgs boson, which was achieved by the \atlas and \cms Collaborations during \LHCruni \cite{atlas_higgs_discovery,cms_higgs_discovery} in 2012. Since then, the portfolio of measurements done at the \lhc has grown significantly.
+The Large Hadron Collider (\lhc) at \cern is a synchrotron designed to accelerate protons and heavy ions. With a circumference of $\qty{27}{\kilo\metre}$ at a depth of about $\qty{100}{\metre}$, it passes through France and Switzerland. Its main operational goal was the discovery of the Higgs boson, which was achieved by the \atlas and \cms Collaborations during \LHCruni \cite{atlas_higgs_discovery,cms_higgs_discovery} in 2012. Since then, the portfolio of measurements done at the \lhc has grown significantly.
 This work focuses on the proton-proton collisions during \LHCrunii, building on the collider context described below.
 
-During \LHCrunii from 2015 to 2018, the \lhc operated at a centre of mass energy of $\sqrt{s}=\qty{13}{\tera\electronvolt}$ with an integrated luminosity of $\mathcal{L}_{\text{int}}\approx \qty{140}{\femto\barn^{-1}}$~\cite{ATLAS:2019pzw}.
+During \LHCrunii from 2015 to 2018, the \lhc operated at a centre-of-mass energy of $\sqrt{s}=\qty{13}{\tera\electronvolt}$ with an integrated luminosity of $\mathcal{L}_{\text{int}}\approx \qty{140}{\femto\barn^{-1}}$~\cite{ATLAS:2019pzw}.
 After completion of \LHCruniii in June 2026 and an operational pause, the \lhc will operate with increased luminosity as the High-Luminosity Large Hadron Collider (HL-\lhc). During this phase, it is planned to accumulate data with an integrated luminosity of around $\mathcal{L}_{\text{int}}=\qty{3}{\atto\barn^{-1}}$ \cite{Aberle:2749422}.
 
 
 \section{The Detector}
 The \atlas detector is a general-purpose particle detector located at the \lhc at \cern. With a length of $\qty{46}{\metre}$ and a diameter of $\qty{25}{\metre}$, it represents the largest detector constructed for a particle collider.
 
-The cylindrical detector comprises three primary elements: the inner detector, the calorimeter, and the muon spectrometer~\cite{atlas_tdr}. These components are arranged concentrically around the beam pipe, each enclosing the one before it. The detector is further supported by a magnet system comprising two distinct magnets: a solenoid magnet surrounding the inner detector and a set of toroidal magnets that encompass the muon spectrometer and end-caps.
+The cylindrical detector comprises three primary elements: the inner detector, the calorimeter, and the muon spectrometer~\cite{atlas_tdr,atlas_jinst}. These components are arranged concentrically around the beam pipe, each enclosing the one before it. The detector is further supported by a magnet system comprising two distinct magnets: a solenoid magnet surrounding the inner detector and a set of toroidal magnets that encompass the muon spectrometer and end-caps.
 
-Each component of the detector fulfils a specific function. The inner detector enables tracking, identification, and vertex reconstruction of charged particles. The calorimeters determine the energy and position of charged particles, photons, and hadrons, thereby supporting their measurement. The muon spectrometer identifies muons and measures their momenta.
+Each component of the detector fulfils a specific function. The inner detector enables tracking, identification, and vertex reconstruction of charged particles. The calorimeters determine the energy and position of electrons, photons, and hadrons, thereby supporting their measurement. The muon spectrometer identifies muons and measures their momenta.
+The resolutions of the individual sub-detectors are quoted throughout this chapter and summarised in \Cref{tab:resolutions}. Unless stated otherwise, they are design values; the resolutions achieved in \LHCrunii differ somewhat and are given in the cited performance papers. Energy resolutions are given as functions of the energy $E$ in $\unit{\giga\electronvolt}$, and $\oplus$ denotes addition in quadrature.
 
 \subsection{The Coordinate System}
 The interaction point marks the origin of the \atlas coordinate system. The $z$-axis is orientated along the beamline, the $x$-axis points towards the centre of the \lhc and the $y$-axis points upwards.
 
 Using this convention, several kinematic variables are defined, such as the transverse momentum, defined as 
 \begin{align}
-    p_T=\sqrt{p_x^2+p_y^2}
+    p_T=\sqrt{p_x^2+p_y^2}~.
 \end{align}
-Because of the \atlas detector's cylindrical shape and the cylindrical symmetry of the interactions, the azimuthal angle is used as an additional variable. The polar angle relative to the $z$-axis can be used to define the pseudorapidity, which can also be expressed in terms of the momentum 
+Because of the \atlas detector's cylindrical shape and the cylindrical symmetry of the interactions, the azimuthal angle $\phi$ is used as an additional variable. The polar angle $\theta$ relative to the $z$-axis can be used to define the pseudorapidity, which can also be expressed in terms of the momentum 
 \begin{align}
     \eta=-\ln\left(\tan\left(\frac{\theta}{2}\right)\right)=\ln\left(\frac{|\vec   p|+p_z}{|\vec p|-p_z}\right)~.
 \end{align}
@@ -30,7 +31,7 @@ In the ultra-relativistic limit $m\ll |\vec p|$, the pseudorapidity is equal to 
 \begin{align}
     y=\frac{1}{2}\ln\left(\frac{E+p_z}{E-p_z}\right)~.
 \end{align}
-These variables are convenient for usage in the \atlas experiment because $p_T,\phi$, and differences of $\eta$ are invariant under Lorentz-boosts along the $z$-axis. This is important in a hadron collider, where the interacting partons are not at rest in the lab frame.
+These variables are convenient for usage in the \atlas experiment because $p_T,\phi$, and differences of $y$ (and, in the massless limit, of $\eta$) are invariant under Lorentz boosts along the $z$-axis. This is important in a hadron collider, where the interacting partons are not at rest in the lab frame.
 
 \subsection{Inner Detector}
 \begin{figure}[ht]
@@ -38,35 +39,68 @@ These variables are convenient for usage in the \atlas experiment because $p_T,\
     \includegraphics[width=1.0\textwidth]{figures/atlas-detector/IDbriefing_figure1.png}
     \caption{Schematic cross-section of the inner detector of the \atlas detector (\copyright\ \cern).}
     \label{fig:inner_det}
-\end{figure} \noindent The inner detector (ID) is the innermost part of the \atlas detector. It is used for tracking charged particles, particle identification, and primary- and secondary-vertex determination~\cite{atlas_tdr}. The ID consists of three different sub-detectors, in addition to the Insertable B-Layer (IBL), which was installed after \LHCruni \cite{atlas_ibl_tdr}. Their rough structure is depicted in \Cref{fig:inner_det}. All the ID's components are encapsulated within a solenoid magnet, providing a $\qty{2}{\tesla}$ axial magnetic field inside the ID.  The magnetic field is crucial for measuring the momentum of a charged particle, as it enables the determination of the particle's transverse momentum via the curvature induced by the Lorentz force.
+\end{figure} \noindent The inner detector (ID) is the innermost part of the \atlas detector. It is used for tracking charged particles, particle identification, and primary- and secondary-vertex determination~\cite{atlas_tdr,atlas_id_tdr}. It covers the range $|\eta|<2.5$ and consists of three different sub-detectors, in addition to the Insertable B-Layer (IBL), which was installed after \LHCruni \cite{atlas_ibl_tdr}. Their rough structure is depicted in \Cref{fig:inner_det}. All the ID's components are encapsulated within a solenoid magnet, providing a $\qty{2}{\tesla}$ axial magnetic field inside the ID. The magnetic field is crucial for measuring the momentum of a charged particle, as it enables the determination of the particle's transverse momentum via the curvature induced by the Lorentz force. The resulting design transverse-momentum resolution of the ID is
+\begin{align}
+    \frac{\sigma_{p_T}}{p_T} = \qty{0.05}{\percent}\cdot\frac{p_T}{\unit{\giga\electronvolt}} \oplus \qty{1}{\percent}~,
+\end{align}
+where the first term describes the degradation of the curvature measurement at high $p_T$ and the second term is due to multiple scattering~\cite{atlas_id_tdr,atlas_jinst}.
 
-The detector part closest to the beam pipe is the pixel detector. It consists of $1744$ modules arranged in three barrel layers. Each module hosts $47232$ silicon pixels with a size of $\qty{50}{\micro\metre}\times \qty{400}{\micro\metre}$. The pixels are semiconductor trackers used to detect the tracks of charged particles. An additional layer, the IBL, was installed after \LHCruni closest to the beam pipe. It is made up of $14$ starves, each comprising 32 modules of silicon pixel sensors with a pixel size of $\qty{50}{\micro\metre}\times \qty{250}{\micro\metre}$. It primarily improved vertexing performance, thereby enhancing $b$-tagging performance.
+The detector part closest to the beam pipe is the pixel detector. It consists of $1744$ modules arranged in three barrel layers. Each module hosts $47232$ silicon pixels with a size of $\qty{50}{\micro\metre}\times \qty{400}{\micro\metre}$, of which $46080$ are read out individually. The pixels are semiconductor trackers used to detect the tracks of charged particles. They provide an intrinsic hit resolution of $\qty{10}{\micro\metre}$ in the $R\text{-}\phi$ plane and $\qty{115}{\micro\metre}$ along the $z$-axis~\cite{atlas_jinst}. An additional layer, the IBL, was installed after \LHCruni closest to the beam pipe. It is made up of $14$ staves, each comprising $20$ modules of silicon pixel sensors with a pixel size of $\qty{50}{\micro\metre}\times \qty{250}{\micro\metre}$~\cite{atlas_ibl_tdr,atlas_ibl_paper}. Its intrinsic resolution is about $\qty{8}{\micro\metre}$ in $R\text{-}\phi$ and $\qty{40}{\micro\metre}$ in $z$~\cite{atlas_ibl_tdr}. It primarily improved vertexing performance, thereby enhancing $b$-tagging performance.
 
-The following part of the detector is the semiconductor tracker (SCT). It consists of $4088$ modules arranged in four layers to ensure four-position measurements of charged particles. Each module consists of four silicon sensors. The sensors offer a $\qty{17}{\micro \metre}$ in-plane lateral resolution and $~\qty{580}{\micro \metre}$ in-plane longitudinal resolution.
+The following part of the detector is the semiconductor tracker (SCT). It consists of $4088$ modules arranged in four layers to ensure four-position measurements of charged particles. Each module consists of four silicon sensors. The sensors offer an intrinsic resolution of $\qty{17}{\micro\metre}$ in the $R\text{-}\phi$ plane and $\qty{580}{\micro\metre}$ along the $z$-axis~\cite{atlas_jinst,atlas_sct_run2}.
 
-The outermost part of the inner detector is the transition radiation tracker (TRT). It consists of polyimide drift (straw) tubes with a $\qty{4}{\milli\metre}$ diameter that are arranged in a $\qty{528}{\milli\metre}$ thick cylindrical layer around the beam pipe. The straw tubes are interleaved with fibres for the readout.
-The transition radiation tracker utilises the transition radiation emitted by charged particles traversing the interface between two media with different refractive indices. The TRT provides velocity measurements of charged particles, thereby enabling electron identification.
+The outermost part of the inner detector is the transition radiation tracker (TRT), covering $|\eta|<2.0$. It consists of polyimide drift (straw) tubes with a $\qty{4}{\milli\metre}$ diameter that are arranged in a $\qty{528}{\milli\metre}$ thick cylindrical layer around the beam pipe. Each straw provides a hit resolution of about $\qty{130}{\micro\metre}$ in the $R\text{-}\phi$ plane, but no measurement along the straw~\cite{atlas_jinst,atlas_trt_performance}. Owing to the large number of hits per track (typically around $30$), the TRT nevertheless contributes significantly to the momentum measurement.
+The straw tubes are interleaved with a radiator material (fibres in the barrel, foils in the end caps) in which transition radiation is emitted by charged particles traversing the interfaces between media with different dielectric constants. The intensity of this radiation is sensitive to the particle's Lorentz factor, $\gamma$, and therefore provides a measure of its velocity, which can aid the electron identification.
 
 \subsection{Calorimeter System}
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.85\textwidth]{figures/atlas-detector/0803015_01.jpg}
     \caption{Computer generated image of the \atlas calorimeter (\copyright\ \cern).}
-    \label{fig:colorimeter}
-\end{figure}\noindent The calorimeters are the detector layers following the inner detectors. Its structure is divided into the electromagnetic calorimeter (ECal), the hadronic calorimeter (HCal), and the forward calorimeter (FCAL).
+    \label{fig:calorimeter}
+\end{figure}\noindent The calorimeters are the detector layers following the inner detectors. Their structure is divided into the electromagnetic calorimeter (ECal), the hadronic calorimeter (HCal), and the forward calorimeter (FCal). A computer-generated image of the various calorimeters is shown in \Cref{fig:calorimeter}.
+The energy resolution of a sampling calorimeter is commonly parametrised as
+\begin{align}
+    \frac{\sigma_E}{E} = \frac{a}{\sqrt{E/\unit{\giga\electronvolt}}} \oplus b \oplus \frac{c}{E}~,
+\end{align}
+where $a$ is the sampling term, caused by statistical fluctuations of the shower development in the active medium, $b$ is the constant term, caused by detector non-uniformities and calibration uncertainties, and $c$ is the noise term, which is relevant only at low energies. At high energies, the constant term dominates.
+
 \subsubsection{Electromagnetic Calorimeter}
-The ECal is used for the energy and position measurement of electrically charged particles and photons. It utilises bremsstrahlung and pair production to create a cascade of charged particles that is measured. Apart from offering full azimuthal coverage, it is equipped with end caps along the beam pipe. The \atlas ECal is a sampling calorimeter using lead as the passive medium and liquid argon as the active medium. The innermost part of the ECal is a presampler that detects whether the particle started showering before reaching the ECal.
+The ECal is used for the energy and position measurement of electrons and photons. It utilises bremsstrahlung and pair production to create a cascade of charged particles that is measured. Apart from offering full azimuthal coverage up to $|\eta|<3.2$, it is equipped with end caps along the beam pipe. The \atlas ECal is a sampling calorimeter with an accordion geometry, using lead as the passive medium and liquid argon as the active medium. The innermost part of the ECal is a presampler that detects whether the particle started showering before reaching the ECal. The design energy resolution is characterised by a sampling term of $a\approx\qty{10}{\percent}$ and a constant term of $b\approx\qty{0.7}{\percent}$~\cite{atlas_lar_tdr,atlas_egamma_run2}.
+
 \subsubsection{Hadronic Calorimeter}
-The HCal measures the energy and position of baryons and mesons through strong interactions with the nuclei. In the range $|\eta|<1.7$, it is a sampling calorimeter with steel as the passive medium and scintillators as the active medium. For the end cap, liquid argon is deployed as the active medium. The HCal operates on the same principle as the ECal but provides less precise measurements. This is attributed to greater fluctuations in the shower shape, invisible energy losses, and coarser HCal sampling, which is necessary due to the larger length scale of hadronic showers.
+The HCal measures the energy and position of hadrons through strong interactions with the nuclei. In the range $|\eta|<1.7$, it is a sampling calorimeter with steel as the passive medium and scintillating tiles as the active medium (Tile calorimeter). In the end caps ($1.5<|\eta|<3.2$), copper is used as the passive medium and liquid argon as the active medium (HEC). The HCal operates on the same principle as the ECal but provides less precise measurements: for single hadrons and jets, the design resolution is $a\approx\qty{50}{\percent}$ and $b\approx\qty{3}{\percent}$~\cite{atlas_tile_tdr,atlas_lar_tdr}. This is attributed to greater fluctuations in the shower shape, invisible energy losses, and coarser HCal sampling, which is necessary due to the larger length scale of hadronic showers. The measured jet energy resolution in \LHCrunii is given in \cite{atlas_jer_run2}.
 
-\subsection{Forward Calorimeter}
-In the range of $3.1<|\eta|<4.9$, ECal and HCal are substituted with the forward calorimeters (FCal), which are made up of three modules to fulfil the function of both calorimeters. In combination with the FCal, the calorimeters cover the full range $|\eta|<4.9$.
+\subsubsection{Forward Calorimeter}
+In the range $3.1<|\eta|<4.9$, ECal and HCal are substituted with the forward calorimeters (FCal), which are made up of three modules to fulfil the function of both calorimeters. Their resolution is coarser than that of the central calorimeters, with $a\approx\qty{100}{\percent}$ and $b\approx\qty{10}{\percent}$ for hadrons~\cite{atlas_lar_tdr,atlas_jinst}. In combination with the FCal, the calorimeters cover the full range $|\eta|<4.9$.
 
-A computer-generated image of the structures of the various calorimeters used in the \atlas detector is shown in \Cref{fig:colorimeter}.
 \subsection{Muon Spectrometer}
-The muon spectrometer is the outermost part of the \atlas detector. Its purpose is to detect charged particles exiting the calorimeters and measure their momentum in the range of $|\eta|<2.7$. A detector dedicated to measuring muons is necessary because their mass makes them minimally-ionising particles in the energy range of \lhc collisions. The energy loss due to bremsstrahlung is insufficient to produce the showers needed to measure their energy in the calorimeters. Like the inner detector, the muon spectrometer utilises a magnetic field to measure the particle's momentum.  In the muon spectrometer, however, a toroidal magnet is used to allow for the measurement of the muon's momentum along a different direction. By combining measurements from the ID and the muon spectrometer, a full determination of the muon's momentum is possible, alongside high specificity in particle identification.
+The muon spectrometer is the outermost part of the \atlas detector. Its purpose is to detect charged particles exiting the calorimeters and measure their momentum in the range of $|\eta|<2.7$. A detector dedicated to measuring muons is necessary because their mass makes them minimally-ionising particles in the energy range of \lhc collisions. The energy loss due to bremsstrahlung is insufficient to produce the showers needed to measure their energy in the calorimeters. Like the inner detector, the muon spectrometer utilises a magnetic field to measure the particle's momentum. In the muon spectrometer, however, a toroidal magnet is used, which bends the muons in a different plane than the solenoid of the ID. By combining measurements from the ID and the muon spectrometer, a full determination of the muon's momentum is possible, alongside high specificity in particle identification.
+
+The precision tracking is performed by monitored drift tubes (MDTs), which reach a resolution of about $\qty{80}{\micro\metre}$ per tube and about $\qty{35}{\micro\metre}$ per chamber, and, in the innermost layer at large $|\eta|$, by cathode-strip chambers (CSCs) with about $\qty{40}{\micro\metre}$ resolution in the bending plane~\cite{atlas_muon_tdr,atlas_jinst}. Resistive plate chambers and thin gap chambers provide fast trigger signals. The resulting stand-alone design resolution of the muon spectrometer is about $\qty{3}{\percent}$ for muons with $\qty{10}{\giga\electronvolt}<p_T<\qty{250}{\giga\electronvolt}$ and about $\qty{10}{\percent}$ at $p_T=\qty{1}{\tera\electronvolt}$~\cite{atlas_muon_tdr}. The performance achieved in \LHCrunii is documented in \cite{atlas_muon_run2}.
+
+\begin{table}[ht]
+    \centering
+    \caption{Design resolutions of the \atlas sub-detectors~\cite{atlas_jinst}. For the calorimeters, only the sampling and constant terms are shown.}
+    \label{tab:resolutions}
+    \begin{tabular}{llc}
+        \toprule
+        Sub-detector & Quantity & Resolution \\
+        \midrule
+        Pixel  & $R\text{-}\phi\times z$ & $\qtyproduct{10 x 115}{\micro\metre}$ \\
+        IBL    & $R\text{-}\phi\times z$ & $\qtyproduct{8 x 40}{\micro\metre}$ \\
+        SCT    & $R\text{-}\phi\times z$ & $\qtyproduct{17 x 580}{\micro\metre}$ \\
+        TRT    & $R\text{-}\phi$         & $\qty{130}{\micro\metre}$ \\
+        ID     & $\sigma_{p_T}/p_T$      & $\qty{0.05}{\percent}\,p_T\oplus\qty{1}{\percent}$ \\
+        ECal   & $\sigma_E/E$            & $\qty{10}{\percent}/\sqrt{E}\oplus\qty{0.7}{\percent}$ \\
+        HCal   & $\sigma_E/E$            & $\qty{50}{\percent}/\sqrt{E}\oplus\qty{3}{\percent}$ \\
+        FCal   & $\sigma_E/E$            & $\qty{100}{\percent}/\sqrt{E}\oplus\qty{10}{\percent}$ \\
+        Muon spectrometer & $\sigma_{p_T}/p_T$ & $\approx\qty{10}{\percent}$ at $\qty{1}{\tera\electronvolt}$ \\
+        \bottomrule
+    \end{tabular}
+\end{table}
 
 \subsection{Trigger System}
-With a bunch spacing of $\qty{25}{\nano\second}$ \cite{ATLAS:2019pzw} collisions happen at a rate of $\qty{40}{\mega\hertz}$. Each collision involves hundreds of particles, resulting in detector readout rates that exceed the bandwidth of post-processing pipelines and data storage systems. Therefore, triggers are employed to target specific physics processes and events of particular interest.
+With a bunch spacing of $\qty{25}{\nano\second}$ \cite{ATLAS:2019pzw} collisions happen at a rate of $\qty{40}{\mega\hertz}$. Each collision involves hundreds of particles, resulting in detector readout rates that exceed the bandwidth of post-processing pipelines and data storage systems. Therefore, triggers are employed to target specific physics processes and events of particular interest~\cite{atlas_trigger_run2}.
 
-Different layers of triggers operate either at the hardware or software level. The L1 hardware-level trigger serves as the first filter for events. It makes decisions in less than $\qty{2.5}{\micro\second}$, reducing the data rate to $\qty{100}{\kilo\hertz}$. The subsequent High-Level Trigger (HLT) is a software-level trigger that makes decisions in less than $\qty{200}{\micro \second}$. Combined, the trigger system reduces the event rate from $\qty{40}{\mega\hertz}$ to $\qty{1}{\kilo\hertz}$, with events stored at the CERN data centre for offline analysis. 
+Different layers of triggers operate either at the hardware or software level. The L1 hardware-level trigger serves as the first filter for events. It makes decisions in less than $\qty{2.5}{\micro\second}$, reducing the data rate to $\qty{100}{\kilo\hertz}$. The subsequent High-Level Trigger (HLT) is a software-level trigger that takes about $\qty{200}{\milli\second}$ per event on average. Combined, the trigger system reduces the event rate from $\qty{40}{\mega\hertz}$ to about $\qty{1}{\kilo\hertz}$, with events stored at the CERN data centre for offline analysis.

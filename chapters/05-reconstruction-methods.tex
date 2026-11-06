@@ -12,7 +12,7 @@ All the samples used here are from the \atlas MC simulation campaign. Thus, all 
 
 \subsection{Simulation of Dileptonic Top-Quark Pair Events}
 \label{sec:nominal_ttbar}
-The process of \ttbar production with dileptonic decays is simulated using \powheg~\cite{powheg} at next-to-leading order (NLO) in perturbative quantum chromodynamics (QCD). The \powheg generator is interfaced with \pythia~\cite{pythia} for parton showering, hadronisation, and underlying event modelling. A more detailed description can be found in the Reference~\cite{atlas_toponium}.
+The process of \ttbar production with dileptonic decays is simulated using \powheg~\cite{powheg} at next-to-leading order (NLO) in perturbative quantum chromodynamics (QCD). The \powheg generator is interfaced with \pythia~\cite{pythia} for parton showering, hadronisation, and underlying event modelling. A more detailed description can be found in Reference~\cite{atlas_toponium}.
 
 Additionally, quasi-bound-state effects can modify the cross-section relative to the pQCD calculation. These are modelled using non-relativistic QCD (NRQCD). For this analysis, these contributions are modelled as described in Reference~\cite{NRQCD_toponium_2}. The implementation details for event generation and the samples used here can be found in Reference~\cite{atlas_toponium}.
 
@@ -22,21 +22,21 @@ To link the reco-level particles to the parton-level objects, a parton matching 
 \label{sec:object-definition}
 The reconstruction of physics objects—electrons, muons, jets, and missing transverse energy (\met)—is performed using standard \atlas reconstruction algorithms~\cite{atlas_tdr}.
 
-\paragraph{Electrons} are required to have transverse momentum $p_T>\qty{10}{\giga\electronvolt}$ and pseudorapidity $|\eta| < 2.47$, excluding the transition region between the barrel and endcap calorimeters ($1.37 < |\eta| < 1.52$). Electrons must satisfy the tight identification criteria and be isolated from other activity in the detector \cite{EGAM-2018-01,EGAM-2019-01}.
+\paragraph{Electrons} are required to have transverse momentum $p_T>\qty{10}{\giga\electronvolt}$ and pseudorapidity $|\eta| < 2.47$, excluding the transition region between the barrel and endcap calorimeters ($1.37 < |\eta| < 1.52$). Electrons must satisfy the tight identification criteria and be isolated from other activity in the detector by $\Delta R>0.1$ \cite{EGAM-2018-01,EGAM-2019-01}.
 
-\paragraph{Muons} are reconstructed using information from both the inner detector and the muon spectrometer. They are required to have $p_T>\qty{10}{\giga\electronvolt}$ and $|\eta| < 2.5$. Muons must satisfy the tight identification criteria and be isolated \cite{muon,muon_2}.
+\paragraph{Muons} are reconstructed using information from both the inner detector and the muon spectrometer. They are required to have $p_T>\qty{10}{\giga\electronvolt}$ and $|\eta| < 2.5$. Muons must satisfy the tight identification criteria and be isolated from other activity by $\Delta R>0.1$ \cite{muon,muon_2}.
 
 \paragraph{Jets} are reconstructed using the anti-$k_t$ algorithm \cite{anti_k_t_jet_2} with a radius parameter of $R = 0.4$. They are required to have $p_T>\qty{25}{\giga\electronvolt}$ and $|\eta| <
 2.5$. $b$-tagging is performed using the GN2
-algorithm~\cite{gn2_btagger} to identify jets originating from $b$ quarks.
+algorithm~\cite{gn2_btagger} at the $85\%$ working point (WP) to identify jets originating from $b$ quarks. 
 
 \paragraph{Missing Transverse Energy} (\met) is calculated from the negative vector sum of the transverse momenta of all reconstructed objects in the event, including a soft term to account for energy not associated with reconstructed objects.
 
 \subsection{Event Selection}
 \label{sec:event-selection}
-Events are selected to contain exactly two oppositely charged leptons (electrons or muons). One of the leptons must have $p_T>\qty{25}{\giga\electronvolt}$. At least two jets are required, with one $b$-tagged at the $85\%$ working point (WP).
+Events are selected to contain exactly two oppositely charged leptons (electrons or muons). One of the leptons must have $p_T>\qty{25}{\giga\electronvolt}$. At least two jets are required, with one $b$-tagged.
 
-For training and evaluation of the reconstruction methods, only events that meet the selection criteria and have successful parton matching are considered. Fully parton-matched events account for about $65\%$ of the total sample. Jets or leptons from the \ttbar decay that end up outside the detector acceptance are the main cause of an event being unmatched. Thus, training only on parton-matched events might introduce a bias towards certain event topologies if they are disfavoured by parton matching. Investigation of variables such as $p_T(t), \eta(t), m(t\bar{t})$, however, yielded no major difference in the distribution for matched and unmatched events.
+For training and evaluation of the reconstruction methods, only events that meet the selection criteria and have successful parton matching are considered. Fully parton-matched events account for about $65\%$ of the total sample. Jets or leptons from the \ttbar decay that end up outside the detector acceptance are the main cause of an event being unmatched. Thus, training only on parton-matched events might introduce a bias towards certain event topologies if they are disfavoured by parton matching. While no major differences or biases were identified here, this remains an open research questions that motivates further studies.
 
 \section{Reconstruction of Top-Quark Pairs}
 \label{sec:reconstruction-methods}
@@ -53,15 +53,12 @@ The identification of $b$-jets is crucial for the reconstruction of \ttbar event
 \subsection{Jet Assignment Methods}
 \label{sec:jet_assignment}
 This thesis evaluates several methods for jet assignment, ranging from traditional algorithms to machine learning approaches. While the leptons can be assigned to the $W$ bosons based on their charge, the assignment of jets to the decaying parent top-quark is not straightforward due to the presence of multiple jets in the event. All the methods presented here utilise kinematic relationships to group jets and leptons stemming from the same top quark decay.
-From recent publications, e.g.~\cite{atlas_entanglement,atlas_toponium}, two conventional methods have been implemented as baselines:
+From recent publications, ~\cite{atlas_entanglement,atlas_toponium}, two conventional methods have been implemented as baselines:
 
 \paragraph{Jet-Selection}
 Both methods start by selecting the two $b$-jet candidates in the event using $b$-tagging at the $ 85\%$ WP. If more than two $b$-tagged jets are present, the two with the highest \pt are chosen.
 If only one $b$-tagged jet is found, the non-tagged jet with the highest $b$-tagging score is selected as the second candidate.
-\begin{figure}[H]
-\centering
-\begin{minipage}[t]{0.48\textwidth}
-    \textbf{$\chi^2$ method}\\[0.5em]
+\paragraph{$\chi^2$ Method}
     For both possible assignments of the two $b$-jets to the parent top quarks, the invariant masses of the reconstructed top quarks are computed,
     \begin{equation}
         \label{eq:chi_square}
@@ -69,20 +66,17 @@ If only one $b$-tagged jet is found, the non-tagged jet with the highest $b$-tag
         m_{t})^2+(m_{b_2,\bar{\nu},\ell^-} - m_{t})^2,
     \end{equation}
     where $m_t = 172.5~\unit{\giga\electronvolt}$ is the top quark mass. The assignment with the smaller $\chi^2$ value is chosen.
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.48\textwidth}
-    \textbf{$\Delta R$ method}\\[0.5em]
+
+\paragraph{$\Delta R$ Method}
     This method assigns the $b$-jet candidates based on their angular distance to the leptons.
     \begin{equation}
         \Delta R = \sqrt{(\Delta\phi)^2 + (\Delta\eta)^2}
     \end{equation}
-    The jet and the lepton that form the pair with the smallest dR are assigned to each other. The remaining jet is assigned to the other lepton.
-    \end{minipage}
-\end{figure}
+The jet and the lepton that form the pair with the smallest $\Delta R$ are assigned to each other. The remaining jet is assigned to the other lepton.
+
 Note that the $\chi^2$ method relies on the reconstructed neutrino momenta to compute the invariant masses of the top quarks. Therefore, it is inherently linked to the neutrino regression method used. In contrast, the $\Delta R$ method is independent of the neutrino momenta.
 
-Empiric evidence for the validity of both can be found in \Cref{fig:jet_lepton_pairing}, which shows the distributions of the reconstructed invariant mass of the top quark and the $\Delta R$
+Empirical evidence for the validity of both can be found in \Cref{fig:jet_lepton_pairing}, which shows the distributions of the reconstructed invariant mass of the top quark and the $\Delta R$
 between the jet and lepton for correct and incorrect jet-lepton pairs. The correct pairs show a clear peak around the top quark mass in the invariant mass distribution and a smaller $\Delta R$ compared to incorrect pairs, which supports the use of these variables for jet assignment.
 
 The $\Delta R$ method was used in previous \atlas analyses \cite{atlas_entanglement,atlas_toponium} for events that failed the kinematic reconstruction required for the $\chi^2$ method. However, in this thesis, both methods are evaluated on the full dataset for comparison.
@@ -110,7 +104,7 @@ Due to the limited availability of kinematic reconstruction methods within the \
 
 \subsubsection{Neutrino-Weighter}
 \label{sec:nu_weighter}
-The Neutrino-Weighter ($\nu$-Weighter), first described in \cite{neutrino_weighting_method}, is a method that assigns weights to different possible neutrino momentum configurations based on how well they satisfy the kinematic structure of the event using the measured \met and the momenta of the leptons and jets. These momentum configurations are obtained by sampling the neutrinos' pseudorapidities from a Gaussian distribution and computing the full 3-vector of the neutrinos by solving the system of equations derived from the constraints in \Cref{sec:kinematic_constraints}. The masses of the top quarks and $W$ bosons are smeared around their nominal values, i.e. different values are considered and evaluated.
+The Neutrino-Weighter ($\nu$-Weighter), first described in Reference~\cite{neutrino_weighting_method}, is a method that assigns weights to different possible neutrino momentum configurations based on how well they satisfy the kinematic structure of the event using the measured \met and the momenta of the leptons and jets. These momentum configurations are obtained by sampling the neutrinos' pseudorapidities from a Gaussian distribution and computing the full 3-vector of the neutrinos by solving the system of equations derived from the constraints in \Cref{sec:kinematic_constraints}. The masses of the top quarks and $W$ bosons are smeared around their nominal values, i.e. different values are considered and evaluated.
 For each configuration, a weight (called likelihood) is computed based on loose kinematic constraints associated with \ttbar events— including on-shell requirements for the $W$ bosons and top quarks. The configuration with the highest weight is then selected as the reconstructed neutrino momenta. This method is computationally intensive because it requires scanning through numerous possible neutrino momentum configurations. Also, the computation of the reconstructed masses for the top quarks and W-bosons requires identification of the jets with a lepton. In principle, this might be done by a sophisticated method such as the one to be developed in this thesis. However, the implementation used here selects the jets based on $b$-tagging at the $ 85\%$ working point and on the leading $p_T$ if the number of $b$-tagged jets deviates from two. While this still leaves a twofold degeneracy in the assignment, both scenarios are evaluated, weighted, and considered for the likelihood maximisation.
 
 

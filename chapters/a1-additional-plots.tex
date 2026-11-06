@@ -141,12 +141,6 @@
 \end{figure}
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.7\textwidth]{plots/compact_assigner/binned_performance/N_jets/binned_selection_accuracies_N_jets.pdf}
-    \caption{Selection accuracy as a function of the number of jets in the event for different reconstruction methods. The background histogram shows the distribution of events as a function of the number of jets. The uncertainties represent the statistical variations in the evaluation dataset.}
-    \label{fig:selection_accuracy_vs_n_jets}
-\end{figure}
-\begin{figure}[!htbp]
-    \centering
     \includegraphics[width=1.0\textwidth]{plots/compact_assigner/binned_2d_performance/truth_ttbar_mass_vs_dR_l1l2/2d_binned_accuracies_truth_ttbar_mass_dR_l1l2.pdf}
     \caption{Assignment accuracy binned with respect to parton-level \mttbar and $\Delta R(\ell_1,\ell_2)$.}
     \label{fig:accuracy_2d_ttbar_mass_dR_l1l2}
@@ -254,6 +248,7 @@
 \begin{table}[!htbp]
     \centering
     \caption{Assignment accuracy of different methods evaluated on ${t\bar{t}}_{\text{NRQCD}}$ events. The brackets describe the dataset used in the training of the MMT: \textit{Nominal} with ${t\bar{t}}_{\text{pQCD}}$ events, \textit{Toponium} with ${t\bar{t}}_{\text{NRQCD}}$ events, and \textit{Threshold} with ${t\bar{t}}_{\text{pQCD}}$ events with $m(t\bar{t})<450~\GeV$.}
+    \label{fig:assignment_accuracy_region_specific}
     \input{plots/evaluate_regions_toponium/accuracy/reconstruction_accuracies_table.tex}
 \end{table}
 \clearpage
